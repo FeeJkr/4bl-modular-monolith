@@ -1,0 +1,23 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app
+      - ~/.ssh:/root/.ssh
+  redis:
+    image: "redis:alpine"
+    ports:
+      - 6379:6379
+  db:
+    image: "postgres:latest"
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: default
+      POSTGRES_PASSWORD: default
+      PGPASSWORD: default_secret
