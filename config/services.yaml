@@ -45,6 +45,17 @@ services:
         arguments:
             $repository: '@category.cache_repository'
 
+    wallet.database_repository:
+        class: App\Infrastructure\Wallet\Persistence\Doctrine\WalletReadModelRepository
+    wallet.cache_repository:
+        class: App\Infrastructure\Wallet\Persistence\Redis\WalletReadModelRepository
+        arguments:
+            App\ReadModel\Wallet\WalletReadModelRepository: '@wallet.database_repository'
+
+    App\ReadModel\Wallet\WalletReadModel:
+        class: App\ReadModel\Wallet\WalletReadModel
+        arguments:
+            App\ReadModel\Wallet\WalletReadModelRepository: '@wallet.cache_repository'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
