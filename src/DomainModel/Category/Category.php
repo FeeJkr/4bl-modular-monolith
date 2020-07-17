@@ -6,7 +6,6 @@ namespace App\DomainModel\Category;
 use App\SharedKernel\Category\CategoryId;
 use App\SharedKernel\Category\CategoryType;
 use App\SharedKernel\User\UserId;
-use DateTimeInterface;
 
 final class Category
 {
@@ -45,6 +44,26 @@ final class Category
             $type,
             $icon
         );
+    }
+
+    public function update(string $name, CategoryType $type, string $icon): void
+    {
+        if ($this->name !== $name) {
+            $this->name = $name;
+        }
+
+        if (! $this->type->equals($type)) {
+            $this->type = $type;
+        }
+
+        if ($this->icon !== $icon) {
+            $this->icon = $icon;
+        }
+    }
+
+    public function getId(): CategoryId
+    {
+        return $this->id;
     }
 
     public function getUserId(): UserId

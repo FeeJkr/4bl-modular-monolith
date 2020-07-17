@@ -12,6 +12,11 @@ categories.oneById:
     controller: App\UI\Web\Controller\CategoryController::fetchOneById
     methods: GET
 
+categories.update:
+    path: /api/categories/{id}
+    controller: App\UI\Web\Controller\CategoryController::update
+    methods: PATCH
+
 categories.create:
     path: /api/categories
     controller: App\UI\Web\Controller\CategoryController::create

@@ -5,6 +5,7 @@ namespace App\Application\Category;
 
 use App\Application\Category\Command\CreateNewCategoryCommand;
 use App\Application\Category\Command\DeleteCategoryCommand;
+use App\Application\Category\Command\UpdateCategoryCommand;
 use App\DomainModel\Category\Category;
 use App\DomainModel\Category\CategoryRepository;
 
@@ -32,5 +33,14 @@ final class CategoryService
     public function deleteCategory(DeleteCategoryCommand $command): void
     {
         $this->repository->delete($command->getCategoryId(), $command->getUserId());
+    }
+
+    public function updateCategory(UpdateCategoryCommand $command): void
+    {
+        $category = $this->repository->fetchById($command->getCategoryId(), $command->getUserId());
+
+        $category->update($command->getCategoryName(), $command->getCategoryType(), $command->getCategoryIcon());
+
+        $this->repository->save($category);
     }
 }

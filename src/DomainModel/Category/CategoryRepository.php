@@ -10,4 +10,6 @@ interface CategoryRepository
 {
     public function store(Category $category): void;
     public function delete(CategoryId $categoryId, UserId $userId): void;
+    public function fetchById(CategoryId $categoryId, UserId $userId): Category;
+    public function save(Category $category): void;
 }

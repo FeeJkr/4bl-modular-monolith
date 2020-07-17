@@ -15,4 +15,11 @@ final class CategoryException extends Exception
             sprintf('Category with ID %s for user %s can\'t be deleted.', $categoryId->toInt(), $userId->toInt())
         );
     }
+
+    public static function notFound(CategoryId $categoryId, UserId $userId): self
+    {
+        return new self(
+            sprintf('Category with ID %s for user %s not found.', $categoryId->toInt(), $userId->toInt())
+        );
+    }
 }

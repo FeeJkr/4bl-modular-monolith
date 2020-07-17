@@ -7,6 +7,7 @@ use App\DomainModel\Category\Category;
 use App\DomainModel\Category\CategoryException;
 use App\DomainModel\Category\CategoryRepository as CategoryRepositoryInterface;
 use App\SharedKernel\Category\CategoryId;
+use App\SharedKernel\Category\CategoryType;
 use App\SharedKernel\User\UserId;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -52,6 +53,42 @@ final class CategoryRepository implements CategoryRepositoryInterface
         if ($isDeleted === 0) {
             throw CategoryException::notDeleted($categoryId, $userId);
         }
+
+        $this->cache->clear('categories');
+    }
+
+    public function fetchById(CategoryId $categoryId, UserId $userId): Category
+    {
+        $data = $this->entityManager->getConnection()->executeQuery("
+            SELECT * FROM categories WHERE id = :id AND user_id = :user_id
+        ", [
+            'id' => $categoryId->toInt(),
+            'user_id' => $userId->toInt(),
+        ])->fetch();
+
+        if ($data === false) {
+            throw CategoryException::notFound($categoryId, $userId);
+        }
+
+        return new Category(
+            CategoryId::fromInt($data['id']),
+            UserId::fromInt($data['user_id']),
+            $data['name'],
+            new CategoryType($data['type']),
+            $data['icon']
+        );
+    }
+
+    public function save(Category $category): void
+    {
+        $this->entityManager->getConnection()->executeQuery("
+            UPDATE categories SET name = :name, type = :type, icon = :icon WHERE id = :id;
+        ", [
+            'name' => $category->getName(),
+            'type' => $category->getType()->getValue(),
+            'icon' => $category->getIcon(),
+            'id' => $category->getId()->toInt(),
+        ]);
 
         $this->cache->clear('categories');
     }
