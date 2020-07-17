@@ -21,3 +21,8 @@ categories.delete:
     path: /api/categories/{id}
     controller: App\UI\Web\Controller\CategoryController::delete
     methods: DELETE
+
+wallets:
+    path: /api/wallets
+    controller: App\UI\Web\Controller\WalletController::fetchAll
+    methods: GET
