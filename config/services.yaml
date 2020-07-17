@@ -34,6 +34,12 @@ services:
         class: App\Infrastructure\Category\Persistence\Redis\CategoryReadModelRepository
         arguments:
             App\ReadModel\Category\CategoryReadModelRepository: '@category.database_repository'
+    category.domain_repository:
+        class: App\Infrastructure\Category\Persistence\Doctrine\CategoryRepository
+
+    App\Application\Category\CategoryService:
+        arguments:
+            App\DomainModel\Category\CategoryRepository: '@category.domain_repository'
 
     App\ReadModel\Category\CategoryReadModel:
         arguments:

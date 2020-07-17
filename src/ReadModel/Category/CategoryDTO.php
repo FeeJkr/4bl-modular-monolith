@@ -6,6 +6,7 @@ namespace App\ReadModel\Category;
 use App\SharedKernel\Category\CategoryId;
 use App\SharedKernel\Category\CategoryType;
 use App\SharedKernel\User\UserId;
+use DateTime;
 use DateTimeInterface;
 use JsonSerializable;
 
@@ -32,6 +33,18 @@ final class CategoryDTO implements JsonSerializable
         $this->type = $type;
         $this->icon = $icon;
         $this->createdAt = $createdAt;
+    }
+
+    public static function createFromArray(array $category): self
+    {
+        return new self(
+            CategoryId::fromInt($category['id']),
+            UserId::fromInt($category['user_id']),
+            $category['name'],
+            new CategoryType($category['type']),
+            $category['icon'],
+            DateTime::createFromFormat('Y-m-d H:i:s', $category['created_at'])
+        );
     }
 
     public function jsonSerialize(): array

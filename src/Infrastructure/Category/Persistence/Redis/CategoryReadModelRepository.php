@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Category\Persistence\Redis;
 
-use App\ReadModel\Category\CategoryDTOFactory;
+use App\ReadModel\Category\CategoryDTO;
 use App\ReadModel\Category\CategoryReadModelRepository as CategoryReadModelRepositoryInterface;
+use App\SharedKernel\Category\CategoryId;
 use App\SharedKernel\User\UserId;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
@@ -32,6 +32,27 @@ final class CategoryReadModelRepository implements CategoryReadModelRepositoryIn
         }
 
         $data = $this->databaseRepository->fetchAll($userId);
+        $cacheItem->set($data);
+        $cacheItem->expiresAfter(3600);
+        $this->cache->save($cacheItem);
+
+        return $data;
+    }
+
+    public function fetchOneById(UserId $userId, CategoryId $categoryId): ?CategoryDTO
+    {
+        $cacheItem = $this->cache->getItem(sprintf('categories.%s.%s', $userId->toInt(), $categoryId->toInt()));
+
+        if ($cacheItem->isHit()) {
+            return $cacheItem->get();
+        }
+
+        $data = $this->databaseRepository->fetchOneById($userId, $categoryId);
+
+        if ($data === null) {
+            return null;
+        }
+
         $cacheItem->set($data);
         $cacheItem->expiresAfter(3600);
         $this->cache->save($cacheItem);

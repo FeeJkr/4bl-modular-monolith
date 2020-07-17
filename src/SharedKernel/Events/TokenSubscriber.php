@@ -40,7 +40,7 @@ final class TokenSubscriber implements EventSubscriberInterface
                 /** @var stdClass $data */
                 $data = JWT::decode($jwtToken, $this->jwtSecretKey, ['HS256']);
 
-                $event->getRequest()->request->set('user_id', new UserId($data->user_id));
+                $event->getRequest()->request->set('user_id', UserId::fromInt($data->user_id));
 
                 return;
             } catch (\UnexpectedValueException $exception) {

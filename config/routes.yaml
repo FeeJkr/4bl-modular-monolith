@@ -4,4 +4,15 @@ jwt.generate:
 
 categories:
     path: /api/categories
-    controller: App\UI\Web\Controller\CategoryController::index
+    controller: App\UI\Web\Controller\CategoryController::fetchAll
+    methods: GET
+
+categories.oneById:
+    path: /api/categories/{id}
+    controller: App\UI\Web\Controller\CategoryController::fetchOneById
+    methods: GET
+
+categories.createNew:
+    path: /api/categories
+    controller: App\UI\Web\Controller\CategoryController::createNew
+    methods: POST

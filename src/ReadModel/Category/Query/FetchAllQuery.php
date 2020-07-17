@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\ReadModel\Category;
+namespace App\ReadModel\Category\Query;
 
 use App\SharedKernel\User\UserId;
 

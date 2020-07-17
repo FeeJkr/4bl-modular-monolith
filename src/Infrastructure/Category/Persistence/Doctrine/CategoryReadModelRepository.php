@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Category\Persistence\Doctrine;
 
-use App\ReadModel\Category\CategoryDTOFactory;
+use App\ReadModel\Category\CategoryDTO;
 use App\ReadModel\Category\CategoryReadModelRepository as CategoryReadModelRepositoryInterface;
+use App\SharedKernel\Category\CategoryId;
 use App\SharedKernel\User\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -34,9 +35,26 @@ final class CategoryReadModelRepository implements CategoryReadModelRepositoryIn
         )->fetchAll();
 
         foreach ($data as $category) {
-            $collection->add(CategoryDTOFactory::createFromArray($category));
+            $collection->add(CategoryDTO::createFromArray($category));
         }
 
         return $collection;
+    }
+
+    public function fetchOneById(UserId $userId, CategoryId $categoryId): ?CategoryDTO
+    {
+        $data = $this->entityManager->getConnection()->executeQuery(
+            "SELECT * FROM categories WHERE user_id = :user_id AND id = :category_id",
+            [
+                'user_id' => $userId->toInt(),
+                'category_id' => $categoryId->toInt(),
+            ]
+        )->fetch();
+
+        if ($data === false) {
+            return null;
+        }
+
+        return CategoryDTO::createFromArray($data);
     }
 }
