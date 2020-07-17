@@ -12,7 +12,7 @@ categories.oneById:
     controller: App\UI\Web\Controller\CategoryController::fetchOneById
     methods: GET
 
-categories.createNew:
+categories.create:
     path: /api/categories
-    controller: App\UI\Web\Controller\CategoryController::createNew
+    controller: App\UI\Web\Controller\CategoryController::create
     methods: POST

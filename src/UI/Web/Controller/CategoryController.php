@@ -56,7 +56,7 @@ final class CategoryController extends AbstractController
         }
     }
 
-    public function createNew(Request $request): JsonResponse
+    public function create(Request $request): JsonResponse
     {
         try {
             $this->categoryService->createNewCategory(
@@ -70,7 +70,6 @@ final class CategoryController extends AbstractController
 
             return $this->json([], Response::HTTP_NO_CONTENT);
         } catch (Throwable $exception) {
-            dd($exception);
             return $this->json(['error' => 'Unexpected error.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
