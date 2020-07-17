@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Events;
+namespace App\SharedKernel\Events;
 
-use DateTime;
+use App\SharedKernel\User\UserId;
 use Firebase\JWT\JWT;
 use stdClass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -40,7 +40,7 @@ final class TokenSubscriber implements EventSubscriberInterface
                 /** @var stdClass $data */
                 $data = JWT::decode($jwtToken, $this->jwtSecretKey, ['HS256']);
 
-                $event->getRequest()->request->set('user_id', $data->user_id);
+                $event->getRequest()->request->set('user_id', new UserId($data->user_id));
 
                 return;
             } catch (\UnexpectedValueException $exception) {

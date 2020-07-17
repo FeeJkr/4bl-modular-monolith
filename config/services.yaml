@@ -19,14 +19,26 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
+    App\UI\Web\Controller\:
+        resource: '../src/UI/Web/Controller'
         tags: ['controller.service_arguments']
 
-    App\Events\TokenSubscriber:
+    App\SharedKernel\Events\TokenSubscriber:
         arguments:
             $jwtSecretKey: '%jwt.secret_token%'
         tags: ['kernel.event_subscriber']
+
+    category.database_repository:
+        class: App\Infrastructure\Category\Persistence\Doctrine\CategoryReadModelRepository
+    category.cache_repository:
+        class: App\Infrastructure\Category\Persistence\Redis\CategoryReadModelRepository
+        arguments:
+            App\ReadModel\Category\CategoryReadModelRepository: '@category.database_repository'
+
+    App\ReadModel\Category\CategoryReadModel:
+        arguments:
+            $repository: '@category.cache_repository'
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     librdkafka-dev \
     libxslt-dev \
     libzip-dev \
+    libpq-dev \
     exim4-daemon-light \
     git \
     nginx \
@@ -25,6 +26,7 @@ RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/include/ \
         opcache \
         pdo \
         pdo_mysql \
+        pdo_pgsql \
         mysqli \
         bcmath \
         gd \

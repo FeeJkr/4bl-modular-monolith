@@ -1,7 +1,7 @@
 jwt.generate:
     path: /jwt/generate
-    controller: App\Controller\IndexController::generateJWT
+    controller: App\UI\Web\Controller\IndexController::generateJWT
 
-index:
-    path: /
-    controller: App\Controller\IndexController::index
+categories:
+    path: /api/categories
+    controller: App\UI\Web\Controller\CategoryController::index

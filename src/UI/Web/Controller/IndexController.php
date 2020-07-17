@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\UI\Web\Controller;
 
 use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +15,7 @@ final class IndexController extends AbstractController
         $key = 'testing_on_dev';
         $payload = [
             'iss' => 'feejkr',
-            'exp' => (new \DateTime())->modify('+ 30 minutes')->getTimestamp(),
+            'exp' => (new \DateTime())->modify('+ 30 days')->getTimestamp(),
             'user_id' => 1234,
         ];
 
