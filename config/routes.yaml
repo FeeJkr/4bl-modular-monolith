@@ -26,3 +26,8 @@ wallets:
     path: /api/wallets
     controller: App\UI\Web\Controller\WalletController::fetchAll
     methods: GET
+
+wallets.oneById:
+    path: /api/wallets/{id}
+    controller: App\UI\Web\Controller\WalletController::fetchOneById
+    methods: GET
