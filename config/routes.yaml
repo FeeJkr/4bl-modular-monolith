@@ -16,3 +16,8 @@ categories.create:
     path: /api/categories
     controller: App\UI\Web\Controller\CategoryController::create
     methods: POST
+
+categories.delete:
+    path: /api/categories/{id}
+    controller: App\UI\Web\Controller\CategoryController::delete
+    methods: DELETE

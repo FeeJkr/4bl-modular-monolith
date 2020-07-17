@@ -5,6 +5,7 @@ namespace App\UI\Web\Controller;
 
 use App\Application\Category\CategoryService;
 use App\Application\Category\Command\CreateNewCategoryCommand;
+use App\Application\Category\Command\DeleteCategoryCommand;
 use App\ReadModel\Category\CategoryReadModel;
 use App\ReadModel\Category\CategoryReadModelException;
 use App\ReadModel\Category\Query\FetchAllQuery;
@@ -65,6 +66,22 @@ final class CategoryController extends AbstractController
                     $request->get('category_name'),
                     new CategoryType($request->get('category_type')),
                     $request->get('category_icon')
+                )
+            );
+
+            return $this->json([], Response::HTTP_NO_CONTENT);
+        } catch (Throwable $exception) {
+            return $this->json(['error' => 'Unexpected error.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function delete(Request $request): JsonResponse
+    {
+        try {
+            $this->categoryService->deleteCategory(
+                new DeleteCategoryCommand(
+                    CategoryId::fromInt((int) $request->get('id')),
+                    $request->get('user_id')
                 )
             );
 

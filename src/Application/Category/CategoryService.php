@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Application\Category;
 
 use App\Application\Category\Command\CreateNewCategoryCommand;
+use App\Application\Category\Command\DeleteCategoryCommand;
 use App\DomainModel\Category\Category;
 use App\DomainModel\Category\CategoryRepository;
 
@@ -26,5 +27,10 @@ final class CategoryService
         );
 
         $this->repository->store($category);
+    }
+
+    public function deleteCategory(DeleteCategoryCommand $command): void
+    {
+        $this->repository->delete($command->getCategoryId(), $command->getUserId());
     }
 }
