@@ -69,8 +69,11 @@ final class WalletRepository implements WalletRepositoryInterface
                 (SELECT string_agg(user_id::text, ', ') FROM wallets_users WHERE wallet_id = wallets.id) as user_ids
             FROM wallets
                 LEFT JOIN wallets_users ON wallets.id = wallets_users.wallet_id
-            WHERE wallets_users.user_id = :user_id AND wallets.id = :wallet_id;
-        ")->fetch();
+            WHERE wallets_users.user_id = :userId AND wallets.id = :walletId;
+        ", [
+            'userId' => $userId->toInt(),
+            'walletId' => $walletId->toInt(),
+        ])->fetch();
 
         if ($data === false) {
             throw WalletException::notFound($walletId, $userId);
@@ -88,13 +91,25 @@ final class WalletRepository implements WalletRepositoryInterface
 
     public function save(Wallet $wallet): void
     {
+        $this->entityManager->getConnection()->executeQuery("
+            UPDATE wallets SET name = :name, start_balance = :startBalance WHERE id = :id;
+        ", [
+            'name' => $wallet->getName(),
+            'startBalance' => $wallet->getStartBalance()->getAmount(),
+            'id' => $wallet->getId()->toInt(),
+        ]);
+
+        $this->entityManager->getConnection()->executeQuery("
+            DELETE FROM wallets_users WHERE wallet_id = :id;
+        ", [
+            'id' => $wallet->getId()->toInt(),
+        ]);
+
         $insertIds = $wallet->getUserIds()->map(static function (UserId $userId) use ($wallet): string {
             return "({$wallet->getId()->toInt()}, {$userId->toInt()})";
         })->getValues();
 
         $this->entityManager->getConnection()->executeQuery("
-            UPDATE wallets SET name = :name, start_balance = :startBalance WHERE id = :id;
-            DELETE FROM wallets_users WHERE wallet_id = :walletId;
             INSERT INTO wallets_users (wallet_id, user_id) VALUES " . implode(', ', $insertIds) . ";
         ");
 

@@ -48,7 +48,12 @@ final class Wallet
             $this->startBalance = $startBalance;
         }
 
-        if (! empty(array_diff($this->userIds->getValues(), $userIds->getValues()))) {
+        $oldUserIds = $this->userIds->map(static function (UserId $id): int { return $id->toInt(); })->getValues();
+        $newUserIds = $userIds->map(static function (UserId $id): int { return $id->toInt(); })->getValues();
+        sort($oldUserIds);
+        sort($newUserIds);
+
+        if ($newUserIds !== $oldUserIds) {
             $this->userIds = $userIds;
         }
     }

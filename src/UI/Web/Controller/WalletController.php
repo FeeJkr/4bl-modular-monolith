@@ -82,8 +82,12 @@ final class WalletController extends AbstractController
 
     public function update(Request $request): Response
     {
-        $userIds = (new ArrayCollection(explode(', ', $request->get('wallet_user_ids'))))
-            ->map(static function (string $id): UserId { return UserId::fromInt((int) $id); });
+        $userIds = new ArrayCollection();
+
+        if (! empty($request->get('wallet_user_ids'))) {
+            $userIds = (new ArrayCollection(explode(', ', $request->get('wallet_user_ids'))))
+                ->map(static function (string $id): UserId { return UserId::fromInt((int) $id); });
+        }
 
         $userIds->add($request->get('user_id'));
 
