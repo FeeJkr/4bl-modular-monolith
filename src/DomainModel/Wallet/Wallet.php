@@ -38,6 +38,21 @@ final class Wallet
         );
     }
 
+    public function update(string $name, Money $startBalance, Collection $userIds): void
+    {
+        if ($this->name !== $name) {
+            $this->name = $name;
+        }
+
+        if (! $this->startBalance->equals($startBalance)) {
+            $this->startBalance = $startBalance;
+        }
+
+        if (! empty(array_diff($this->userIds->getValues(), $userIds->getValues()))) {
+            $this->userIds = $userIds;
+        }
+    }
+
     public function getId(): WalletId
     {
         return $this->id;

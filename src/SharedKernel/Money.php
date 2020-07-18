@@ -16,4 +16,9 @@ final class Money
     {
         return $this->amount;
     }
+
+    public function equals(Money $money): bool
+    {
+        return $this->amount === $money->getAmount();
+    }
 }

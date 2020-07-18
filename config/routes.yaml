@@ -41,3 +41,13 @@ wallets.create:
     path: /api/wallets
     controller: App\UI\Web\Controller\WalletController::create
     methods: POST
+
+wallets.update:
+    path: /api/wallets/{id}
+    controller: App\UI\Web\Controller\WalletController::update
+    methods: PATCH
+
+wallets.delete:
+    path: /api/wallets/{id}
+    controller: App\UI\Web\Controller\WalletController::delete
+    methods: DELETE
