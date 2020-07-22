@@ -57,5 +57,16 @@ services:
         arguments:
             App\ReadModel\Wallet\WalletReadModelRepository: '@wallet.cache_repository'
 
+    transaction.database_repository:
+        class: App\Infrastructure\Transaction\Persistence\Doctrine\TransactionReadModelRepository
+    transaction.cache_repository:
+        class: App\Infrastructure\Transaction\Persistence\Redis\TransactionReadModelRepository
+        arguments:
+            App\ReadModel\Transaction\TransactionReadModelRepository: '@transaction.database_repository'
+
+    App\ReadModel\Transaction\TransactionReadModel:
+        arguments:
+            $repository: '@transaction.cache_repository'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
