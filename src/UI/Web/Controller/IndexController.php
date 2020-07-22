@@ -10,18 +10,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class IndexController extends AbstractController
 {
-    public function generateJWT(): Response
+    private $jwtSecretKey;
+
+    public function __construct(string $jwtSecretKey)
     {
-        $key = 'testing_on_dev';
+        $this->jwtSecretKey = $jwtSecretKey;
+    }
+
+    public function generateJWT(Request $request): Response
+    {
         $payload = [
-            'iss' => 'feejkr',
             'exp' => (new \DateTime())->modify('+ 30 days')->getTimestamp(),
-            'user_id' => 1234,
+            'user_id' => $request->get('user_id', 1234),
         ];
 
-        $jwt = JWT::encode($payload, $key, 'HS256');
+        $jwt = JWT::encode($payload, $this->jwtSecretKey, 'HS256');
 
-        dd($jwt);
+        return $this->json(['token' => $jwt]);
     }
 
     public function index(Request $request): Response

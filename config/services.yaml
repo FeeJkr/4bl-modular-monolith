@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    jwt.secret_token: '%env(resolve:JWT_SECRET_TOKEN)%'
+    jwt.secret_key: '%env(resolve:JWT_SECRET_KEY)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -25,8 +25,12 @@ services:
 
     App\SharedKernel\Events\TokenSubscriber:
         arguments:
-            $jwtSecretKey: '%jwt.secret_token%'
+            $jwtSecretKey: '%jwt.secret_key%'
         tags: ['kernel.event_subscriber']
+
+    App\UI\Web\Controller\IndexController:
+        arguments:
+            $jwtSecretKey: '%jwt.secret_key%'
 
     category.database_repository:
         class: App\Infrastructure\Category\Persistence\Doctrine\CategoryReadModelRepository
