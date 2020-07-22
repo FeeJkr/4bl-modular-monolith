@@ -77,7 +77,7 @@ final class TransactionDTO implements JsonSerializable
             'wallet_id' => $this->walletId->toInt(),
             'category_id' => $this->categoryId->toInt(),
             'transaction_type' => $this->transactionType->getValue(),
-            'money' => $this->amount->getAmount(),
+            'amount' => $this->amount->getAmount(),
             'description' => $this->description,
             'operation_at' => $this->operationAt->getTimestamp(),
             'created_at' => $this->operationAt->getTimestamp(),

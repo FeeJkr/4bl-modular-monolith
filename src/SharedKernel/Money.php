@@ -21,4 +21,9 @@ final class Money
     {
         return $this->amount === $money->getAmount();
     }
+
+    public function negate(): self
+    {
+        return new self(-$this->amount);
+    }
 }

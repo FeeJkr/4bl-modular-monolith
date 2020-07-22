@@ -65,3 +65,19 @@ transactions.oneById:
 transactions:
     path: /api/transactions
     controller: App\UI\Web\Controller\TransactionController::fetchAll
+    methods: GET
+
+transactions.create:
+    path: /api/transactions
+    controller: App\UI\Web\Controller\TransactionController::create
+    methods: POST
+
+transactions.update:
+    path: /api/transactions/{id}
+    controller: App\UI\Web\Controller\TransactionController::update
+    methods: PATCH
+
+transactions.delete:
+    path: /api/transactions/{id}
+    controller: App\UI\Web\Controller\TransactionController::delete
+    methods: DELETE
