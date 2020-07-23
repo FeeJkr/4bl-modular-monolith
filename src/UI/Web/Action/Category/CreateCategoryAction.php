@@ -22,7 +22,7 @@ final class CreateCategoryAction extends Action
 
     public function __invoke(Request $request): JsonResponse
     {
-        $this->categoryService->createNewCategory(
+        $this->categoryService->createCategory(
             new CreateCategoryCommand(
                 $request->get('user_id'),
                 $request->get('category_name'),

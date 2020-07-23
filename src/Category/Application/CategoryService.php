@@ -18,7 +18,7 @@ final class CategoryService
         $this->repository = $repository;
     }
 
-    public function createNewCategory(CreateCategoryCommand $command): void
+    public function createCategory(CreateCategoryCommand $command): void
     {
         $category = Category::createNew(
             $command->getUserId(),
