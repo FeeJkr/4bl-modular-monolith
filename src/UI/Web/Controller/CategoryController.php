@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace App\UI\Web\Controller;
 
-use App\Application\Category\CategoryService;
-use App\Application\Category\Command\CreateNewCategoryCommand;
-use App\Application\Category\Command\DeleteCategoryCommand;
-use App\Application\Category\Command\UpdateCategoryCommand;
-use App\DomainModel\Category\CategoryException;
-use App\ReadModel\Category\CategoryReadModel;
-use App\ReadModel\Category\CategoryReadModelException;
-use App\ReadModel\Category\Query\FetchAllQuery;
-use App\ReadModel\Category\Query\FetchOneByIdQuery;
-use App\SharedKernel\Category\CategoryId;
-use App\SharedKernel\Category\CategoryType;
+use App\Category\Application\CategoryService;
+use App\Category\Application\Command\CreateNewCategoryCommand;
+use App\Category\Application\Command\DeleteCategoryCommand;
+use App\Category\Application\Command\UpdateCategoryCommand;
+use App\Category\Domain\CategoryException;
+use App\Category\ReadModel\CategoryReadModel;
+use App\Category\ReadModel\CategoryReadModelException;
+use App\Category\ReadModel\Query\FetchAllQuery;
+use App\Category\ReadModel\Query\FetchOneByIdQuery;
+use App\Category\SharedKernel\CategoryId;
+use App\Category\SharedKernel\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

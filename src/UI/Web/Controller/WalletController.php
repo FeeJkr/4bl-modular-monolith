@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace App\UI\Web\Controller;
 
-use App\Application\Wallet\Command\CreateNewWalletCommand;
-use App\Application\Wallet\Command\DeleteWalletCommand;
-use App\Application\Wallet\Command\UpdateWalletCommand;
-use App\Application\Wallet\WalletService;
-use App\ReadModel\Wallet\Query\FetchAllQuery;
-use App\ReadModel\Wallet\Query\FetchOneByIdQuery;
-use App\ReadModel\Wallet\WalletReadModel;
-use App\ReadModel\Wallet\WalletReadModelException;
 use App\SharedKernel\Money;
 use App\SharedKernel\User\UserId;
-use App\SharedKernel\Wallet\WalletId;
+use App\Wallet\Application\Command\CreateNewWalletCommand;
+use App\Wallet\Application\Command\DeleteWalletCommand;
+use App\Wallet\Application\Command\UpdateWalletCommand;
+use App\Wallet\Application\WalletService;
+use App\Wallet\ReadModel\Query\FetchAllQuery;
+use App\Wallet\ReadModel\Query\FetchOneByIdQuery;
+use App\Wallet\ReadModel\WalletReadModel;
+use App\Wallet\ReadModel\WalletReadModelException;
+use App\Wallet\SharedKernel\WalletId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
