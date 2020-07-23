@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Transaction\ReadModel\Query;
+namespace App\Wallet\ReadModel\Query;
 
 use App\SharedKernel\User\UserId;
 
-final class FetchAllQuery
+final class FetchAllWalletsQuery
 {
     private $userId;
 

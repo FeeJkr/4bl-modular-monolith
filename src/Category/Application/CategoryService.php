@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Category\Application;
 
-use App\Category\Application\Command\CreateNewCategoryCommand;
+use App\Category\Application\Command\CreateCategoryCommand;
 use App\Category\Application\Command\DeleteCategoryCommand;
 use App\Category\Application\Command\UpdateCategoryCommand;
 use App\Category\Domain\Category;
@@ -18,7 +18,7 @@ final class CategoryService
         $this->repository = $repository;
     }
 
-    public function createNewCategory(CreateNewCategoryCommand $command): void
+    public function createNewCategory(CreateCategoryCommand $command): void
     {
         $category = Category::createNew(
             $command->getUserId(),

@@ -6,7 +6,7 @@ namespace App\Category\Application\Command;
 use App\Category\SharedKernel\CategoryType;
 use App\SharedKernel\User\UserId;
 
-final class CreateNewCategoryCommand
+final class CreateCategoryCommand
 {
     private $userId;
     private $categoryName;

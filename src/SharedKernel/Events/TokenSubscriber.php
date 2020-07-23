@@ -30,8 +30,7 @@ final class TokenSubscriber implements EventSubscriberInterface
 
         $jwtToken = $event->getRequest()->get('jwtToken');
 
-        // TODO: REMOVE AFTER TESTS
-        if ($event->getController()[1] === 'generateJWT') {
+        if (is_array($event->getController()) && $event->getController()[1] === 'generateJWT') {
             return;
         }
 

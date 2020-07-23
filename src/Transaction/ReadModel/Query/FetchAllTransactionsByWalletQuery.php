@@ -6,7 +6,7 @@ namespace App\Transaction\ReadModel\Query;
 use App\SharedKernel\User\UserId;
 use App\Wallet\SharedKernel\WalletId;
 
-final class FetchAllByWalletQuery
+final class FetchAllTransactionsByWalletQuery
 {
     private $walletId;
     private $userId;

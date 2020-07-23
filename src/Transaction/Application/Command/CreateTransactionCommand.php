@@ -10,7 +10,7 @@ use App\Transaction\SharedKernel\TransactionType;
 use App\Wallet\SharedKernel\WalletId;
 use DateTimeInterface;
 
-final class CreateNewTransactionCommand
+final class CreateTransactionCommand
 {
     private $userId;
     private $walletId;

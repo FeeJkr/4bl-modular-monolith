@@ -6,7 +6,7 @@ namespace App\Transaction\ReadModel\Query;
 use App\SharedKernel\User\UserId;
 use App\Transaction\SharedKernel\TransactionId;
 
-final class FetchOneByIdQuery
+final class FetchOneTransactionByIdQuery
 {
     private $transactionId;
     private $userId;

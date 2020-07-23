@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Category\ReadModel;
 
-use App\Category\ReadModel\Query\FetchAllQuery;
-use App\Category\ReadModel\Query\FetchOneByIdQuery;
+use App\Category\ReadModel\Query\FetchAllCategoriesQuery;
+use App\Category\ReadModel\Query\FetchOneCategoryByIdQuery;
 use Doctrine\Common\Collections\Collection;
 
 final class CategoryReadModel
@@ -16,12 +16,12 @@ final class CategoryReadModel
         $this->repository = $repository;
     }
 
-    public function fetchAll(FetchAllQuery $query): Collection
+    public function fetchAll(FetchAllCategoriesQuery $query): Collection
     {
         return $this->repository->fetchAll($query->getUserId());
     }
 
-    public function fetchOneById(FetchOneByIdQuery $query): ?CategoryDTO
+    public function fetchOneById(FetchOneCategoryByIdQuery $query): ?CategoryDTO
     {
         $categoryDTO = $this->repository->fetchOneById($query->getUserId(), $query->getCategoryId());
 

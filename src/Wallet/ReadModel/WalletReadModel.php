@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Wallet\ReadModel;
 
-use App\Wallet\ReadModel\Query\FetchAllQuery;
-use App\Wallet\ReadModel\Query\FetchOneByIdQuery;
+use App\Wallet\ReadModel\Query\FetchAllWalletsQuery;
+use App\Wallet\ReadModel\Query\FetchOneWalletByIdQuery;
 use Doctrine\Common\Collections\ArrayCollection;
 
 final class WalletReadModel
@@ -16,12 +16,12 @@ final class WalletReadModel
         $this->repository = $repository;
     }
 
-    public function fetchAll(FetchAllQuery $query): ArrayCollection
+    public function fetchAll(FetchAllWalletsQuery $query): ArrayCollection
     {
         return $this->repository->fetchAll($query->getUserId());
     }
 
-    public function fetchOneById(FetchOneByIdQuery $query): WalletDTO
+    public function fetchOneById(FetchOneWalletByIdQuery $query): WalletDTO
     {
         $walletDTO = $this->repository->fetchOneById($query->getWalletId(), $query->getUserId());
 

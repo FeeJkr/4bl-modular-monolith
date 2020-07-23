@@ -6,7 +6,7 @@ namespace App\Wallet\Application\Command;
 use App\SharedKernel\Money;
 use App\SharedKernel\User\UserId;
 
-final class CreateNewWalletCommand
+final class CreateWalletCommand
 {
     private $name;
     private $startBalance;

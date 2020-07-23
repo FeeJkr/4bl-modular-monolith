@@ -5,7 +5,7 @@ namespace App\Category\ReadModel\Query;
 
 use App\SharedKernel\User\UserId;
 
-final class FetchAllQuery
+final class FetchAllCategoriesQuery
 {
     private $userId;
 

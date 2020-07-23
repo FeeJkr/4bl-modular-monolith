@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Transaction\Application;
 
-use App\Transaction\Application\Command\CreateNewTransactionCommand;
+use App\Transaction\Application\Command\CreateTransactionCommand;
 use App\Transaction\Application\Command\DeleteTransactionCommand;
 use App\Transaction\Application\Command\UpdateTransactionCommand;
 use App\Transaction\Domain\Transaction;
@@ -18,7 +18,7 @@ final class TransactionService
         $this->repository = $repository;
     }
 
-    public function createNew(CreateNewTransactionCommand $command): void
+    public function createNew(CreateTransactionCommand $command): void
     {
         $transaction = Transaction::createNew(
             $command->getUserId(),

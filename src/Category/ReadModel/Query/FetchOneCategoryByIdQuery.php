@@ -6,7 +6,7 @@ namespace App\Category\ReadModel\Query;
 use App\Category\SharedKernel\CategoryId;
 use App\SharedKernel\User\UserId;
 
-final class FetchOneByIdQuery
+final class FetchOneCategoryByIdQuery
 {
     private $userId;
     private $categoryId;

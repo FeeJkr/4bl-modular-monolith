@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Wallet\Application;
 
-use App\Wallet\Application\Command\CreateNewWalletCommand;
+use App\Wallet\Application\Command\CreateWalletCommand;
 use App\Wallet\Application\Command\DeleteWalletCommand;
 use App\Wallet\Application\Command\UpdateWalletCommand;
 use App\Wallet\Domain\Wallet;
@@ -18,7 +18,7 @@ final class WalletService
         $this->repository = $repository;
     }
 
-    public function createNewWallet(CreateNewWalletCommand $command): void
+    public function createNewWallet(CreateWalletCommand $command): void
     {
         $wallet = Wallet::createNew(
             $command->getName(),
