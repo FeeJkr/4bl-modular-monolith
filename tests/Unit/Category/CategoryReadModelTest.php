@@ -29,7 +29,7 @@ final class CategoryReadModelTest extends TestCase
         $this->readModel = new CategoryReadModel($this->repository);
     }
 
-    public function testFetchAllWithData(): void
+    public function testFetchAllWithEmptyDatabase(): void
     {
         $this->repository->expects($this->once())->method('fetchAll')->willReturn(
             new ArrayCollection()
@@ -42,7 +42,7 @@ final class CategoryReadModelTest extends TestCase
         $this->assertEmpty($result);
     }
 
-    public function testFetchAllWithEmptyDatabase(): void
+    public function testFetchAllWithData(): void
     {
         $this->repository->expects($this->once())->method('fetchAll')->willReturn(
             new ArrayCollection([1, 2, 3, 4])
