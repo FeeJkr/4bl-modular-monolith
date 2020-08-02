@@ -28,9 +28,4 @@ final class IndexController extends AbstractController
 
         return $this->json(['token' => $jwt]);
     }
-
-    public function index(Request $request): Response
-    {
-        return new Response('You are authenticated.' . $request->get('user_id'));
-    }
 }

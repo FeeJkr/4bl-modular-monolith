@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 
 # SYSTEM PACKAGES
 RUN apt-get update && apt-get install -y \
@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
     nano
 
 # PHP PACKAGES
-RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/include/ \
+RUN docker-php-ext-configure gd --with-jpeg \
     && pecl install \
         redis \
     && docker-php-ext-install \

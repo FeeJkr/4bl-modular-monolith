@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 final class TokenSubscriber implements EventSubscriberInterface
 {
-    private $jwtSecretKey;
+    private string $jwtSecretKey;
 
     public function __construct(string $jwtSecretKey)
     {
@@ -28,7 +28,7 @@ final class TokenSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $jwtToken = $event->getRequest()->get('jwtToken');
+        $jwtToken = $event->getRequest()->headers->get('X-Authorization');
 
         if (is_array($event->getController()) && $event->getController()[1] === 'generateJWT') {
             return;
