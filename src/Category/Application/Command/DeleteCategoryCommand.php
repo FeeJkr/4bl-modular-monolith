@@ -8,8 +8,8 @@ use App\SharedKernel\User\UserId;
 
 final class DeleteCategoryCommand
 {
-    private $categoryId;
-    private $userId;
+    private CategoryId $categoryId;
+    private UserId $userId;
 
     public function __construct(CategoryId $categoryId, UserId $userId)
     {

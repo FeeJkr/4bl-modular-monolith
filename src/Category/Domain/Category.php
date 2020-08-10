@@ -11,11 +11,11 @@ final class Category
 {
     private const DEFAULT_ICON = 'home';
 
-    private $id;
-    private $userId;
-    private $name;
-    private $type;
-    private $icon;
+    private CategoryId $id;
+    private UserId $userId;
+    private string $name;
+    private CategoryType $type;
+    private ?string $icon;
 
     public function __construct(
         CategoryId $id,

@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 
 final class CategoryReadModel
 {
-    private $repository;
+    private CategoryReadModelRepository $repository;
 
     public function __construct(CategoryReadModelRepository $repository)
     {

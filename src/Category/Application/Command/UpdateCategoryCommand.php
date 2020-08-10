@@ -9,11 +9,11 @@ use App\SharedKernel\User\UserId;
 
 final class UpdateCategoryCommand
 {
-    private $categoryId;
-    private $userId;
-    private $categoryName;
-    private $categoryType;
-    private $categoryIcon;
+    private CategoryId $categoryId;
+    private UserId $userId;
+    private string $categoryName;
+    private CategoryType $categoryType;
+    private string $categoryIcon;
 
     public function __construct(
         CategoryId $categoryId,

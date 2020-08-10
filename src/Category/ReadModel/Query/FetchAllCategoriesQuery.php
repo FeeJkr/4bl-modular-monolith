@@ -7,7 +7,7 @@ use App\SharedKernel\User\UserId;
 
 final class FetchAllCategoriesQuery
 {
-    private $userId;
+    private UserId $userId;
 
     public function __construct(UserId $userId)
     {

@@ -8,8 +8,8 @@ use App\SharedKernel\User\UserId;
 
 final class FetchOneCategoryByIdQuery
 {
-    private $userId;
-    private $categoryId;
+    private UserId $userId;
+    private CategoryId $categoryId;
 
     public function __construct(UserId $userId, CategoryId $categoryId)
     {

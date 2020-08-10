@@ -11,7 +11,7 @@ use App\Category\Domain\CategoryRepository;
 
 final class CategoryService
 {
-    private $repository;
+    private CategoryRepository $repository;
 
     public function __construct(CategoryRepository $repository)
     {

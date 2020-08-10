@@ -8,10 +8,10 @@ use App\SharedKernel\User\UserId;
 
 final class CreateCategoryCommand
 {
-    private $userId;
-    private $categoryName;
-    private $categoryType;
-    private $categoryIcon;
+    private UserId $userId;
+    private string $categoryName;
+    private CategoryType $categoryType;
+    private ?string $categoryIcon;
 
     public function __construct(
         UserId $userId,

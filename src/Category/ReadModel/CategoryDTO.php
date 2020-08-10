@@ -12,12 +12,12 @@ use JsonSerializable;
 
 final class CategoryDTO implements JsonSerializable
 {
-    private $id;
-    private $userId;
-    private $name;
-    private $type;
-    private $icon;
-    private $createdAt;
+    private CategoryId $id;
+    private UserId $userId;
+    private string $name;
+    private CategoryType $type;
+    private string $icon;
+    private DateTimeInterface $createdAt;
 
     public function __construct(
         CategoryId $id,
