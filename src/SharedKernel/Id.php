@@ -5,7 +5,7 @@ namespace App\SharedKernel;
 
 abstract class Id
 {
-    private $id;
+    private ?int $id;
 
     private function __construct(?int $id)
     {
