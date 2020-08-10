@@ -8,9 +8,9 @@ use App\SharedKernel\User\UserId;
 
 final class CreateWalletCommand
 {
-    private $name;
-    private $startBalance;
-    private $userId;
+    private string $name;
+    private Money $startBalance;
+    private UserId $userId;
 
     public function __construct(string $name, Money $startBalance, UserId $userId)
     {

@@ -14,11 +14,11 @@ use JsonSerializable;
 
 final class WalletDTO implements JsonSerializable
 {
-    private $id;
-    private $name;
-    private $startBalance;
-    private $userIds;
-    private $createdAt;
+    private WalletId $id;
+    private string $name;
+    private Money $startBalance;
+    private Collection $userIds;
+    private DateTimeInterface $createdAt;
 
     public function __construct(
         WalletId $id,

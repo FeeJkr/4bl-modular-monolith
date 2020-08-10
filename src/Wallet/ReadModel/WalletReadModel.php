@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 final class WalletReadModel
 {
-    private $repository;
+    private WalletReadModelRepository $repository;
 
     public function __construct(WalletReadModelRepository $repository)
     {

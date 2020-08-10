@@ -11,10 +11,10 @@ use Doctrine\Common\Collections\Collection;
 
 final class Wallet
 {
-    private $id;
-    private $name;
-    private $startBalance;
-    private $userIds;
+    private WalletId $id;
+    private string $name;
+    private Money $startBalance;
+    private Collection $userIds;
 
     public function __construct(
         WalletId $id,

@@ -11,7 +11,7 @@ use App\Wallet\Domain\WalletRepository;
 
 final class WalletService
 {
-    private $repository;
+    private WalletRepository $repository;
 
     public function __construct(WalletRepository $repository)
     {

@@ -10,11 +10,11 @@ use Doctrine\Common\Collections\Collection;
 
 final class UpdateWalletCommand
 {
-    private $walletId;
-    private $userId;
-    private $name;
-    private $startBalance;
-    private $userIds;
+    private WalletId $walletId;
+    private UserId $userId;
+    private string $name;
+    private Money $startBalance;
+    private Collection $userIds;
 
     public function __construct(
         WalletId $walletId,
