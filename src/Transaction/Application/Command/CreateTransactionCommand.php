@@ -12,14 +12,14 @@ use DateTimeInterface;
 
 final class CreateTransactionCommand
 {
-    private $userId;
-    private $walletId;
-    private $linkedWalletId;
-    private $categoryId;
-    private $transactionType;
-    private $amount;
-    private $description;
-    private $operationAt;
+    private UserId $userId;
+    private WalletId $walletId;
+    private WalletId $linkedWalletId;
+    private CategoryId $categoryId;
+    private TransactionType $transactionType;
+    private Money $amount;
+    private ?string $description;
+    private DateTimeInterface $operationAt;
 
     public function __construct(
         UserId $userId,

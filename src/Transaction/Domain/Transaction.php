@@ -14,16 +14,16 @@ use DateTimeInterface;
 
 final class Transaction
 {
-    private $id;
-    private $linkedTransaction;
-    private $userId;
-    private $walletId;
-    private $categoryId;
-    private $type;
-    private $amount;
-    private $description;
-    private $operationAt;
-    private $createdAt;
+    private TransactionId $id;
+    private ?LinkedTransaction $linkedTransaction;
+    private UserId $userId;
+    private WalletId $walletId;
+    private CategoryId $categoryId;
+    private TransactionType $type;
+    private Money $amount;
+    private ?string $description;
+    private DateTimeInterface $operationAt;
+    private DateTimeInterface $createdAt;
 
     public function __construct(
         TransactionId $id,

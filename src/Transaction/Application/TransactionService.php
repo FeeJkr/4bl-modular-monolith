@@ -11,7 +11,7 @@ use App\Transaction\Domain\TransactionRepository;
 
 final class TransactionService
 {
-    private $repository;
+    private TransactionRepository $repository;
 
     public function __construct(TransactionRepository $repository)
     {

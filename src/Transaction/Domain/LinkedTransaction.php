@@ -9,9 +9,9 @@ use App\Wallet\SharedKernel\WalletId;
 
 final class LinkedTransaction
 {
-    private $id;
-    private $walletId;
-    private $amount;
+    private TransactionId $id;
+    private WalletId $walletId;
+    private Money $amount;
 
     public function __construct(
         TransactionId $id,

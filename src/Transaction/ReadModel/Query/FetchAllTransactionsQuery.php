@@ -7,7 +7,7 @@ use App\SharedKernel\User\UserId;
 
 final class FetchAllTransactionsQuery
 {
-    private $userId;
+    private Userid $userId;
 
     public function __construct(UserId $userId)
     {

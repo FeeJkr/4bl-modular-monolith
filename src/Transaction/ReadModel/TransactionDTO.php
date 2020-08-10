@@ -15,16 +15,16 @@ use JsonSerializable;
 
 final class TransactionDTO implements JsonSerializable
 {
-    private $id;
-    private $linkedTransactionId;
-    private $userId;
-    private $walletId;
-    private $categoryId;
-    private $transactionType;
-    private $amount;
-    private $description;
-    private $operationAt;
-    private $createdAt;
+    private TransactionId $id;
+    private TransactionId $linkedTransactionId;
+    private UserId $userId;
+    private WalletId $walletId;
+    private CategoryId $categoryId;
+    private TransactionType $transactionType;
+    private Money $amount;
+    private ?string $description;
+    private DateTimeInterface $operationAt;
+    private DateTimeInterface $createdAt;
 
     public function __construct(
         TransactionId $id,

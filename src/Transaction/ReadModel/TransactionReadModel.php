@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 
 final class TransactionReadModel
 {
-    private $repository;
+    private TransactionReadModelRepository $repository;
 
     public function __construct(TransactionReadModelRepository $repository)
     {

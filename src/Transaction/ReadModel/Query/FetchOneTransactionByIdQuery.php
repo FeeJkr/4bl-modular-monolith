@@ -8,8 +8,8 @@ use App\Transaction\SharedKernel\TransactionId;
 
 final class FetchOneTransactionByIdQuery
 {
-    private $transactionId;
-    private $userId;
+    private TransactionId $transactionId;
+    private UserId $userId;
 
     public function __construct(TransactionId $transactionId, UserId $userId)
     {

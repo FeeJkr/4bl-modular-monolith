@@ -13,15 +13,15 @@ use DateTimeInterface;
 
 final class UpdateTransactionCommand
 {
-    private $transactionId;
-    private $userId;
-    private $walletId;
-    private $linkedWalletId;
-    private $categoryId;
-    private $transactionType;
-    private $amount;
-    private $description;
-    private $operationAt;
+    private TransactionId $transactionId;
+    private UserId $userId;
+    private WalletId $walletId;
+    private WalletId $linkedWalletId;
+    private CategoryId $categoryId;
+    private TransactionType $transactionType;
+    private Money $amount;
+    private ?string $description;
+    private DateTimeInterface $operationAt;
 
     public function __construct(
         TransactionId $transactionId,

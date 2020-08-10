@@ -8,8 +8,8 @@ use App\Wallet\SharedKernel\WalletId;
 
 final class FetchAllTransactionsByWalletQuery
 {
-    private $walletId;
-    private $userId;
+    private WalletId $walletId;
+    private UserId $userId;
 
     public function __construct(WalletId $walletId, UserId $userId)
     {
