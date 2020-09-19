@@ -1,0 +1,65 @@
+parameters:
+  jwt.secret_key: '%env(resolve:JWT_SECRET_KEY)%'
+
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  App\:
+    resource: '../../../src/*'
+    exclude: '../../../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+
+  App\UI\Web\Action\:
+    resource: '../../../src/UI/Web/Action/'
+    tags: ['controller.service_arguments']
+
+  App\SharedKernel\Events\TokenSubscriber:
+    arguments:
+      $jwtSecretKey: '%jwt.secret_key%'
+    tags: ['kernel.event_subscriber']
+
+  App\UI\Web\Action\GenerateJWTTokenAction:
+    arguments:
+      $jwtSecretKey: '%jwt.secret_key%'
+    tags: ['controller.service_arguments']
+
+  category.database_repository:
+    class: App\Category\Infrastructure\Persistence\Doctrine\CategoryReadModelRepository
+  category.cache_repository:
+    class: App\Category\Infrastructure\Persistence\Redis\CategoryReadModelRepository
+    arguments:
+      App\Category\ReadModel\CategoryReadModelRepository: '@category.database_repository'
+  category.domain_repository:
+    class: App\Category\Infrastructure\Persistence\Doctrine\CategoryRepository
+
+  App\Category\Application\CategoryService:
+    arguments:
+      App\Category\Domain\CategoryRepository: '@category.domain_repository'
+
+  App\Category\ReadModel\CategoryReadModel:
+    arguments:
+      $repository: '@category.cache_repository'
+
+  wallet.database_repository:
+    class: App\Wallet\Infrastructure\Persistence\Doctrine\WalletReadModelRepository
+  wallet.cache_repository:
+    class: App\Wallet\Infrastructure\Persistence\Redis\WalletReadModelRepository
+    arguments:
+      App\Wallet\ReadModel\WalletReadModelRepository: '@wallet.database_repository'
+
+  App\Wallet\ReadModel\WalletReadModel:
+    class: App\Wallet\ReadModel\WalletReadModel
+    arguments:
+      App\Wallet\ReadModel\WalletReadModelRepository: '@wallet.cache_repository'
+
+  transaction.database_repository:
+    class: App\Transaction\Infrastructure\Persistence\Doctrine\TransactionReadModelRepository
+  transaction.cache_repository:
+    class: App\Transaction\Infrastructure\Persistence\Redis\TransactionReadModelRepository
+    arguments:
+      App\Transaction\ReadModel\TransactionReadModelRepository: '@transaction.database_repository'
+
+  App\Transaction\ReadModel\TransactionReadModel:
+    arguments:
+      $repository: '@transaction.cache_repository'

@@ -1,80 +1,10 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    jwt.secret_key: '%env(resolve:JWT_SECRET_KEY)%'
 services:
-    # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        autowire: true
+        autoconfigure: true
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+    App\Common\:
+        resource: '../src/Common/'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\UI\Web\Controller\:
-        resource: '../src/UI/Web/Controller'
-        tags: ['controller.service_arguments']
-
-    App\UI\Web\Action\:
-        resource: '../src/UI/Web/Action'
-        tags: ['controller.service_arguments']
-
-    App\SharedKernel\Events\TokenSubscriber:
-        arguments:
-            $jwtSecretKey: '%jwt.secret_key%'
-        tags: ['kernel.event_subscriber']
-
-    App\UI\Web\Controller\IndexController:
-        arguments:
-            $jwtSecretKey: '%jwt.secret_key%'
-
-    category.database_repository:
-        class: App\Category\Infrastructure\Persistence\Doctrine\CategoryReadModelRepository
-    category.cache_repository:
-        class: App\Category\Infrastructure\Persistence\Redis\CategoryReadModelRepository
-        arguments:
-            App\Category\ReadModel\CategoryReadModelRepository: '@category.database_repository'
-    category.domain_repository:
-        class: App\Category\Infrastructure\Persistence\Doctrine\CategoryRepository
-
-    App\Category\Application\CategoryService:
-        arguments:
-            App\Category\Domain\CategoryRepository: '@category.domain_repository'
-
-    App\Category\ReadModel\CategoryReadModel:
-        arguments:
-            $repository: '@category.cache_repository'
-
-    wallet.database_repository:
-        class: App\Wallet\Infrastructure\Persistence\Doctrine\WalletReadModelRepository
-    wallet.cache_repository:
-        class: App\Wallet\Infrastructure\Persistence\Redis\WalletReadModelRepository
-        arguments:
-            App\Wallet\ReadModel\WalletReadModelRepository: '@wallet.database_repository'
-
-    App\Wallet\ReadModel\WalletReadModel:
-        class: App\Wallet\ReadModel\WalletReadModel
-        arguments:
-            App\Wallet\ReadModel\WalletReadModelRepository: '@wallet.cache_repository'
-
-    transaction.database_repository:
-        class: App\Transaction\Infrastructure\Persistence\Doctrine\TransactionReadModelRepository
-    transaction.cache_repository:
-        class: App\Transaction\Infrastructure\Persistence\Redis\TransactionReadModelRepository
-        arguments:
-            App\Transaction\ReadModel\TransactionReadModelRepository: '@transaction.database_repository'
-
-    App\Transaction\ReadModel\TransactionReadModel:
-        arguments:
-            $repository: '@transaction.cache_repository'
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+imports:
+    - {resource: 'modules/finances/services.yaml'}

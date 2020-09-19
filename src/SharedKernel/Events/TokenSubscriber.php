@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\SharedKernel\Events;
 
 use App\SharedKernel\User\UserId;
+use App\UI\Web\Action\GenerateJWTTokenAction;
 use Firebase\JWT\JWT;
 use stdClass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -30,7 +31,7 @@ final class TokenSubscriber implements EventSubscriberInterface
 
         $jwtToken = $event->getRequest()->headers->get('X-Authorization');
 
-        if (is_array($event->getController()) && $event->getController()[1] === 'generateJWT') {
+        if ($event->getController() instanceof GenerateJWTTokenAction) {
             return;
         }
 
