@@ -6,12 +6,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 use App\Modules\Finances\Application\Category\CategoryService;
 use App\Modules\Finances\Application\Category\Command\DeleteCategoryCommand;
 use App\Modules\Finances\Domain\Category\CategoryId;
-use App\UI\Web\Action\Action;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class DeleteCategoryAction extends Action
+final class DeleteCategoryAction extends AbstractController
 {
     private CategoryService $categoryService;
 

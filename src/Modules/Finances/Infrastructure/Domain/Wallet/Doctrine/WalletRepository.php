@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\Domain\Wallet\Doctrine;
 
+use App\Common\User\UserId;
+use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Wallet\Wallet;
 use App\Modules\Finances\Domain\Wallet\WalletException;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use App\Modules\Finances\Domain\Wallet\WalletRepository as WalletRepositoryInterface;
-use App\SharedKernel\Money;
-use App\SharedKernel\User\UserId;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;

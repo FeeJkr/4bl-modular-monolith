@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\Domain\Category\Doctrine;
 
+use App\Common\User\UserId;
 use App\Modules\Finances\Application\Category\CategoryDTO;
 use App\Modules\Finances\Application\Category\CategoryReadModelRepository as CategoryReadModelRepositoryInterface;
 use App\Modules\Finances\Domain\Category\CategoryId;
-use App\SharedKernel\User\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Category;
 
+use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Category\CategoryId;
-use App\SharedKernel\User\UserId;
 use Doctrine\Common\Collections\Collection;
 
 interface CategoryReadModelRepository

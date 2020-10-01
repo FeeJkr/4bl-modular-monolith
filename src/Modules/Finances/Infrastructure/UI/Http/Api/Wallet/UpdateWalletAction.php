@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
+use App\Common\User\UserId;
 use App\Modules\Finances\Application\Wallet\Command\UpdateWalletCommand;
 use App\Modules\Finances\Application\Wallet\WalletService;
+use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Wallet\WalletId;
-use App\SharedKernel\Money;
-use App\SharedKernel\User\UserId;
-use App\UI\Web\Action\Action;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class UpdateWalletAction extends Action
+final class UpdateWalletAction extends AbstractController
 {
     private WalletService $walletService;
 

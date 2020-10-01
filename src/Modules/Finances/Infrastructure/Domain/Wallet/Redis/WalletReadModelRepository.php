@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\Domain\Wallet\Redis;
 
+use App\Common\User\UserId;
 use App\Modules\Finances\Application\Wallet\WalletDTO;
 use App\Modules\Finances\Application\Wallet\WalletReadModelRepository as WalletReadModelRepositoryInterface;
 use App\Modules\Finances\Domain\Wallet\WalletId;
-use App\SharedKernel\User\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 

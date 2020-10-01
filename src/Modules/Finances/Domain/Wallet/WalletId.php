@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Domain\Wallet;
 
-use App\SharedKernel\Id;
+use App\Common\Id;
 
 final class WalletId extends Id
 {

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\SharedKernel;
+namespace App\Modules\Finances\Domain;
 
 final class Money
 {
-    private $amount;
+    private int $amount;
 
     public function __construct(int $amount)
     {

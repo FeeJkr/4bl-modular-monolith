@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\SharedKernel\Events;
+namespace App\Common\Events;
 
-use App\SharedKernel\User\UserId;
-use App\UI\Web\Action\GenerateJWTTokenAction;
+use App\Common\User\UserId;
+use App\Modules\Accounts\Infrastructure\UI\Http\Api\GenerateJWTTokenAction;
 use Firebase\JWT\JWT;
 use stdClass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

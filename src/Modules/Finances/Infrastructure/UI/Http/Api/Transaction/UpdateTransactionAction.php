@@ -6,17 +6,17 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 use App\Modules\Finances\Application\Transaction\Command\UpdateTransactionCommand;
 use App\Modules\Finances\Application\Transaction\TransactionService;
 use App\Modules\Finances\Domain\Category\CategoryId;
+use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\Wallet\WalletId;
-use App\SharedKernel\Money;
-use App\UI\Web\Action\Action;
 use DateTime;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class UpdateTransactionAction extends Action
+final class UpdateTransactionAction extends AbstractController
 {
     private TransactionService $transactionService;
 

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\SharedKernel\User;
+namespace App\Common\User;
 
-use App\SharedKernel\Id;
+use App\Common\Id;
 
 final class UserId extends Id
 {

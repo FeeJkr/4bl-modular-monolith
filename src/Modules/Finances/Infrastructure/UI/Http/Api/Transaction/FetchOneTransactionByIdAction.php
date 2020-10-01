@@ -6,11 +6,11 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 use App\Modules\Finances\Application\Transaction\Query\FetchOneTransactionByIdQuery;
 use App\Modules\Finances\Application\Transaction\TransactionReadModel;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
-use App\UI\Web\Action\Action;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class FetchOneTransactionByIdAction extends Action
+final class FetchOneTransactionByIdAction extends AbstractController
 {
     private TransactionReadModel $transactionReadModel;
 

@@ -5,11 +5,11 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
 use App\Modules\Finances\Application\Wallet\Query\FetchAllWalletsQuery;
 use App\Modules\Finances\Application\Wallet\WalletReadModel;
-use App\UI\Web\Action\Action;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class FetchAllWalletsAction extends Action
+final class FetchAllWalletsAction extends AbstractController
 {
     private WalletReadModel $walletReadModel;
 

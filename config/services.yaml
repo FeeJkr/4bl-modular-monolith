@@ -1,3 +1,6 @@
+parameters:
+    jwt.secret_key: '%env(resolve:JWT_SECRET_KEY)%'
+
 services:
     _defaults:
         autowire: true
@@ -6,5 +9,11 @@ services:
     App\Common\:
         resource: '../src/Common/'
 
+    App\Common\Events\TokenSubscriber:
+        arguments:
+            $jwtSecretKey: '%jwt.secret_key%'
+        tags: [ 'kernel.event_subscriber' ]
+
 imports:
     - {resource: 'modules/finances/services.yaml'}
+    - {resource: 'modules/accounts/services.yaml'}

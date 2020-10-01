@@ -7,12 +7,12 @@ use App\Modules\Finances\Application\Category\CategoryService;
 use App\Modules\Finances\Application\Category\Command\UpdateCategoryCommand;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryType;
-use App\UI\Web\Action\Action;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class UpdateCategoryAction extends Action
+final class UpdateCategoryAction extends AbstractController
 {
     private CategoryService $categoryService;
 

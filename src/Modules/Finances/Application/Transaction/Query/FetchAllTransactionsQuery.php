@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\Query;
 
-use App\SharedKernel\User\UserId;
+use App\Common\User\UserId;
 
 final class FetchAllTransactionsQuery
 {

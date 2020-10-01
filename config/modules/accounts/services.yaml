@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  App\Modules\Accounts\:
+    resource: '../../../src/Modules/Accounts/'
+
+  App\Modules\Accounts\Infrastructure\UI\Http\Api\:
+    resource: '../../../src/Modules/Accounts/Infrastructure/UI/Http/Api/'
+    tags: ['controller.service_arguments']
+
+  App\Modules\Accounts\Infrastructure\UI\Http\Api\GenerateJWTTokenAction:
+    arguments:
+      $jwtSecretKey: '%jwt.secret_key%'
+    tags: ['controller.service_arguments']

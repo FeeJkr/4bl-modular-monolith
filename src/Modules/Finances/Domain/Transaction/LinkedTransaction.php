@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Domain\Transaction;
 
+use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Wallet\WalletId;
-use App\SharedKernel\Money;
 
 final class LinkedTransaction
 {

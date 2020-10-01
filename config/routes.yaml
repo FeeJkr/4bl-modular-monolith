@@ -1,2 +1,5 @@
 finances:
     resource: 'modules/finances/routes.yaml'
+
+accounts:
+    resource: 'modules/accounts/routes.yaml'

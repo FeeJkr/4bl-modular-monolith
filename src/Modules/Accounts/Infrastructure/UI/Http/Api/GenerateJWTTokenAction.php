@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\UI\Web\Action;
+namespace App\Modules\Accounts\Infrastructure\UI\Http\Api;
 
 use Firebase\JWT\JWT;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class GenerateJWTTokenAction extends Action
+final class GenerateJWTTokenAction extends AbstractController
 {
     private string $jwtSecretKey;
 

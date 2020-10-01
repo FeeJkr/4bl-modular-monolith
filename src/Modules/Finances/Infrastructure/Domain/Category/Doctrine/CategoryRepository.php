@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\Domain\Category\Doctrine;
 
+use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryException;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryRepository as CategoryRepositoryInterface;
 use App\Modules\Finances\Domain\Category\CategoryType;
-use App\SharedKernel\User\UserId;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;

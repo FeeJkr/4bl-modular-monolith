@@ -5,11 +5,11 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 
 use App\Modules\Finances\Application\Transaction\Query\FetchAllTransactionsQuery;
 use App\Modules\Finances\Application\Transaction\TransactionReadModel;
-use App\UI\Web\Action\Action;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class FetchAllTransactionsAction extends Action
+final class FetchAllTransactionsAction extends AbstractController
 {
     private TransactionReadModel $transactionReadModel;
 

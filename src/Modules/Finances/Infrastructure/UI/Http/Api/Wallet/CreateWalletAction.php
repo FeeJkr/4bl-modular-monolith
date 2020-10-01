@@ -5,13 +5,13 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
 use App\Modules\Finances\Application\Wallet\Command\CreateWalletCommand;
 use App\Modules\Finances\Application\Wallet\WalletService;
-use App\SharedKernel\Money;
-use App\UI\Web\Action\Action;
+use App\Modules\Finances\Domain\Money;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class CreateWalletAction extends Action
+final class CreateWalletAction extends AbstractController
 {
     private WalletService $walletService;
 

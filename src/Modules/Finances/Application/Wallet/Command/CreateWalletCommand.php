@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Wallet\Command;
 
-use App\SharedKernel\Money;
-use App\SharedKernel\User\UserId;
+use App\Common\User\UserId;
+use App\Modules\Finances\Domain\Money;
 
 final class CreateWalletCommand
 {

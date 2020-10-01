@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Domain\Category;
 
-use App\SharedKernel\User\UserId;
+use App\Common\User\UserId;
 use Exception;
 
 final class CategoryException extends Exception

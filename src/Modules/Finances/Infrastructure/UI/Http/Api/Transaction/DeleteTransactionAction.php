@@ -6,12 +6,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 use App\Modules\Finances\Application\Transaction\Command\DeleteTransactionCommand;
 use App\Modules\Finances\Application\Transaction\TransactionService;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
-use App\UI\Web\Action\Action;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class DeleteTransactionAction extends Action
+final class DeleteTransactionAction extends AbstractController
 {
     private TransactionService $transactionService;
 

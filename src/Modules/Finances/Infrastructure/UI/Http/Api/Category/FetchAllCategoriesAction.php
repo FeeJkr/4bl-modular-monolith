@@ -5,11 +5,11 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 
 use App\Modules\Finances\Application\Category\CategoryReadModel;
 use App\Modules\Finances\Application\Category\Query\FetchAllCategoriesQuery;
-use App\UI\Web\Action\Action;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class FetchAllCategoriesAction extends Action
+final class FetchAllCategoriesAction extends AbstractController
 {
     private CategoryReadModel $categoryReadModel;
 

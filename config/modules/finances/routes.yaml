@@ -1,7 +1,3 @@
-jwt.generate:
-  path: /jwt/generate
-  controller: App\UI\Web\Action\GenerateJWTTokenAction
-
 categories:
   path: /api/categories
   controller: App\Modules\Finances\Infrastructure\UI\Http\Api\Category\FetchAllCategoriesAction

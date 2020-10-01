@@ -6,26 +6,11 @@ services:
     autowire: true
     public: false
 
-  App\:
-    resource: '../../../src/*'
-    exclude: '../../../src/{DependencyInjection,Entity,Tests,Kernel.php}'
-
-  App\UI\Web\Action\:
-    resource: '../../../src/UI/Web/Action/'
-    tags: ['controller.service_arguments']
+  App\Modules\Finances\:
+    resource: '../../../src/Modules/Finances/'
 
   App\Modules\Finances\Infrastructure\UI\Http\Api\:
     resource: '../../../src/Modules/Finances/Infrastructure/UI/Http/Api/'
-    tags: ['controller.service_arguments']
-
-  App\SharedKernel\Events\TokenSubscriber:
-    arguments:
-      $jwtSecretKey: '%jwt.secret_key%'
-    tags: ['kernel.event_subscriber']
-
-  App\UI\Web\Action\GenerateJWTTokenAction:
-    arguments:
-      $jwtSecretKey: '%jwt.secret_key%'
     tags: ['controller.service_arguments']
 
   category.database_repository:
@@ -43,7 +28,7 @@ services:
 
   App\Modules\Finances\Application\Category\CategoryReadModel:
     arguments:
-      $repository: '@category.cache_repository'
+      App\Modules\Finances\Application\Category\CategoryReadModelRepository: '@category.cache_repository'
 
   wallet.database_repository:
     class: App\Modules\Finances\Infrastructure\Domain\Wallet\Doctrine\WalletReadModelRepository

@@ -6,11 +6,11 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 use App\Modules\Finances\Application\Category\CategoryReadModel;
 use App\Modules\Finances\Application\Category\Query\FetchOneCategoryByIdQuery;
 use App\Modules\Finances\Domain\Category\CategoryId;
-use App\UI\Web\Action\Action;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class FetchOneCategoryByIdAction extends Action
+final class FetchOneCategoryByIdAction extends AbstractController
 {
     private CategoryReadModel $categoryReadModel;
 

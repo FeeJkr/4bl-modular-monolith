@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\Domain\Transaction\Doctrine;
 
+use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Category\CategoryId;
+use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\LinkedTransaction;
 use App\Modules\Finances\Domain\Transaction\Transaction;
 use App\Modules\Finances\Domain\Transaction\TransactionException;
@@ -11,13 +13,9 @@ use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository as TransactionRepositoryInterface;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\Wallet\WalletId;
-use App\SharedKernel\Money;
-use App\SharedKernel\User\UserId;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-
-// TODO: Add SQL transactions on insert and update queries
 
 final class TransactionRepository implements TransactionRepositoryInterface
 {
