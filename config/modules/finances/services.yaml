@@ -14,6 +14,10 @@ services:
     resource: '../../../src/UI/Web/Action/'
     tags: ['controller.service_arguments']
 
+  App\Modules\Finances\Infrastructure\UI\Http\Api\:
+    resource: '../../../src/Modules/Finances/Infrastructure/UI/Http/Api/'
+    tags: ['controller.service_arguments']
+
   App\SharedKernel\Events\TokenSubscriber:
     arguments:
       $jwtSecretKey: '%jwt.secret_key%'
@@ -25,41 +29,41 @@ services:
     tags: ['controller.service_arguments']
 
   category.database_repository:
-    class: App\Category\Infrastructure\Persistence\Doctrine\CategoryReadModelRepository
+    class: App\Modules\Finances\Infrastructure\Domain\Category\Doctrine\CategoryReadModelRepository
   category.cache_repository:
-    class: App\Category\Infrastructure\Persistence\Redis\CategoryReadModelRepository
+    class: App\Modules\Finances\Infrastructure\Domain\Category\Redis\CategoryReadModelRepository
     arguments:
-      App\Category\ReadModel\CategoryReadModelRepository: '@category.database_repository'
+      App\Modules\Finances\Application\Category\CategoryReadModelRepository: '@category.database_repository'
   category.domain_repository:
-    class: App\Category\Infrastructure\Persistence\Doctrine\CategoryRepository
+    class: App\Modules\Finances\Infrastructure\Domain\Category\Doctrine\CategoryRepository
 
-  App\Category\Application\CategoryService:
+  App\Modules\Finances\Application\Category\CategoryService:
     arguments:
-      App\Category\Domain\CategoryRepository: '@category.domain_repository'
+      App\Modules\Finances\Domain\Category\CategoryRepository: '@category.domain_repository'
 
-  App\Category\ReadModel\CategoryReadModel:
+  App\Modules\Finances\Application\Category\CategoryReadModel:
     arguments:
       $repository: '@category.cache_repository'
 
   wallet.database_repository:
-    class: App\Wallet\Infrastructure\Persistence\Doctrine\WalletReadModelRepository
+    class: App\Modules\Finances\Infrastructure\Domain\Wallet\Doctrine\WalletReadModelRepository
   wallet.cache_repository:
-    class: App\Wallet\Infrastructure\Persistence\Redis\WalletReadModelRepository
+    class: App\Modules\Finances\Infrastructure\Domain\Wallet\Redis\WalletReadModelRepository
     arguments:
-      App\Wallet\ReadModel\WalletReadModelRepository: '@wallet.database_repository'
+      App\Modules\Finances\Application\Wallet\WalletReadModelRepository: '@wallet.database_repository'
 
-  App\Wallet\ReadModel\WalletReadModel:
-    class: App\Wallet\ReadModel\WalletReadModel
+  App\Modules\Finances\Application\Wallet\WalletReadModel:
+    class: App\Modules\Finances\Application\Wallet\WalletReadModel
     arguments:
-      App\Wallet\ReadModel\WalletReadModelRepository: '@wallet.cache_repository'
+      App\Modules\Finances\Application\Wallet\WalletReadModelRepository: '@wallet.cache_repository'
 
   transaction.database_repository:
-    class: App\Transaction\Infrastructure\Persistence\Doctrine\TransactionReadModelRepository
+    class: App\Modules\Finances\Infrastructure\Domain\Transaction\Doctrine\TransactionReadModelRepository
   transaction.cache_repository:
-    class: App\Transaction\Infrastructure\Persistence\Redis\TransactionReadModelRepository
+    class: App\Modules\Finances\Infrastructure\Domain\Transaction\Redis\TransactionReadModelRepository
     arguments:
-      App\Transaction\ReadModel\TransactionReadModelRepository: '@transaction.database_repository'
+      App\Modules\Finances\Application\Transaction\TransactionReadModelRepository: '@transaction.database_repository'
 
-  App\Transaction\ReadModel\TransactionReadModel:
+  App\Modules\Finances\Application\Transaction\TransactionReadModel:
     arguments:
       $repository: '@transaction.cache_repository'
