@@ -6,8 +6,12 @@ namespace App\Modules\Finances\Application\Category;
 use App\Modules\Finances\Application\Category\Command\CreateCategoryCommand;
 use App\Modules\Finances\Application\Category\Command\DeleteCategoryCommand;
 use App\Modules\Finances\Application\Category\Command\UpdateCategoryCommand;
+use App\Modules\Finances\Application\Category\Query\FetchAllCategoriesQuery;
+use App\Modules\Finances\Application\Category\Query\FetchOneCategoryByIdQuery;
 use App\Modules\Finances\Domain\Category\Category;
+use App\Modules\Finances\Domain\Category\CategoryException;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
+use Doctrine\Common\Collections\Collection;
 
 final class CategoryService
 {
@@ -42,5 +46,21 @@ final class CategoryService
         $category->update($command->getCategoryName(), $command->getCategoryType(), $command->getCategoryIcon());
 
         $this->repository->save($category);
+    }
+
+    public function fetchAll(FetchAllCategoriesQuery $query): Collection
+    {
+        return $this->repository->fetchAll($query->getUserId());
+    }
+
+    public function fetchOneById(FetchOneCategoryByIdQuery $query): ?CategoryDTO
+    {
+        $categoryDTO = $this->repository->fetchOneById($query->getUserId(), $query->getCategoryId());
+
+        if ($categoryDTO === null) {
+            throw CategoryException::notFoundById($query->getCategoryId());
+        }
+
+        return $categoryDTO;
     }
 }
