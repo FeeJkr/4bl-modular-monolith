@@ -6,8 +6,11 @@ namespace App\Modules\Finances\Application\Wallet;
 use App\Modules\Finances\Application\Wallet\Command\CreateWalletCommand;
 use App\Modules\Finances\Application\Wallet\Command\DeleteWalletCommand;
 use App\Modules\Finances\Application\Wallet\Command\UpdateWalletCommand;
+use App\Modules\Finances\Application\Wallet\Query\FetchAllWalletsQuery;
+use App\Modules\Finances\Application\Wallet\Query\FetchOneWalletByIdQuery;
 use App\Modules\Finances\Domain\Wallet\Wallet;
 use App\Modules\Finances\Domain\Wallet\WalletRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 final class WalletService
 {
@@ -41,5 +44,21 @@ final class WalletService
         $wallet->update($command->getName(), $command->getStartBalance(), $command->getUserIds());
 
         $this->repository->save($wallet);
+    }
+
+    public function fetchAll(FetchAllWalletsQuery $query): ArrayCollection
+    {
+        return $this->repository->fetchAll($query->getUserId());
+    }
+
+    public function fetchOneById(FetchOneWalletByIdQuery $query): WalletDTO
+    {
+        $walletDTO = $this->repository->fetchOneById($query->getWalletId(), $query->getUserId());
+
+        if ($walletDTO === null) {
+            throw WalletReadModelException::notFound($query->getWalletId(), $query->getUserId());
+        }
+
+        return $walletDTO;
     }
 }

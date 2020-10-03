@@ -21,4 +21,11 @@ final class CategoryException extends Exception
             sprintf('Category with ID %s for user %s not found.', $categoryId->toInt(), $userId->toInt())
         );
     }
+
+    public static function notFoundById(CategoryId $categoryId): self
+    {
+        return new self(
+            sprintf('Category with ID %s not found.', $categoryId->toInt())
+        );
+    }
 }

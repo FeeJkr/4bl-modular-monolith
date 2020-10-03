@@ -5,6 +5,7 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 
 use App\Modules\Finances\Application\Transaction\Query\FetchAllTransactionsByWalletQuery;
 use App\Modules\Finances\Application\Transaction\TransactionReadModel;
+use App\Modules\Finances\Application\Transaction\TransactionService;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,11 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class FetchAllTransactionsByWalletIdAction extends AbstractController
 {
-    private TransactionReadModel $transactionReadModel;
+    private TransactionService $transactionService;
 
-    public function __construct(TransactionReadModel $transactionReadModel)
+    public function __construct(TransactionService $transactionService)
     {
-        $this->transactionReadModel = $transactionReadModel;
+        $this->transactionService = $transactionService;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -27,7 +28,7 @@ final class FetchAllTransactionsByWalletIdAction extends AbstractController
         );
 
         return $this->json(
-            $this->transactionReadModel->fetchAllByWallet($query)->toArray()
+            $this->transactionService->fetchAllByWallet($query)->toArray()
         );
     }
 }

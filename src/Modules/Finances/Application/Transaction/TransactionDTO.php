@@ -5,10 +5,10 @@ namespace App\Modules\Finances\Application\Transaction;
 
 use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Category\CategoryId;
+use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\Wallet\WalletId;
-use App\SharedKernel\Money;
 use DateTime;
 use DateTimeInterface;
 use JsonSerializable;

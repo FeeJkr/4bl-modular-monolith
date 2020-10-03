@@ -6,8 +6,12 @@ namespace App\Modules\Finances\Application\Transaction;
 use App\Modules\Finances\Application\Transaction\Command\CreateTransactionCommand;
 use App\Modules\Finances\Application\Transaction\Command\DeleteTransactionCommand;
 use App\Modules\Finances\Application\Transaction\Command\UpdateTransactionCommand;
+use App\Modules\Finances\Application\Transaction\Query\FetchAllTransactionsByWalletQuery;
+use App\Modules\Finances\Application\Transaction\Query\FetchAllTransactionsQuery;
+use App\Modules\Finances\Application\Transaction\Query\FetchOneTransactionByIdQuery;
 use App\Modules\Finances\Domain\Transaction\Transaction;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
+use Doctrine\Common\Collections\Collection;
 
 final class TransactionService
 {
@@ -55,5 +59,20 @@ final class TransactionService
         );
 
         $this->repository->save($transaction);
+    }
+
+    public function fetchAllByWallet(FetchAllTransactionsByWalletQuery $query): Collection
+    {
+        return $this->repository->fetchAllByWallet($query->getWalletId(), $query->getUserId());
+    }
+
+    public function fetchOneById(FetchOneTransactionByIdQuery $query): TransactionDTO
+    {
+        return $this->repository->fetchOneById($query->getTransactionId(), $query->getUserId());
+    }
+
+    public function fetchAll(FetchAllTransactionsQuery $query): Collection
+    {
+        return $this->repository->fetchAll($query->getUserId());
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
 use App\Modules\Finances\Application\Wallet\Query\FetchOneWalletByIdQuery;
-use App\Modules\Finances\Application\Wallet\WalletReadModel;
+use App\Modules\Finances\Application\Wallet\WalletService;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,11 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class FetchOneWalletByIdAction extends AbstractController
 {
-    private WalletReadModel $walletReadModel;
+    private WalletService $walletService;
 
-    public function __construct(WalletReadModel $walletReadModel)
+    public function __construct(WalletService $walletService)
     {
-        $this->walletReadModel = $walletReadModel;
+        $this->walletService = $walletService;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -27,7 +27,7 @@ final class FetchOneWalletByIdAction extends AbstractController
         );
 
         return $this->json(
-            $this->walletReadModel->fetchOneById($query)
+            $this->walletService->fetchOneById($query)
         );
     }
 }
