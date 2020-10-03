@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\Domain\Wallet\Doctrine;
 
 use App\Common\User\UserId;
-use App\Modules\Finances\Application\Wallet\WalletDTO;
+use App\Modules\Finances\Application\Wallet\FetchOneById\WalletDTO;
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Wallet\Wallet;
 use App\Modules\Finances\Domain\Wallet\WalletException;

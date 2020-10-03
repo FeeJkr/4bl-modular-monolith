@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Wallet\Command;
+namespace App\Modules\Finances\Application\Wallet\Create;
 
 use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Money;

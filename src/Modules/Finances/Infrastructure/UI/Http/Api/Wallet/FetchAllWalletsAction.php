@@ -3,19 +3,20 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
-use App\Modules\Finances\Application\Wallet\Query\FetchAllWalletsQuery;
-use App\Modules\Finances\Application\Wallet\WalletService;
+use App\Modules\Finances\Application\Wallet\FetchAll\FetchAllWalletsQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class FetchAllWalletsAction extends AbstractController
 {
-    private WalletService $walletService;
+    private MessageBusInterface $bus;
 
-    public function __construct(WalletService $walletService)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->walletService = $walletService;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -24,8 +25,11 @@ final class FetchAllWalletsAction extends AbstractController
             $request->get('user_id')
         );
 
-        return $this->json(
-            $this->walletService->fetchAll($query)->toArray()
-        );
+        $result = $this->bus->dispatch($query)
+            ->last(HandledStamp::class)
+            ->getResult()
+            ->toArray();
+
+        return $this->json($result);
     }
 }

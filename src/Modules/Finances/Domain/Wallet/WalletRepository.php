@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Domain\Wallet;
 
 use App\Common\User\UserId;
-use App\Modules\Finances\Application\Wallet\WalletDTO;
+use App\Modules\Finances\Application\Wallet\FetchOneById\WalletDTO;
 use Doctrine\Common\Collections\ArrayCollection;
 
 interface WalletRepository

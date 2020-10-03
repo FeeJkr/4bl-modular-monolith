@@ -38,3 +38,28 @@ services:
     tags:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Category\FetchOneById\FetchOneCategoryByIdQuery
+
+  App\Modules\Finances\Application\Wallet\Create\CreateWalletHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Wallet\Create\CreateWalletCommand
+
+  App\Modules\Finances\Application\Wallet\Delete\DeleteWalletHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand
+
+  App\Modules\Finances\Application\Wallet\FetchAll\FetchAllWalletsHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Wallet\FetchAll\FetchAllWalletsQuery
+
+  App\Modules\Finances\Application\Wallet\FetchOneById\FetchOneWalletByIdHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Wallet\FetchOneById\FetchOneWalletByIdQuery
+
+  App\Modules\Finances\Application\Wallet\Update\UpdateWalletHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand

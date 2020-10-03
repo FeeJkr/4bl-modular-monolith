@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
 use App\Common\User\UserId;
-use App\Modules\Finances\Application\Wallet\Command\UpdateWalletCommand;
-use App\Modules\Finances\Application\Wallet\WalletService;
+use App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand;
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,14 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class UpdateWalletAction extends AbstractController
 {
-    private WalletService $walletService;
+    private MessageBusInterface $bus;
 
-    public function __construct(WalletService $walletService)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->walletService = $walletService;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -34,7 +34,7 @@ final class UpdateWalletAction extends AbstractController
 
         $userIds->add($request->get('user_id'));
 
-        $this->walletService->updateWallet(
+        $this->bus->dispatch(
             new UpdateWalletCommand(
                 WalletId::fromInt((int) $request->get('id')),
                 $request->get('user_id'),

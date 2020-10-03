@@ -3,26 +3,26 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
-use App\Modules\Finances\Application\Wallet\Command\DeleteWalletCommand;
-use App\Modules\Finances\Application\Wallet\WalletService;
+use App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class DeleteWalletAction extends AbstractController
 {
-    private WalletService $walletService;
+    private MessageBusInterface $bus;
 
-    public function __construct(WalletService $walletService)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->walletService = $walletService;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $this->walletService->deleteWallet(
+        $this->bus->dispatch(
             new DeleteWalletCommand(
                 WalletId::fromInt((int) $request->get('id')),
                 $request->get('user_id')
