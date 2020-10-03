@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Domain\Category;
 
 use App\Common\User\UserId;
-use App\Modules\Finances\Application\Category\CategoryDTO;
+use App\Modules\Finances\Application\Category\FetchOneById\CategoryDTO;
 use Doctrine\Common\Collections\Collection;
 
 interface CategoryRepository

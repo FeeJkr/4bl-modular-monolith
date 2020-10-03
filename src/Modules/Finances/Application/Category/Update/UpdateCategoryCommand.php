@@ -1,28 +1,37 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Category\Command;
+namespace App\Modules\Finances\Application\Category\Update;
 
 use App\Common\User\UserId;
+use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryType;
 
-final class CreateCategoryCommand
+final class UpdateCategoryCommand
 {
+    private CategoryId $categoryId;
     private UserId $userId;
     private string $categoryName;
     private CategoryType $categoryType;
-    private ?string $categoryIcon;
+    private string $categoryIcon;
 
     public function __construct(
+        CategoryId $categoryId,
         UserId $userId,
         string $categoryName,
         CategoryType $categoryType,
-        ?string $categoryIcon
+        string $categoryIcon
     ) {
+        $this->categoryId = $categoryId;
         $this->userId = $userId;
         $this->categoryName = $categoryName;
         $this->categoryType = $categoryType;
         $this->categoryIcon = $categoryIcon;
+    }
+
+    public function getCategoryId(): CategoryId
+    {
+        return $this->categoryId;
     }
 
     public function getUserId(): UserId
@@ -40,7 +49,7 @@ final class CreateCategoryCommand
         return $this->categoryType;
     }
 
-    public function getCategoryIcon(): ?string
+    public function getCategoryIcon(): string
     {
         return $this->categoryIcon;
     }

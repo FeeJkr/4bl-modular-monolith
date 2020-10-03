@@ -12,3 +12,29 @@ services:
   App\Modules\Finances\Infrastructure\UI\Http\Api\:
     resource: '../../../src/Modules/Finances/Infrastructure/UI/Http/Api/'
     tags: ['controller.service_arguments']
+
+  App\Modules\Finances\Application\Category\Create\CreateCategoryHandler:
+    tags:
+      -
+        name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Category\Create\CreateCategoryCommand
+
+  App\Modules\Finances\Application\Category\Delete\DeleteCategoryHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Category\Delete\DeleteCategoryCommand
+
+  App\Modules\Finances\Application\Category\Update\UpdateCategoryHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Category\Update\UpdateCategoryCommand
+
+  App\Modules\Finances\Application\Category\FetchAll\FetchAllCategoriesHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Category\FetchAll\FetchAllCategoriesQuery
+
+  App\Modules\Finances\Application\Category\FetchOneById\FetchOneCategoryByIdHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Category\FetchOneById\FetchOneCategoryByIdQuery

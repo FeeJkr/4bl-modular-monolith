@@ -3,27 +3,27 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 
-use App\Modules\Finances\Application\Category\CategoryService;
-use App\Modules\Finances\Application\Category\Command\UpdateCategoryCommand;
+use App\Modules\Finances\Application\Category\Update\UpdateCategoryCommand;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class UpdateCategoryAction extends AbstractController
 {
-    private CategoryService $categoryService;
+    private MessageBusInterface $bus;
 
-    public function __construct(CategoryService $categoryService)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->categoryService = $categoryService;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $this->categoryService->updateCategory(
+        $this->bus->dispatch(
             new UpdateCategoryCommand(
                 CategoryId::fromInt((int) $request->get('id')),
                 $request->get('user_id'),

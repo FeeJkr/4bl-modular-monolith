@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Category\Command;
+namespace App\Modules\Finances\Application\Category\Delete;
 
 use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Category\CategoryId;
