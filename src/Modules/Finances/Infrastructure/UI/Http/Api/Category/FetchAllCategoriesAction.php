@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 
 use App\Modules\Finances\Application\Category\FetchAll\FetchAllCategoriesQuery;
+use App\Modules\Finances\Domain\User\UserId;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -21,7 +22,7 @@ final class FetchAllCategoriesAction
     public function __invoke(Request $request): JsonResponse
     {
         $query = new FetchAllCategoriesQuery(
-            $request->get('user_id')
+            UserId::fromInt($request->get('user_id'))
         );
 
         $result = $this->bus->dispatch($query)

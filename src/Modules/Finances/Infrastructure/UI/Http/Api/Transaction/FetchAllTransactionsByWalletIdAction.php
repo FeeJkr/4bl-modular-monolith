@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 
 use App\Modules\Finances\Application\Transaction\FetchAllByWallet\FetchAllTransactionsByWalletQuery;
+use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,7 @@ final class FetchAllTransactionsByWalletIdAction
     {
         $query = new FetchAllTransactionsByWalletQuery(
             WalletId::fromInt((int) $request->get('wallet_id')),
-            $request->get('user_id')
+            UserId::fromInt($request->get('user_id'))
         );
 
         $result = $this->bus->dispatch($query)

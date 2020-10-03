@@ -5,6 +5,7 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 
 use App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdQuery;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
+use App\Modules\Finances\Domain\User\UserId;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -23,7 +24,7 @@ final class FetchOneTransactionByIdAction
     {
         $query = new FetchOneTransactionByIdQuery(
             TransactionId::fromInt((int) $request->get('id')),
-            $request->get('user_id')
+            UserId::fromInt($request->get('user_id'))
         );
 
         $result = $this->bus->dispatch($query)

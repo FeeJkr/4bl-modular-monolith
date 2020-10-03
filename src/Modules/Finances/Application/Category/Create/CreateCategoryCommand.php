@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Category\Create;
 
-use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Category\CategoryType;
+use App\Modules\Finances\Domain\User\UserId;
 
 final class CreateCategoryCommand
 {

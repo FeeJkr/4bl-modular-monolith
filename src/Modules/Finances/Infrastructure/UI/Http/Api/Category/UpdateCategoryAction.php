@@ -6,6 +6,7 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 use App\Modules\Finances\Application\Category\Update\UpdateCategoryCommand;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryType;
+use App\Modules\Finances\Domain\User\UserId;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ final class UpdateCategoryAction
         $this->bus->dispatch(
             new UpdateCategoryCommand(
                 CategoryId::fromInt((int) $request->get('id')),
-                $request->get('user_id'),
+                UserId::fromInt($request->get('user_id')),
                 $request->get('category_name'),
                 new CategoryType($request->get('category_type')),
                 $request->get('category_icon')

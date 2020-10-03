@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
-use App\Common\User\UserId;
 use App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand;
 use App\Modules\Finances\Domain\Money;
+use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,7 +36,7 @@ final class UpdateWalletAction
         $this->bus->dispatch(
             new UpdateWalletCommand(
                 WalletId::fromInt((int) $request->get('id')),
-                $request->get('user_id'),
+                UserId::fromInt($request->get('user_id')),
                 $request->get('wallet_name'),
                 new Money((int) $request->get('wallet_start_balance')),
                 $userIds

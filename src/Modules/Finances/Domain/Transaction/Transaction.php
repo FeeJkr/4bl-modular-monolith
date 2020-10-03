@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Domain\Transaction;
 
-use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Money;
+use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTime;
 use DateTimeInterface;

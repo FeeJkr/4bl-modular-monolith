@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Common\Events;
 
-use App\Common\User\UserId;
 use App\Modules\Accounts\Infrastructure\UI\Http\Api\GenerateJWTTokenAction;
 use Firebase\JWT\JWT;
 use stdClass;
@@ -40,7 +39,7 @@ final class TokenSubscriber implements EventSubscriberInterface
                 /** @var stdClass $data */
                 $data = JWT::decode($jwtToken, $this->jwtSecretKey, ['HS256']);
 
-                $event->getRequest()->request->set('user_id', UserId::fromInt($data->user_id));
+                $event->getRequest()->request->set('user_id', $data->user_id);
 
                 return;
             } catch (\UnexpectedValueException $exception) {

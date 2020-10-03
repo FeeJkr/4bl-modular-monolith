@@ -7,6 +7,7 @@ use App\Modules\Finances\Application\Transaction\Create\CreateTransactionCommand
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
+use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTime;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,7 +28,7 @@ final class CreateTransactionAction
     {
         $this->bus->dispatch(
             new CreateTransactionCommand(
-                $request->get('user_id'),
+                UserId::fromInt($request->get('user_id')),
                 WalletId::fromInt((int) $request->get('wallet_id')),
                 $request->get('linked_wallet_id') === null
                     ? WalletId::nullInstance()

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\FetchOneById;
 
-use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
+use App\Modules\Finances\Domain\User\UserId;
 
 final class FetchOneTransactionByIdQuery
 {

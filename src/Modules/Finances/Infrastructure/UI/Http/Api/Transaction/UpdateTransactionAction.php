@@ -8,6 +8,7 @@ use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
+use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTime;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,7 +30,7 @@ final class UpdateTransactionAction
         $this->bus->dispatch(
             new UpdateTransactionCommand(
                 TransactionId::fromInt((int) $request->get('id')),
-                $request->get('user_id'),
+                UserId::fromInt($request->get('user_id')),
                 WalletId::fromInt((int) $request->get('wallet_id')),
                 $request->get('linked_wallet_id') === null
                     ? WalletId::nullInstance()

@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\Domain\Category\Doctrine;
 
-use App\Common\User\UserId;
 use App\Modules\Finances\Application\Category\FetchOneById\CategoryDTO;
 use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryException;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryRepository as CategoryRepositoryInterface;
 use App\Modules\Finances\Domain\Category\CategoryType;
+use App\Modules\Finances\Domain\User\UserId;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
