@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\Domain\Transaction\Doctrine;
 
 use App\Common\User\UserId;
-use App\Modules\Finances\Application\Transaction\TransactionDTO;
+use App\Modules\Finances\Application\Transaction\FetchOneById\TransactionDTO;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\LinkedTransaction;

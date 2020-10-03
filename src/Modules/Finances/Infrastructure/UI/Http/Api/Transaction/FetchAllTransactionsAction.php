@@ -3,19 +3,20 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 
-use App\Modules\Finances\Application\Transaction\Query\FetchAllTransactionsQuery;
-use App\Modules\Finances\Application\Transaction\TransactionService;
+use App\Modules\Finances\Application\Transaction\FetchAll\FetchAllTransactionsQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class FetchAllTransactionsAction extends AbstractController
 {
-    private TransactionService $transactionService;
+    private MessageBusInterface $bus;
 
-    public function __construct(TransactionService $transactionService)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->transactionService = $transactionService;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -24,8 +25,11 @@ final class FetchAllTransactionsAction extends AbstractController
             $request->get('user_id')
         );
 
-        return $this->json(
-            $this->transactionService->fetchAll($query)->toArray()
-        );
+        $result = $this->bus->dispatch($query)
+            ->last(HandledStamp::class)
+            ->getResult()
+            ->toArray();
+
+        return $this->json($result);
     }
 }

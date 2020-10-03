@@ -1,17 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\Command;
+namespace App\Modules\Finances\Application\Transaction\Update;
 
 use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Money;
+use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTimeInterface;
 
-final class CreateTransactionCommand
+final class UpdateTransactionCommand
 {
+    private TransactionId $transactionId;
     private UserId $userId;
     private WalletId $walletId;
     private WalletId $linkedWalletId;
@@ -22,6 +24,7 @@ final class CreateTransactionCommand
     private DateTimeInterface $operationAt;
 
     public function __construct(
+        TransactionId $transactionId,
         UserId $userId,
         WalletId $walletId,
         WalletId $linkedWalletId,
@@ -31,6 +34,7 @@ final class CreateTransactionCommand
         ?string $description,
         DateTimeInterface $operationAt
     ) {
+        $this->transactionId = $transactionId;
         $this->userId = $userId;
         $this->walletId = $walletId;
         $this->linkedWalletId = $linkedWalletId;
@@ -39,6 +43,11 @@ final class CreateTransactionCommand
         $this->amount = $amount;
         $this->description = $description;
         $this->operationAt = $operationAt;
+    }
+
+    public function getTransactionId(): TransactionId
+    {
+        return $this->transactionId;
     }
 
     public function getUserId(): UserId

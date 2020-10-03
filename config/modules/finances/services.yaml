@@ -63,3 +63,33 @@ services:
     tags:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand
+
+  App\Modules\Finances\Application\Transaction\Create\CreateTransactionHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Transaction\Create\CreateTransactionCommand
+
+  App\Modules\Finances\Application\Transaction\Delete\DeleteTransactionHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Transaction\Delete\DeleteTransactionCommand
+
+  App\Modules\Finances\Application\Transaction\Update\UpdateTransactionHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Transaction\Update\UpdateTransactionCommand
+
+  App\Modules\Finances\Application\Transaction\FetchAll\FetchAllTransactionsHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Transaction\FetchAll\FetchAllTransactionsQuery
+
+  App\Modules\Finances\Application\Transaction\FetchAllByWallet\FetchAllTransactionsByWalletHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Transaction\FetchAllByWallet\FetchAllTransactionsByWalletQuery
+
+  App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdQuery

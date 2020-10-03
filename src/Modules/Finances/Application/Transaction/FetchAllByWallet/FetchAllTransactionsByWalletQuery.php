@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\Query;
+namespace App\Modules\Finances\Application\Transaction\FetchAllByWallet;
 
 use App\Common\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;

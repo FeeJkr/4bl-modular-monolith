@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\Query;
+namespace App\Modules\Finances\Application\Transaction\FetchAll;
 
 use App\Common\User\UserId;
 
