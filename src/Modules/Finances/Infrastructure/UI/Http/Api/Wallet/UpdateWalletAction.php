@@ -8,13 +8,12 @@ use App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand;
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class UpdateWalletAction extends AbstractController
+final class UpdateWalletAction
 {
     private MessageBusInterface $bus;
 
@@ -44,6 +43,6 @@ final class UpdateWalletAction extends AbstractController
             )
         );
 
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

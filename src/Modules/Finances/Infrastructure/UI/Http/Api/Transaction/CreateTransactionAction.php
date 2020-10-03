@@ -9,13 +9,12 @@ use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTime;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class CreateTransactionAction extends AbstractController
+final class CreateTransactionAction
 {
     private MessageBusInterface $bus;
 
@@ -41,6 +40,6 @@ final class CreateTransactionAction extends AbstractController
             )
         );
 
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

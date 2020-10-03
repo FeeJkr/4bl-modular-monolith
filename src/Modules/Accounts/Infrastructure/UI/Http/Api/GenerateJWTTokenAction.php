@@ -4,11 +4,10 @@ declare(strict_types=1);
 namespace App\Modules\Accounts\Infrastructure\UI\Http\Api;
 
 use Firebase\JWT\JWT;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class GenerateJWTTokenAction extends AbstractController
+final class GenerateJWTTokenAction
 {
     private string $jwtSecretKey;
 
@@ -26,6 +25,6 @@ final class GenerateJWTTokenAction extends AbstractController
 
         $jwt = JWT::encode($payload, $this->jwtSecretKey, 'HS256');
 
-        return $this->json(['token' => $jwt]);
+        return new JsonResponse(['token' => $jwt]);
     }
 }

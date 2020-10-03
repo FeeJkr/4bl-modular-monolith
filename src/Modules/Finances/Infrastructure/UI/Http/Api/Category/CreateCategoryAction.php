@@ -5,13 +5,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 
 use App\Modules\Finances\Application\Category\Create\CreateCategoryCommand;
 use App\Modules\Finances\Domain\Category\CategoryType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class CreateCategoryAction extends AbstractController
+final class CreateCategoryAction
 {
     private MessageBusInterface $bus;
 
@@ -31,6 +30,6 @@ final class CreateCategoryAction extends AbstractController
             )
         );
 
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

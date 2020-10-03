@@ -5,13 +5,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
 use App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand;
 use App\Modules\Finances\Domain\Wallet\WalletId;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class DeleteWalletAction extends AbstractController
+final class DeleteWalletAction
 {
     private MessageBusInterface $bus;
 
@@ -29,6 +28,6 @@ final class DeleteWalletAction extends AbstractController
             )
         );
 
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

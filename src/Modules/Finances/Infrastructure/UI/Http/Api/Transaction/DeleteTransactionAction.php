@@ -5,13 +5,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 
 use App\Modules\Finances\Application\Transaction\Delete\DeleteTransactionCommand;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class DeleteTransactionAction extends AbstractController
+final class DeleteTransactionAction
 {
     private MessageBusInterface $bus;
 
@@ -29,6 +28,6 @@ final class DeleteTransactionAction extends AbstractController
             )
         );
 
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

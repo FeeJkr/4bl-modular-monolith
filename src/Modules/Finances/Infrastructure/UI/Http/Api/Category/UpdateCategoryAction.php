@@ -6,13 +6,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 use App\Modules\Finances\Application\Category\Update\UpdateCategoryCommand;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class UpdateCategoryAction extends AbstractController
+final class UpdateCategoryAction
 {
     private MessageBusInterface $bus;
 
@@ -33,6 +32,6 @@ final class UpdateCategoryAction extends AbstractController
             )
         );
 
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

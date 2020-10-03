@@ -5,13 +5,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction;
 
 use App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdQuery;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class FetchOneTransactionByIdAction extends AbstractController
+final class FetchOneTransactionByIdAction
 {
     private MessageBusInterface $bus;
 
@@ -31,6 +30,6 @@ final class FetchOneTransactionByIdAction extends AbstractController
             ->last(HandledStamp::class)
             ->getResult();
 
-        return $this->json($result);
+        return new JsonResponse($result);
     }
 }

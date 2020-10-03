@@ -5,13 +5,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 
 use App\Modules\Finances\Application\Category\Delete\DeleteCategoryCommand;
 use App\Modules\Finances\Domain\Category\CategoryId;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class DeleteCategoryAction extends AbstractController
+final class DeleteCategoryAction
 {
     private MessageBusInterface $bus;
 
@@ -29,6 +28,6 @@ final class DeleteCategoryAction extends AbstractController
             )
         );
 
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

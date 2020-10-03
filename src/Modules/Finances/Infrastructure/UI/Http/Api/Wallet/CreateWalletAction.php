@@ -5,13 +5,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
 use App\Modules\Finances\Application\Wallet\Create\CreateWalletCommand;
 use App\Modules\Finances\Domain\Money;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class CreateWalletAction extends AbstractController
+final class CreateWalletAction
 {
     private MessageBusInterface $bus;
 
@@ -30,6 +29,6 @@ final class CreateWalletAction extends AbstractController
             )
         );
 
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }

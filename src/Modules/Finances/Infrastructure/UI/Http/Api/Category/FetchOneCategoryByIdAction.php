@@ -5,13 +5,12 @@ namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Category;
 
 use App\Modules\Finances\Application\Category\FetchOneById\FetchOneCategoryByIdQuery;
 use App\Modules\Finances\Domain\Category\CategoryId;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class FetchOneCategoryByIdAction extends AbstractController
+final class FetchOneCategoryByIdAction
 {
     private MessageBusInterface $bus;
 
@@ -31,6 +30,6 @@ final class FetchOneCategoryByIdAction extends AbstractController
             ->last(HandledStamp::class)
             ->getResult();
 
-        return $this->json($result);
+        return new JsonResponse($result);
     }
 }

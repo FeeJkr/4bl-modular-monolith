@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\UI\Http\Api\Wallet;
 
 use App\Modules\Finances\Application\Wallet\FetchAll\FetchAllWalletsQuery;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class FetchAllWalletsAction extends AbstractController
+final class FetchAllWalletsAction
 {
     private MessageBusInterface $bus;
 
@@ -30,6 +29,6 @@ final class FetchAllWalletsAction extends AbstractController
             ->getResult()
             ->toArray();
 
-        return $this->json($result);
+        return new JsonResponse($result);
     }
 }
