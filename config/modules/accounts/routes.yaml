@@ -1,3 +1,9 @@
-jwt.generate:
-  path: /jwt/generate
-  controller: App\Modules\Accounts\Infrastructure\UI\Http\Api\GenerateJWTTokenAction
+register:
+  path: /api/users
+  controller: App\Modules\Accounts\Infrastructure\UI\Http\Api\User\RegisterUserAction
+  methods: POST
+
+signIn:
+  path: /api/users/sign-in
+  controller: App\Modules\Accounts\Infrastructure\UI\Http\Api\User\SignInUserAction
+  methods: POST
