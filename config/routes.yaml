@@ -3,3 +3,8 @@ finances:
 
 accounts:
     resource: 'modules/accounts/routes.yaml'
+
+dashboard:
+    path: /
+    controller: App\Common\Web\RenderDashboardPageAction
+    methods: GET

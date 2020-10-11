@@ -77,3 +77,8 @@ transactions.delete:
   path: /api/transactions/{id}
   controller: App\Modules\Finances\Infrastructure\UI\Http\Api\Transaction\DeleteTransactionAction
   methods: DELETE
+
+finances:
+  path: /finances
+  controller: App\Modules\Finances\Infrastructure\UI\Http\Web\RenderFinancesPageAction
+  methods: GET

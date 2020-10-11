@@ -23,7 +23,3 @@ register:
   controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\RegisterUserAction
   methods: [GET, POST]
 
-dashboard:
-  path: /
-  controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\RenderDashboardPageAction
-  methods: GET

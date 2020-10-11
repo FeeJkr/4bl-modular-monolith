@@ -42,6 +42,3 @@ services:
   App\Modules\Accounts\Infrastructure\Domain\User\JWTTokenManager:
     arguments:
       $jwtSecretKey: '%jwt.secret_key%'
-
-  App\Modules\Accounts\Infrastructure\UI\Http\Events\TokenSubscriber:
-    tags: [ 'kernel.event_subscriber' ]
