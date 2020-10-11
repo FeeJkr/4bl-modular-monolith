@@ -36,6 +36,11 @@ final class User
         $this->token = $token;
     }
 
+    public function signOut(): void
+    {
+        $this->token = new Token(null);
+    }
+
     public function getId(): UserId
     {
         return $this->id;

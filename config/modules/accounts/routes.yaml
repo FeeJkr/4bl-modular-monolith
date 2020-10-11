@@ -1,9 +1,29 @@
-register:
-  path: /api/users
+api.v1.accounts.register:
+  path: /api/v1/accounts/register
   controller: App\Modules\Accounts\Infrastructure\UI\Http\Api\User\RegisterUserAction
   methods: POST
 
-signIn:
-  path: /api/users/sign-in
+api.v1.accounts.sign-in:
+  path: /api/v1/accounts/sign-in
   controller: App\Modules\Accounts\Infrastructure\UI\Http\Api\User\SignInUserAction
   methods: POST
+
+sign-in:
+  path: /sign-in
+  controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\SignInUserAction
+  methods: [GET, POST]
+
+sign-out:
+  path: /sign-out
+  controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\SignOutUserAction
+  methods: GET
+
+register:
+  path: /register
+  controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\RegisterUserAction
+  methods: [GET, POST]
+
+dashboard:
+  path: /
+  controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\RenderDashboardPageAction
+  methods: GET

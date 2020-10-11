@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Accounts\Infrastructure\Domain\User\Doctrine;
 
-use App\Modules\Accounts\Application\User\FetchByToken\UserDTO;
 use App\Modules\Accounts\Domain\User\Token;
 use App\Modules\Accounts\Domain\User\User;
+use App\Modules\Accounts\Domain\User\UserException;
 use App\Modules\Accounts\Domain\User\UserId;
 use App\Modules\Accounts\Domain\User\UserRepository as UserRepositoryInterface;
 use DateTime;
@@ -81,5 +81,26 @@ final class UserRepository implements UserRepositoryInterface
         }
 
         return UserId::fromInt($data['id']);
+    }
+
+    public function fetchByToken(Token $token): User
+    {
+        $data = $this->entityManager->getConnection()->executeQuery("
+            SELECT * FROM users WHERE token = :token
+        ", [
+            'token' => $token->toString(),
+        ])->fetch();
+
+        if ($data === false) {
+            throw UserException::notFoundByToken($token);
+        }
+
+        return new User(
+            UserId::fromInt($data['id']),
+            $data['email'],
+            $data['username'],
+            $data['password'],
+            new Token($data['token'])
+        );
     }
 }

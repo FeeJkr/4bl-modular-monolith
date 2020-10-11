@@ -10,6 +10,10 @@ services:
     resource: '../../../src/Modules/Accounts/Infrastructure/UI/Http/Api/'
     tags: ['controller.service_arguments']
 
+  App\Modules\Accounts\Infrastructure\UI\Http\Web\:
+    resource: '../../../src/Modules/Accounts/Infrastructure/UI/Http/Web/'
+    tags: ['controller.service_arguments']
+
   App\Modules\Accounts\Application\User\FetchToken\FetchTokenHandler:
     tags:
       - name: messenger.message_handler
@@ -29,6 +33,11 @@ services:
     tags:
       - name: messenger.message_handler
         handles: App\Modules\Accounts\Application\User\FetchByToken\FetchUserByTokenQuery
+
+  App\Modules\Accounts\Application\User\SignOut\SignOutUserHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Accounts\Application\User\SignOut\SignOutUserCommand
 
   App\Modules\Accounts\Infrastructure\Domain\User\JWTTokenManager:
     arguments:
