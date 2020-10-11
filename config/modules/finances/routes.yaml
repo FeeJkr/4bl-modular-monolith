@@ -1,25 +1,25 @@
-categories:
-  path: /api/categories
+api.v1.finances.categories.all:
+  path: /api/v1/finances/categories
   controller: App\Modules\Finances\Infrastructure\UI\Http\Api\Category\FetchAllCategoriesAction
   methods: GET
 
-categories.oneById:
-  path: /api/categories/{id}
+api.v1.finances.categories.get-one:
+  path: /api/v1/finances/categories/{id}
   controller: App\Modules\Finances\Infrastructure\UI\Http\Api\Category\FetchOneCategoryByIdAction
   methods: GET
 
-categories.update:
-  path: /api/categories/{id}
+api.v1.finances.categories.update:
+  path: /api/v1/finances/categories/{id}
   controller: App\Modules\Finances\Infrastructure\UI\Http\Api\Category\UpdateCategoryAction
   methods: PATCH
 
-categories.create:
-  path: /api/categories
+api.v1.finances.categories.create:
+  path: /api/v1/finances/categories
   controller: App\Modules\Finances\Infrastructure\UI\Http\Api\Category\CreateCategoryAction
   methods: POST
 
-categories.delete:
-  path: /api/categories/{id}
+api.v1.finances.categories.delete:
+  path: /api/v1/finances/categories/{id}
   controller: App\Modules\Finances\Infrastructure\UI\Http\Api\Category\DeleteCategoryAction
   methods: DELETE
 
@@ -80,5 +80,10 @@ transactions.delete:
 
 finances:
   path: /finances
-  controller: App\Modules\Finances\Infrastructure\UI\Http\Web\RenderFinancesPageAction
+  controller: App\Modules\Finances\Infrastructure\UI\Http\Web\ShowFinancesDashboardAction
+  methods: GET
+
+finances.categories.showAll:
+  path: /finances/categories
+  controller: App\Modules\Finances\Infrastructure\UI\Http\Web\Category\ShowAllCategoriesAction
   methods: GET

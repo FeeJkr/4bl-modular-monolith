@@ -6,5 +6,5 @@ accounts:
 
 dashboard:
     path: /
-    controller: App\Common\Web\RenderDashboardPageAction
+    controller: App\Common\Web\ShowDashboardAction
     methods: GET

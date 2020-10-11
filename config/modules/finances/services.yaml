@@ -13,6 +13,10 @@ services:
     resource: '../../../src/Modules/Finances/Infrastructure/UI/Http/Api/'
     tags: ['controller.service_arguments']
 
+  App\Modules\Finances\Infrastructure\UI\Http\Web\:
+    resource: '../../../src/Modules/Finances/Infrastructure/UI/Http/Web/'
+    tags: [ 'controller.service_arguments' ]
+
   App\Modules\Finances\Application\Category\Create\CreateCategoryHandler:
     tags:
       -
