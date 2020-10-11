@@ -1,16 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Common\Web\Middleware;
+namespace App\Web\MVC\Middleware;
 
-use App\Common\Web\ShowDashboardAction;
 use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\Token;
-use App\Modules\Accounts\Infrastructure\UI\Http\Api\User\RegisterUserAction as ApiRegisterUserAction;
-use App\Modules\Accounts\Infrastructure\UI\Http\Api\User\SignInUserAction as ApiSignInUserAction;
-use App\Modules\Accounts\Infrastructure\UI\Http\Web\User\RegisterUserAction;
-use App\Modules\Accounts\Infrastructure\UI\Http\Web\User\SignInUserAction;
-use App\Modules\Accounts\Infrastructure\UI\Http\Web\User\SignOutUserAction;
 use App\Modules\Finances\Infrastructure\UI\Http\Web\Category\ShowAllCategoriesAction;
 use App\Modules\Finances\Infrastructure\UI\Http\Web\ShowFinancesDashboardAction;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

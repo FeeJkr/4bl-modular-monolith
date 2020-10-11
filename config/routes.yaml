@@ -1,10 +1,5 @@
-finances:
-    resource: 'modules/finances/routes.yaml'
+web.mvc:
+    resource: 'web/mvc/routes.yaml'
 
-accounts:
-    resource: 'modules/accounts/routes.yaml'
-
-dashboard:
-    path: /
-    controller: App\Common\Web\ShowDashboardAction
-    methods: GET
+web.api:
+    resource: 'web/api/routes.yaml'

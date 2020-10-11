@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Accounts\Infrastructure\UI\Http\Api\User;
+namespace App\Web\API\Accounts\User;
 
 use App\Modules\Accounts\Application\User\FetchToken\FetchTokenQuery;
 use App\Modules\Accounts\Application\User\FetchToken\TokenDTO;

@@ -1,0 +1,9 @@
+api.v1.accounts.register:
+  path: /api/v1/accounts/register
+  controller: App\Modules\Accounts\Infrastructure\UI\Http\Api\User\RegisterUserAction
+  methods: POST
+
+api.v1.accounts.sign-in:
+  path: /api/v1/accounts/sign-in
+  controller: App\Modules\Accounts\Infrastructure\UI\Http\Api\User\SignInUserAction
+  methods: POST
