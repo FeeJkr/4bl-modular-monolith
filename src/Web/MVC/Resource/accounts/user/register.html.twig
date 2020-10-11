@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 4BL | Register {% endblock %}
+
+{% block content %}
+    <div class="container border border-info rounded shadow-sm bg-white p-2 w-25 mt-5">
+        <form method="POST" action="{{ path('accounts.user.register') }}">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" name="email" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password">
+            </div>
+            <div class="form-group">
+                <label for="repeat_password">Repeat password</label>
+                <input type="password" class="form-control" name="repeat_password" id="repeat_password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+{% endblock %}

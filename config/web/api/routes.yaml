@@ -1,0 +1,89 @@
+api.v1.accounts.register:
+  path: /api/v1/accounts/register
+  controller: App\Web\API\Action\Accounts\User\RegisterUserAction
+  methods: POST
+
+api.v1.accounts.sign-in:
+  path: /api/v1/accounts/sign-in
+  controller: App\Web\API\Action\Accounts\User\SignInUserAction
+  methods: POST
+
+api.v1.finances.categories.all:
+  path: /api/v1/finances/categories
+  controller: App\Web\API\Action\Finances\Category\FetchAllCategoriesAction
+  methods: GET
+
+api.v1.finances.categories.get-one:
+  path: /api/v1/finances/categories/{id}
+  controller: App\Web\API\Action\Finances\Category\FetchOneCategoryByIdAction
+  methods: GET
+
+api.v1.finances.categories.update:
+  path: /api/v1/finances/categories/{id}
+  controller: App\Web\API\Action\Finances\Category\UpdateCategoryAction
+  methods: PATCH
+
+api.v1.finances.categories.create:
+  path: /api/v1/finances/categories
+  controller: App\Web\API\Action\Finances\Category\CreateCategoryAction
+  methods: POST
+
+api.v1.finances.categories.delete:
+  path: /api/v1/finances/categories/{id}
+  controller: App\Web\API\Action\Finances\Category\DeleteCategoryAction
+  methods: DELETE
+
+api.v1.finances.wallets.all:
+  path: /api/v1/finances/wallets
+  controller: App\Web\API\Action\Finances\Wallet\FetchAllWalletsAction
+  methods: GET
+
+api.v1.finances.wallets.get-one:
+  path: /api/v1/finances/wallets/{id}
+  controller: App\Web\API\Action\Finances\Wallet\FetchOneWalletByIdAction
+  methods: GET
+
+api.v1.finances.wallets.create:
+  path: /api/v1/finances/wallets
+  controller: App\Web\API\Action\Finances\Wallet\CreateWalletAction
+  methods: POST
+
+api.v1.finances.wallets.update:
+  path: /api/v1/finances/wallets/{id}
+  controller: App\Web\API\Action\Finances\Wallet\UpdateWalletAction
+  methods: PATCH
+
+api.v1.finances.wallets.delete:
+  path: /api/v1/finances/wallets/{id}
+  controller: App\Web\API\Action\Finances\Wallet\DeleteWalletAction
+  methods: DELETE
+
+api.v1.finances.wallets.transactions:
+  path: /api/v1/finances/wallets/{wallet_id}/transactions
+  controller: App\Web\API\Action\Finances\Transaction\FetchAllTransactionsByWalletIdAction
+  methods: GET
+
+api.v1.finances.transactions.get-one:
+  path: /api/v1/finances/transactions/{id}
+  controller: App\Web\API\Action\Finances\Transaction\FetchOneTransactionByIdAction
+  methods: GET
+
+api.v1.finances.transactions.all:
+  path: /api/v1/finances/transactions
+  controller: App\Web\API\Action\Finances\Transaction\FetchAllTransactionsAction
+  methods: GET
+
+api.v1.finances.transactions.create:
+  path: /api/v1/finances/transactions
+  controller: App\Web\API\Action\Finances\Transaction\CreateTransactionAction
+  methods: POST
+
+api.v1.finances.transactions.update:
+  path: /api/v1/finances/transactions/{id}
+  controller: App\Web\API\Action\Finances\Transaction\UpdateTransactionAction
+  methods: PATCH
+
+api.v1.finances.transactions.delete:
+  path: /api/v1/finances/transactions/{id}
+  controller: App\Web\API\Action\Finances\Transaction\DeleteTransactionAction
+  methods: DELETE

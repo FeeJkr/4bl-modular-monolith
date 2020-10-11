@@ -6,14 +6,6 @@ services:
   App\Modules\Accounts\:
     resource: '../../../src/Modules/Accounts/'
 
-  App\Modules\Accounts\Infrastructure\UI\Http\Api\:
-    resource: '../../../src/Modules/Accounts/Infrastructure/UI/Http/Api/'
-    tags: ['controller.service_arguments']
-
-  App\Modules\Accounts\Infrastructure\UI\Http\Web\:
-    resource: '../../../src/Modules/Accounts/Infrastructure/UI/Http/Web/'
-    tags: ['controller.service_arguments']
-
   App\Modules\Accounts\Application\User\FetchToken\FetchTokenHandler:
     tags:
       - name: messenger.message_handler
