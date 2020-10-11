@@ -59,6 +59,13 @@ final class TokenMiddleware implements EventSubscriberInterface
         $this->urlGenerator = $urlGenerator;
     }
 
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            KernelEvents::CONTROLLER => 'onKernelController',
+        ];
+    }
+
     public function onKernelController(ControllerEvent $event): void
     {
         $this->actionFQCN = get_class($event->getController());
@@ -105,12 +112,5 @@ final class TokenMiddleware implements EventSubscriberInterface
         $event->setController(static function (): Response {
             return new JsonResponse(['error' => 'Authentication error.'], Response::HTTP_FORBIDDEN);
         });
-    }
-
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            KernelEvents::CONTROLLER => 'onKernelController',
-        ];
     }
 }
