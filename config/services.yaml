@@ -9,9 +9,8 @@ services:
     App\Common\:
         resource: '../src/Common/'
 
-    App\Common\Web\Middleware\TokenMiddleware:
-        tags: [ 'kernel.event_subscriber' ]
-
 imports:
     - {resource: 'modules/finances/services.yaml'}
     - {resource: 'modules/accounts/services.yaml'}
+    - {resource: 'web/mvc/services.yaml'}
+    - {resource: 'web/api/services.yaml'}

@@ -31,6 +31,6 @@ final class SignOutUserAction extends AbstractController
 
         $this->session->remove('user.token');
 
-        return $this->redirectToRoute('sign-in');
+        return $this->redirectToRoute('accounts.user.sign-in');
     }
 }

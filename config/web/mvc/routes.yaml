@@ -5,15 +5,25 @@ dashboard:
 
 accounts.user.sign-in:
   path: /sign-in
-  controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\SignInUserAction
+  controller: App\Web\MVC\Action\Accounts\User\SignInUserAction
   methods: [GET, POST]
 
 accounts.user.sign-out:
   path: /sign-out
-  controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\SignOutUserAction
+  controller: App\Web\MVC\Action\Accounts\User\SignOutUserAction
   methods: GET
 
 accounts.user.register:
   path: /register
-  controller: App\Modules\Accounts\Infrastructure\UI\Http\Web\User\RegisterUserAction
+  controller: App\Web\MVC\Action\Accounts\User\RegisterUserAction
   methods: [GET, POST]
+
+finances.dashboard:
+  path: /finances
+  controller: App\Web\MVC\Action\Finances\ShowFinancesDashboardAction
+  methods: GET
+
+finances.category.showAll:
+  path: /finances/categories
+  controller: App\Web\MVC\Action\Finances\Category\ShowAllCategoriesAction
+  methods: GET

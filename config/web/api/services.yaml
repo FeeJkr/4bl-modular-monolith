@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  App\Web\API\Action\:
+    resource: '../../../src/Web/API/Action/'
+    tags: ['controller.service_arguments']
+
+  App\Web\API\Middleware\TokenMiddleware:
+    tags: [ 'kernel.event_subscriber' ]

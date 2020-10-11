@@ -23,7 +23,7 @@ final class RegisterUserAction extends AbstractController
     public function __invoke(Request $request): Response
     {
         if ($request->getMethod() === 'GET') {
-            return $this->render('@Accounts/User/register.html.twig');
+            return $this->render('accounts/user/register.html.twig');
         }
 
         $email = $request->get('email');
@@ -40,13 +40,13 @@ final class RegisterUserAction extends AbstractController
                 ->that($password, 'repeat_password_is_true')->same($repeatPassword)
                 ->verifyNow();
         } catch (LazyAssertionException $exception) {
-            return $this->redirectToRoute('register');
+            return $this->redirectToRoute('accounts.user.register');
         }
 
         $command = new RegisterUserCommand($email, $username, $password);
 
         $this->bus->dispatch($command);
 
-        return $this->redirectToRoute('sign-in');
+        return $this->redirectToRoute('accounts.user.sign-in');
     }
 }

@@ -28,7 +28,7 @@ final class SignInUserAction extends AbstractController
     public function __invoke(Request $request): Response
     {
         if ($request->getMethod() === 'GET') {
-            return $this->render('@Accounts/User/sign-in.html.twig');
+            return $this->render('accounts/user/sign-in.html.twig');
         }
 
         $email = $request->get('email');
