@@ -6,12 +6,13 @@ namespace App\Web\API\Action\Finances\Transaction;
 use App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdQuery;
 use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\User\UserId;
+use App\Web\API\Action\AbstractAction;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class FetchOneTransactionByIdAction
+final class FetchOneTransactionByIdAction extends AbstractAction
 {
     private MessageBusInterface $bus;
 

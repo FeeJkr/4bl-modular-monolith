@@ -4,12 +4,13 @@ declare(strict_types=1);
 namespace App\Web\API\Action\Accounts\User;
 
 use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
+use App\Web\API\Action\AbstractAction;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class RegisterUserAction
+final class RegisterUserAction extends AbstractAction
 {
     private MessageBusInterface $bus;
 

@@ -9,13 +9,14 @@ use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
+use App\Web\API\Action\AbstractAction;
 use DateTime;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class CreateTransactionAction
+final class CreateTransactionAction extends AbstractAction
 {
     private MessageBusInterface $bus;
 
@@ -26,9 +27,11 @@ final class CreateTransactionAction
 
     public function __invoke(Request $request): JsonResponse
     {
+        $userId = $this->fetchUserId($this->bus, $request);
+
         $this->bus->dispatch(
             new CreateTransactionCommand(
-                UserId::fromInt($request->get('user_id')),
+                $userId,
                 WalletId::fromInt((int) $request->get('wallet_id')),
                 $request->get('linked_wallet_id') === null
                     ? WalletId::nullInstance()

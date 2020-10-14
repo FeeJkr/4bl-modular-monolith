@@ -6,12 +6,13 @@ namespace App\Web\API\Action\Finances\Wallet;
 use App\Modules\Finances\Application\Wallet\FetchOneById\FetchOneWalletByIdQuery;
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
+use App\Web\API\Action\AbstractAction;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class FetchOneWalletByIdAction
+final class FetchOneWalletByIdAction extends AbstractAction
 {
     private MessageBusInterface $bus;
 

@@ -7,13 +7,14 @@ use App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand;
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
+use App\Web\API\Action\AbstractAction;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class UpdateWalletAction
+final class UpdateWalletAction extends AbstractAction
 {
     private MessageBusInterface $bus;
 

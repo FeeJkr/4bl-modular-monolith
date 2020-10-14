@@ -6,12 +6,13 @@ namespace App\Web\API\Action\Accounts\User;
 use App\Modules\Accounts\Application\User\FetchToken\FetchTokenQuery;
 use App\Modules\Accounts\Application\User\FetchToken\TokenDTO;
 use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
+use App\Web\API\Action\AbstractAction;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class SignInUserAction
+final class SignInUserAction extends AbstractAction
 {
     private MessageBusInterface $bus;
 
