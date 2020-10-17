@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\Domain\Category\Doctrine;
 
-use App\Modules\Finances\Application\Category\FetchOneById\CategoryDTO;
 use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryException;
 use App\Modules\Finances\Domain\Category\CategoryId;
@@ -11,20 +10,15 @@ use App\Modules\Finances\Domain\Category\CategoryRepository as CategoryRepositor
 use App\Modules\Finances\Domain\Category\CategoryType;
 use App\Modules\Finances\Domain\User\UserId;
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 final class CategoryRepository implements CategoryRepositoryInterface
 {
     private EntityManagerInterface $entityManager;
-    private AdapterInterface $cache;
 
-    public function __construct(EntityManagerInterface $entityManager, AdapterInterface $cache)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->cache = $cache;
     }
 
     public function store(Category $category): void
@@ -36,11 +30,9 @@ final class CategoryRepository implements CategoryRepositoryInterface
                 'name' => $category->getName(),
                 'type' => $category->getType()->getValue(),
                 'icon' => $category->getIcon() ?? 'home',
-                'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
+                'created_at' => $category->getCreatedAt()->format('Y-m-d H:i:s'),
             ]
         );
-
-        $this->cache->clear('categories');
     }
 
     public function delete(CategoryId $categoryId, UserId $userId): void
@@ -56,8 +48,6 @@ final class CategoryRepository implements CategoryRepositoryInterface
         if ($isDeleted === 0) {
             throw CategoryException::notDeleted($categoryId, $userId);
         }
-
-        $this->cache->clear('categories');
     }
 
     public function fetchById(CategoryId $categoryId, UserId $userId): Category
@@ -78,7 +68,8 @@ final class CategoryRepository implements CategoryRepositoryInterface
             UserId::fromInt($data['user_id']),
             $data['name'],
             new CategoryType($data['type']),
-            $data['icon']
+            $data['icon'],
+            DateTime::createFromFormat('Y-m-d H:i:s', $data['created_at'])
         );
     }
 
@@ -92,13 +83,11 @@ final class CategoryRepository implements CategoryRepositoryInterface
             'icon' => $category->getIcon(),
             'id' => $category->getId()->toInt(),
         ]);
-
-        $this->cache->clear('categories');
     }
 
-    public function fetchAll(UserId $userId): Collection
+    public function fetchAll(UserId $userId): array
     {
-        $collection = new ArrayCollection();
+        $collection = [];
 
         $data = $this->entityManager->getConnection()->executeQuery(
             "SELECT * FROM categories WHERE user_id = :user_id",
@@ -106,26 +95,16 @@ final class CategoryRepository implements CategoryRepositoryInterface
         )->fetchAll();
 
         foreach ($data as $category) {
-            $collection->add(CategoryDTO::createFromArray($category));
+            $collection[] = new Category(
+                CategoryId::fromInt($category['id']),
+                UserId::fromInt($category['user_id']),
+                $category['name'],
+                new CategoryType($category['type']),
+                $category['icon'],
+                DateTime::createFromFormat('Y-m-d H:i:s', $category['created_at'])
+            );
         }
 
         return $collection;
-    }
-
-    public function fetchOneById(UserId $userId, CategoryId $categoryId): ?CategoryDTO
-    {
-        $data = $this->entityManager->getConnection()->executeQuery(
-            "SELECT * FROM categories WHERE user_id = :user_id AND id = :category_id",
-            [
-                'user_id' => $userId->toInt(),
-                'category_id' => $categoryId->toInt(),
-            ]
-        )->fetch();
-
-        if ($data === false) {
-            return null;
-        }
-
-        return CategoryDTO::createFromArray($data);
     }
 }

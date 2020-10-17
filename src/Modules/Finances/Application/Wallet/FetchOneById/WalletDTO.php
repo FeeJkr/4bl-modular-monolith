@@ -3,63 +3,52 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Wallet\FetchOneById;
 
-use App\Modules\Finances\Domain\Money;
-use App\Modules\Finances\Domain\User\UserId;
-use App\Modules\Finances\Domain\Wallet\WalletId;
-use DateTime;
 use DateTimeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use JsonSerializable;
 
-final class WalletDTO implements JsonSerializable
+final class WalletDTO
 {
-    private WalletId $id;
+    private int $id;
     private string $name;
-    private Money $startBalance;
-    private Collection $userIds;
+    private int $startBalance;
+    private int $userId;
     private DateTimeInterface $createdAt;
 
     public function __construct(
-        WalletId $id,
+        int $id,
         string $name,
-        Money $startBalance,
-        Collection $userIds,
+        int $startBalance,
+        int $userId,
         DateTimeInterface $createdAt
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->startBalance = $startBalance;
-        $this->userIds = $userIds;
+        $this->userId = $userId;
         $this->createdAt = $createdAt;
     }
 
-    public static function createFromArray(array $wallet): self
+    public function getId(): int
     {
-        $userIds = (new ArrayCollection(explode(', ', $wallet['user_ids'])))
-            ->map(static function (string $id): UserId {
-                return UserId::fromInt((int) $id);
-            });
-
-        return new self(
-            WalletId::fromInt($wallet['id']),
-            $wallet['name'],
-            new Money($wallet['start_balance']),
-            $userIds,
-            DateTime::createFromFormat('Y-m-d H:i:s', $wallet['created_at'])
-        );
+        return $this->id;
     }
 
-    public function jsonSerialize(): array
+    public function getName(): string
     {
-        return [
-            'id' => $this->id->toInt(),
-            'name' => $this->name,
-            'start_balance' => $this->startBalance->getAmount(),
-            'user_ids' => $this->userIds->map(static function (UserId $id): int {
-                return $id->toInt();
-            })->toArray(),
-            'created_at' => $this->createdAt->getTimestamp(),
-        ];
+        return $this->name;
+    }
+
+    public function getStartBalance(): int
+    {
+        return $this->startBalance;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }

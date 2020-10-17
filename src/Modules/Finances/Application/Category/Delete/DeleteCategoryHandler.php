@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Category\Delete;
 
+use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
+use App\Modules\Finances\Domain\User\UserId;
 
 final class DeleteCategoryHandler
 {
@@ -16,6 +18,9 @@ final class DeleteCategoryHandler
 
     public function __invoke(DeleteCategoryCommand $command): void
     {
-        $this->repository->delete($command->getCategoryId(), $command->getUserId());
+        $this->repository->delete(
+            CategoryId::fromInt($command->getCategoryId()),
+            UserId::fromInt($command->getUserId())
+        );
     }
 }

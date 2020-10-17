@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Wallet\Delete;
 
+use App\Modules\Finances\Domain\User\UserId;
+use App\Modules\Finances\Domain\Wallet\WalletId;
 use App\Modules\Finances\Domain\Wallet\WalletRepository;
 
 final class DeleteWalletHandler
@@ -16,6 +18,9 @@ final class DeleteWalletHandler
 
     public function __invoke(DeleteWalletCommand $command): void
     {
-        $this->repository->delete($command->getWalletId(), $command->getUserId());
+        $this->repository->delete(
+            WalletId::fromInt($command->getWalletId()),
+            UserId::fromInt($command->getUserId())
+        );
     }
 }

@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Category\FetchAll;
 
+use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
-use Doctrine\Common\Collections\Collection;
+use App\Modules\Finances\Domain\User\UserId;
 
 final class FetchAllCategoriesHandler
 {
@@ -15,8 +16,23 @@ final class FetchAllCategoriesHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchAllCategoriesQuery $query): Collection
+    public function __invoke(FetchAllCategoriesQuery $query): CategoriesCollection
     {
-        return $this->repository->fetchAll($query->getUserId());
+        $data = [];
+        $categories = $this->repository->fetchAll(UserId::fromInt($query->getUserId()));
+
+        /** @var Category $category */
+        foreach ($categories as $category) {
+            $data[] = new CategoryDTO(
+                $category->getId()->toInt(),
+                $category->getUserId()->toInt(),
+                $category->getName(),
+                $category->getType()->getValue(),
+                $category->getIcon(),
+                $category->getCreatedAt()
+            );
+        }
+
+        return new CategoriesCollection($data);
     }
 }

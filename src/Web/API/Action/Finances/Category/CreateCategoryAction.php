@@ -3,37 +3,27 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Finances\Category;
 
-use App\Modules\Finances\Application\Category\Create\CreateCategoryCommand;
-use App\Modules\Finances\Domain\Category\CategoryType;
-use App\Modules\Finances\Domain\User\UserId;
 use App\Web\API\Action\AbstractAction;
+use App\Web\API\Request\Finances\Category\CreateCategoryRequest;
+use App\Web\API\Service\Finances\Category\CategoryService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 final class CreateCategoryAction extends AbstractAction
 {
-    private MessageBusInterface $bus;
+    private CategoryService $service;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(CategoryService $service)
     {
-        $this->bus = $bus;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $userId = $this->fetchUserId($this->bus, $request);
+        $request = CreateCategoryRequest::createFromServerRequest($request);
 
-        $this->bus->dispatch(
-            new CreateCategoryCommand(
-                $userId,
-                $request->get('category_name'),
-                new CategoryType($request->get('category_type')),
-                $request->get('category_icon')
-            )
-        );
+        $this->service->createCategory($request);
 
-        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+        return $this->noContentResponse();
     }
 }

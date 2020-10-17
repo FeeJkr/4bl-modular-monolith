@@ -3,47 +3,27 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Finances\Wallet;
 
-use App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand;
-use App\Modules\Finances\Domain\Money;
-use App\Modules\Finances\Domain\User\UserId;
-use App\Modules\Finances\Domain\Wallet\WalletId;
 use App\Web\API\Action\AbstractAction;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Web\API\Request\Finances\Wallet\UpdateWalletRequest;
+use App\Web\API\Service\Finances\Wallet\WalletService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 final class UpdateWalletAction extends AbstractAction
 {
-    private MessageBusInterface $bus;
+    private WalletService $service;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(WalletService $service)
     {
-        $this->bus = $bus;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $userIds = new ArrayCollection();
+        $request = UpdateWalletRequest::createFromServerRequest($request);
 
-        if (! empty($request->get('wallet_user_ids'))) {
-            $userIds = (new ArrayCollection(explode(', ', $request->get('wallet_user_ids'))))
-                ->map(static function (string $id): UserId { return UserId::fromInt((int) $id); });
-        }
+        $this->service->updateWallet($request);
 
-        $userIds->add($request->get('user_id'));
-
-        $this->bus->dispatch(
-            new UpdateWalletCommand(
-                WalletId::fromInt((int) $request->get('id')),
-                UserId::fromInt($request->get('user_id')),
-                $request->get('wallet_name'),
-                new Money((int) $request->get('wallet_start_balance')),
-                $userIds
-            )
-        );
-
-        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+        return $this->noContentResponse();
     }
 }

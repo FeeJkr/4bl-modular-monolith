@@ -3,20 +3,17 @@ declare(strict_types=1);
 
 namespace App\Web\API\Request\Finances\Wallet;
 
-use App\Modules\Finances\Domain\Money;
-use App\Modules\Finances\Domain\User\Token;
+use App\Web\API\Request\Request as RequestInterface;
 use Assert\Assert;
 use Symfony\Component\HttpFoundation\Request;
 
-final class CreateWalletRequest
+final class CreateWalletRequest extends RequestInterface
 {
-
-
     private string $walletName;
-    private Money $walletStartBalance;
+    private int $walletStartBalance;
     private string $userToken;
 
-    private function __construct(string $walletName, Money $walletStartBalance, string $userToken)
+    public function __construct(string $walletName, int $walletStartBalance, string $userToken)
     {
         $this->walletName = $walletName;
         $this->walletStartBalance = $walletStartBalance;
@@ -25,22 +22,21 @@ final class CreateWalletRequest
 
     public static function createFromServerRequest(Request $request): self
     {
-        self::validate($request);
+        $walletName = $request->get('name');
+        $startBalance = $request->get('start_balance');
+        $userToken = self::extendUserTokenFromRequest($request);
+
+        Assert::lazy()
+            ->that($walletName, 'name')->notEmpty()
+            ->that($startBalance, 'start_balance')->notEmpty()
+            ->that($userToken, 'user_token')->notEmpty()
+            ->verifyNow();
 
         return new self(
-            $request->get('name'),
-            $request->get('start_balance'),
-            $request->headers->get('X-Authorization')
+            $walletName,
+            (int) $startBalance,
+            $userToken
         );
-    }
-
-    private static function validate(Request $request): void
-    {
-        Assert::lazy()
-            ->that($request->get('name'), 'name')->notEmpty()
-            ->that($request->get('start_balance'), 'start_balance')->notEmpty()
-            ->that($request->headers->get('X-Authorization'))->notEmpty()
-            ->verifyNow();
     }
 
     public function getWalletName(): string
@@ -48,7 +44,7 @@ final class CreateWalletRequest
         return $this->walletName;
     }
 
-    public function getWalletStartBalance(): Money
+    public function getWalletStartBalance(): int
     {
         return $this->walletStartBalance;
     }

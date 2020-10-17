@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Wallet\FetchOneById;
 
+use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletException;
+use App\Modules\Finances\Domain\Wallet\WalletId;
 use App\Modules\Finances\Domain\Wallet\WalletRepository;
 
 final class FetchOneWalletByIdHandler
@@ -17,12 +19,21 @@ final class FetchOneWalletByIdHandler
 
     public function __invoke(FetchOneWalletByIdQuery $query): WalletDTO
     {
-        $walletDTO = $this->repository->fetchOneById($query->getWalletId(), $query->getUserId());
+        $walletId = WalletId::fromInt($query->getWalletId());
+        $userId = UserId::fromInt($query->getUserId());
 
-        if ($walletDTO === null) {
-            throw WalletException::notFound($query->getWalletId(), $query->getUserId());
+        $wallet = $this->repository->fetchById($walletId, $userId);
+
+        if ($wallet === null) {
+            throw WalletException::notFound($walletId, $userId);
         }
 
-        return $walletDTO;
+        return new WalletDTO(
+            $wallet->getId()->toInt(),
+            $wallet->getName(),
+            $wallet->getStartBalance()->getAmount(),
+            $wallet->getUserId()->toInt(),
+            $wallet->getCreatedAt()
+        );
     }
 }

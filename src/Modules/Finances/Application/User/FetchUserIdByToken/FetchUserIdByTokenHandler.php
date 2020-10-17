@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\User\FetchUserIdByToken;
 
-use App\Modules\Finances\Domain\User\UserId;
+use App\Modules\Finances\Domain\User\Token;
 use App\Modules\Finances\Domain\User\UserRepository;
 
 final class FetchUserIdByTokenHandler
@@ -15,8 +15,10 @@ final class FetchUserIdByTokenHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchUserIdByTokenQuery $query): UserId
+    public function __invoke(FetchUserIdByTokenQuery $query): int
     {
-        return $this->repository->fetchIdByToken($query->getToken());
+        return $this->repository
+            ->fetchIdByToken(new Token($query->getToken()))
+            ->toInt();
     }
 }
