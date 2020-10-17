@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\FetchAllByWallet;
 
+use App\Modules\Finances\Domain\Transaction\Transaction;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
-use Doctrine\Common\Collections\Collection;
+use App\Modules\Finances\Domain\User\UserId;
+use App\Modules\Finances\Domain\Wallet\WalletId;
 
 final class FetchAllTransactionsByWalletHandler
 {
@@ -15,8 +17,32 @@ final class FetchAllTransactionsByWalletHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchAllTransactionsByWalletQuery $query): Collection
+    public function __invoke(FetchAllTransactionsByWalletQuery $query): TransactionsCollection
     {
-        return $this->repository->fetchAllByWallet($query->getWalletId(), $query->getUserId());
+        $data = [];
+        $transactions = $this->repository->fetchAllByWallet(
+            WalletId::fromInt($query->getWalletId()),
+            UserId::fromInt($query->getUserId())
+        );
+
+        /** @var Transaction $transaction */
+        foreach ($transactions as $transaction) {
+            $data[] = new TransactionDTO(
+                $transaction->getId()->toInt(),
+                $transaction->getLinkedTransaction() !== null
+                    ? $transaction->getLinkedTransaction()->getId()->toInt()
+                    : null,
+                $transaction->getUserId()->toInt(),
+                $transaction->getWalletId()->toInt(),
+                $transaction->getCategoryId()->toInt(),
+                $transaction->getType()->getValue(),
+                $transaction->getAmount()->getAmount(),
+                $transaction->getDescription(),
+                $transaction->getOperationAt(),
+                $transaction->getCreatedAt()
+            );
+        }
+
+        return new TransactionsCollection($data);
     }
 }

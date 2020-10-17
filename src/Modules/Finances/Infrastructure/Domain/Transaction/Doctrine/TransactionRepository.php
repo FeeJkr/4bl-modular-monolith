@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Infrastructure\Domain\Transaction\Doctrine;
 
-use App\Modules\Finances\Application\Transaction\FetchOneById\TransactionDTO;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\LinkedTransaction;
@@ -15,20 +14,15 @@ use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 final class TransactionRepository implements TransactionRepositoryInterface
 {
     private EntityManagerInterface $entityManager;
-    private AdapterInterface $cache;
 
-    public function __construct(EntityManagerInterface $entityManager, AdapterInterface $cache)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->cache = $cache;
     }
 
     public function store(Transaction $transaction): void
@@ -73,8 +67,6 @@ final class TransactionRepository implements TransactionRepositoryInterface
                  ]
              );
         }
-
-        $this->cache->clear('transactions');
     }
 
     public function delete(TransactionId $transactionId, UserId $userId): void
@@ -87,8 +79,6 @@ final class TransactionRepository implements TransactionRepositoryInterface
                 'id' => $transactionId->toInt(),
             ]
         );
-
-        $this->cache->clear('transactions');
     }
 
     public function save(Transaction $transaction): void
@@ -168,8 +158,6 @@ final class TransactionRepository implements TransactionRepositoryInterface
             'description' => $transaction->getDescription(),
             'operationAt' => $transaction->getOperationAt()->format('Y-m-d H:i:s'),
         ]);
-
-        $this->cache->clear('transactions');
     }
 
     public function fetchById(TransactionId $transactionId, UserId $userId): Transaction
@@ -213,9 +201,9 @@ final class TransactionRepository implements TransactionRepositoryInterface
         );
     }
 
-    public function fetchAllByWallet(WalletId $walletId, UserId $userId): Collection
+    public function fetchAllByWallet(WalletId $walletId, UserId $userId): array
     {
-        $collection = new ArrayCollection();
+        $collection = [];
         $data = $this->entityManager->getConnection()->executeQuery("
             WITH wallet_transactions AS (
                 SELECT * FROM transactions WHERE wallet_id = :walletId AND user_id = :userId
@@ -228,37 +216,34 @@ final class TransactionRepository implements TransactionRepositoryInterface
         ])->fetchAll();
 
         foreach ($data as $transaction) {
-            $collection->add($transaction);
+            $linkedTransaction = $transaction['transaction_id'] !== null
+                ? new LinkedTransaction(
+                    TransactionId::fromInt($transaction['transaction_id']),
+                    WalletId::fromInt($transaction['linked_transaction_wallet_id']),
+                    new Money($transaction['linked_transaction_amount'])
+                )
+                : null;
+
+            $collection[] = new Transaction(
+                TransactionId::fromInt($transaction['id']),
+                $linkedTransaction,
+                UserId::fromInt($transaction['user_id']),
+                WalletId::fromInt($transaction['wallet_id']),
+                CategoryId::fromInt($transaction['category_id']),
+                new TransactionType($transaction['type']),
+                new Money($transaction['amount']),
+                $transaction['description'],
+                DateTime::createFromFormat('Y-m-d H:i:s', $transaction['operation_at']),
+                DateTime::createFromFormat('Y-m-d H:i:s', $transaction['created_at'])
+            );
         }
 
-        return $collection->map(static function (array $transaction): TransactionDTO {
-            return TransactionDTO::createFromArray($transaction);
-        });
+        return $collection;
     }
 
-    public function fetchOneById(TransactionId $transactionId, UserId $userId): TransactionDTO
+    public function fetchAll(UserId $userId): array
     {
-        $data = $this->entityManager->getConnection()->executeQuery("
-            SELECT * FROM transactions 
-            WHERE id = :transactionId 
-              AND user_id = :userId 
-              AND wallet_id IN (SELECT wallet_id FROM wallets_users WHERE user_id = :subQueryWalletId)
-        ", [
-            'transactionId' => $transactionId->toInt(),
-            'userId' => $userId->toInt(),
-            'subQueryWalletId' => $userId->toInt(),
-        ])->fetch();
-
-        if ($data === false) {
-            throw TransactionException::notFound($transactionId, $userId);
-        }
-
-        return TransactionDTO::createFromArray($data);
-    }
-
-    public function fetchAll(UserId $userId): Collection
-    {
-        $collection = new ArrayCollection();
+        $collection = [];
         $data = $this->entityManager->getConnection()->executeQuery("
             WITH wallet_transactions AS (
                 SELECT * FROM transactions WHERE user_id = :userId
@@ -270,11 +255,28 @@ final class TransactionRepository implements TransactionRepositoryInterface
         ])->fetchAll();
 
         foreach ($data as $transaction) {
-            $collection->add($transaction);
+            $linkedTransaction = $transaction['transaction_id'] !== null
+                ? new LinkedTransaction(
+                    TransactionId::fromInt($transaction['transaction_id']),
+                    WalletId::fromInt($transaction['linked_transaction_wallet_id']),
+                    new Money($transaction['linked_transaction_amount'])
+                )
+                : null;
+
+            $collection[] = new Transaction(
+                TransactionId::fromInt($transaction['id']),
+                $linkedTransaction,
+                UserId::fromInt($transaction['user_id']),
+                WalletId::fromInt($transaction['wallet_id']),
+                CategoryId::fromInt($transaction['category_id']),
+                new TransactionType($transaction['type']),
+                new Money($transaction['amount']),
+                $transaction['description'],
+                DateTime::createFromFormat('Y-m-d H:i:s', $transaction['operation_at']),
+                DateTime::createFromFormat('Y-m-d H:i:s', $transaction['created_at'])
+            );
         }
 
-        return $collection->map(static function (array $transaction): TransactionDTO {
-            return TransactionDTO::createFromArray($transaction);
-        });
+        return $collection;
     }
 }

@@ -3,35 +3,27 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Finances\Transaction;
 
-use App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdQuery;
-use App\Modules\Finances\Domain\Transaction\TransactionId;
-use App\Modules\Finances\Domain\User\UserId;
 use App\Web\API\Action\AbstractAction;
+use App\Web\API\Request\Finances\Transaction\GetTransactionByIdRequest;
+use App\Web\API\Service\Finances\Transaction\TransactionService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class FetchOneTransactionByIdAction extends AbstractAction
 {
-    private MessageBusInterface $bus;
+    private TransactionService $service;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(TransactionService $service)
     {
-        $this->bus = $bus;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $query = new FetchOneTransactionByIdQuery(
-            TransactionId::fromInt((int) $request->get('id')),
-            UserId::fromInt($request->get('user_id'))
-        );
+        $request = GetTransactionByIdRequest::createFromServerRequest($request);
 
-        $result = $this->bus->dispatch($query)
-            ->last(HandledStamp::class)
-            ->getResult();
+        $data = $this->service->getTransactionById($request);
 
-        return new JsonResponse($result);
+        return new JsonResponse($data);
     }
 }

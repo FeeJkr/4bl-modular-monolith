@@ -7,7 +7,6 @@ use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
 use App\Web\API\Action\AbstractAction;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class RegisterUserAction extends AbstractAction
@@ -29,6 +28,6 @@ final class RegisterUserAction extends AbstractAction
 
         $this->bus->dispatch($command);
 
-        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+        return $this->noContentResponse();
     }
 }

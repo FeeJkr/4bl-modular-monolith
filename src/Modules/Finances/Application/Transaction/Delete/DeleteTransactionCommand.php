@@ -3,26 +3,23 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\Delete;
 
-use App\Modules\Finances\Domain\Transaction\TransactionId;
-use App\Modules\Finances\Domain\User\UserId;
-
 final class DeleteTransactionCommand
 {
-    private TransactionId $transactionId;
-    private UserId $userId;
+    private int $transactionId;
+    private int $userId;
 
-    public function __construct(TransactionId $transactionId, UserId $userId)
+    public function __construct(int $transactionId, int $userId)
     {
         $this->transactionId = $transactionId;
         $this->userId = $userId;
     }
 
-    public function getTransactionId(): TransactionId
+    public function getTransactionId(): int
     {
         return $this->transactionId;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }

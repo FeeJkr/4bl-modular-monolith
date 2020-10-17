@@ -3,24 +3,12 @@ services:
     autowire: true
     public: false
 
+  App\Web\API\:
+    resource: '../../../src/Web/API/'
+
   App\Web\API\Action\:
     resource: '../../../src/Web/API/Action/'
     tags: ['controller.service_arguments']
 
   App\Web\API\Middleware\TokenMiddleware:
     tags: [ 'kernel.event_subscriber' ]
-
-  App\Web\API\Service\Finances\Wallet\WalletService:
-    class: App\Web\API\Service\Finances\Wallet\DirectCallWalletService
-
-  App\Web\API\Service\Finances\User\UserService:
-    class: App\Web\API\Service\Finances\User\DirectCallUserService
-
-  App\Web\API\ViewModel\Finances\Wallet\ViewModelMapper:
-    class: App\Web\API\ViewModel\Finances\Wallet\ViewModelMapper
-
-  App\Web\API\Service\Finances\Category\CategoryService:
-    class: App\Web\API\Service\Finances\Category\DirectCallCategoryService
-
-  App\Web\API\ViewModel\Finances\Category\ViewModelMapper:
-    class: App\Web\API\ViewModel\Finances\Category\ViewModelMapper

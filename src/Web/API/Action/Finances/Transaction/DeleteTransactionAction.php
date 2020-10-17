@@ -3,33 +3,27 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Finances\Transaction;
 
-use App\Modules\Finances\Application\Transaction\Delete\DeleteTransactionCommand;
-use App\Modules\Finances\Domain\Transaction\TransactionId;
-use App\Modules\Finances\Domain\User\UserId;
 use App\Web\API\Action\AbstractAction;
+use App\Web\API\Request\Finances\Transaction\DeleteTransactionRequest;
+use App\Web\API\Service\Finances\Transaction\TransactionService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 final class DeleteTransactionAction extends AbstractAction
 {
-    private MessageBusInterface $bus;
+    private TransactionService $service;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(TransactionService $service)
     {
-        $this->bus = $bus;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $this->bus->dispatch(
-            new DeleteTransactionCommand(
-                TransactionId::fromInt((int) $request->get('id')),
-                UserId::fromInt($request->get('user_id'))
-            )
-        );
+        $request = DeleteTransactionRequest::createFromServerRequest($request);
 
-        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+        $this->service->deleteTransaction($request);
+
+        return $this->noContentResponse();
     }
 }
