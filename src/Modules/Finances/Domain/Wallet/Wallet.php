@@ -5,26 +5,29 @@ namespace App\Modules\Finances\Domain\Wallet;
 
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\User\UserId;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
+use DateTimeInterface;
 
 final class Wallet
 {
     private WalletId $id;
     private string $name;
     private Money $startBalance;
-    private Collection $userIds;
+    private UserId $userId;
+    private DateTimeInterface $createdAt;
 
     public function __construct(
         WalletId $id,
         string $name,
         Money $startBalance,
-        Collection $userIds
+        UserId $userId,
+        DateTimeInterface $createdAt
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->startBalance = $startBalance;
-        $this->userIds = $userIds;
+        $this->userId = $userId;
+        $this->createdAt = $createdAt;
     }
 
     public static function createNew(string $name, Money $startBalance, UserId $userId): self
@@ -33,11 +36,12 @@ final class Wallet
             WalletId::nullInstance(),
             $name,
             $startBalance,
-            new ArrayCollection([$userId])
+            $userId,
+            new DateTime()
         );
     }
 
-    public function update(string $name, Money $startBalance, Collection $userIds): void
+    public function update(string $name, Money $startBalance, UserId $userId): void
     {
         if ($this->name !== $name) {
             $this->name = $name;
@@ -47,13 +51,8 @@ final class Wallet
             $this->startBalance = $startBalance;
         }
 
-        $oldUserIds = $this->userIds->map(static function (UserId $id): int { return $id->toInt(); })->getValues();
-        $newUserIds = $userIds->map(static function (UserId $id): int { return $id->toInt(); })->getValues();
-        sort($oldUserIds);
-        sort($newUserIds);
-
-        if ($newUserIds !== $oldUserIds) {
-            $this->userIds = $userIds;
+        if ($this->userId->toInt() !== $userId->toInt()) {
+            $this->userId = $userId;
         }
     }
 
@@ -72,8 +71,13 @@ final class Wallet
         return $this->startBalance;
     }
 
-    public function getUserIds(): Collection
+    public function getUserId(): UserId
     {
-        return $this->userIds;
+        return $this->userId;
+    }
+
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }

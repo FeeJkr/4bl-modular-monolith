@@ -5,6 +5,8 @@ namespace App\Modules\Finances\Application\Category\Create;
 
 use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
+use App\Modules\Finances\Domain\Category\CategoryType;
+use App\Modules\Finances\Domain\User\UserId;
 
 final class CreateCategoryHandler
 {
@@ -18,9 +20,9 @@ final class CreateCategoryHandler
     public function __invoke(CreateCategoryCommand $command): void
     {
         $category = Category::createNew(
-            $command->getUserId(),
+            UserId::fromInt($command->getUserId()),
             $command->getCategoryName(),
-            $command->getCategoryType(),
+            new CategoryType($command->getCategoryType()),
             $command->getCategoryIcon()
         );
 

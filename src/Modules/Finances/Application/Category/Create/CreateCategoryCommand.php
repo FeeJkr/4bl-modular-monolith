@@ -3,20 +3,17 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Category\Create;
 
-use App\Modules\Finances\Domain\Category\CategoryType;
-use App\Modules\Finances\Domain\User\UserId;
-
 final class CreateCategoryCommand
 {
-    private UserId $userId;
+    private int $userId;
     private string $categoryName;
-    private CategoryType $categoryType;
+    private string $categoryType;
     private ?string $categoryIcon;
 
     public function __construct(
-        UserId $userId,
+        int $userId,
         string $categoryName,
-        CategoryType $categoryType,
+        string $categoryType,
         ?string $categoryIcon
     ) {
         $this->userId = $userId;
@@ -25,7 +22,7 @@ final class CreateCategoryCommand
         $this->categoryIcon = $categoryIcon;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -35,7 +32,7 @@ final class CreateCategoryCommand
         return $this->categoryName;
     }
 
-    public function getCategoryType(): CategoryType
+    public function getCategoryType(): string
     {
         return $this->categoryType;
     }

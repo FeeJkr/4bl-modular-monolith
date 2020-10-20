@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Domain\Category;
 
 use App\Modules\Finances\Domain\User\UserId;
+use DateTime;
+use DateTimeInterface;
 
 final class Category
 {
@@ -14,19 +16,22 @@ final class Category
     private string $name;
     private CategoryType $type;
     private ?string $icon;
+    private DateTimeInterface $createdAt;
 
     public function __construct(
         CategoryId $id,
         UserId $userId,
         string $name,
         CategoryType $type,
-        ?string $icon
+        ?string $icon,
+        DateTimeInterface $createdAt
     ) {
         $this->id = $id;
         $this->userId = $userId;
         $this->name = $name;
         $this->type = $type;
         $this->icon = $icon;
+        $this->createdAt = $createdAt;
     }
 
     public static function createNew(
@@ -40,7 +45,8 @@ final class Category
             $userId,
             $name,
             $type,
-            $icon
+            $icon,
+            new DateTime()
         );
     }
 
@@ -86,5 +92,10 @@ final class Category
         }
 
         return $this->icon;
+    }
+
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }

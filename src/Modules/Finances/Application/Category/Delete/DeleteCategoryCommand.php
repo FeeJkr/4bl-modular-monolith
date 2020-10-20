@@ -3,26 +3,23 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Category\Delete;
 
-use App\Modules\Finances\Domain\Category\CategoryId;
-use App\Modules\Finances\Domain\User\UserId;
-
 final class DeleteCategoryCommand
 {
-    private CategoryId $categoryId;
-    private UserId $userId;
+    private int $categoryId;
+    private int $userId;
 
-    public function __construct(CategoryId $categoryId, UserId $userId)
+    public function __construct(int $categoryId, int $userId)
     {
         $this->categoryId = $categoryId;
         $this->userId = $userId;
     }
 
-    public function getCategoryId(): CategoryId
+    public function getCategoryId(): int
     {
         return $this->categoryId;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }

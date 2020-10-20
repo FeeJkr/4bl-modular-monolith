@@ -8,6 +8,6 @@ interface UserRepository
     public function store(User $user): void;
     public function save(User $user): void;
     public function fetchByEmail(string $email): ?User;
-    public function fetchIdByToken(Token $token): UserId;
+    public function existsByEmailOrUsername(string $email, string $username): bool;
     public function fetchByToken(Token $token): User;
 }

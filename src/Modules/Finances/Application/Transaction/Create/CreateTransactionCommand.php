@@ -3,31 +3,26 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\Create;
 
-use App\Modules\Finances\Domain\Category\CategoryId;
-use App\Modules\Finances\Domain\Money;
-use App\Modules\Finances\Domain\Transaction\TransactionType;
-use App\Modules\Finances\Domain\User\UserId;
-use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTimeInterface;
 
 final class CreateTransactionCommand
 {
-    private UserId $userId;
-    private WalletId $walletId;
-    private WalletId $linkedWalletId;
-    private CategoryId $categoryId;
-    private TransactionType $transactionType;
-    private Money $amount;
+    private int $userId;
+    private int $walletId;
+    private ?int $linkedWalletId;
+    private int $categoryId;
+    private string $transactionType;
+    private int $amount;
     private ?string $description;
     private DateTimeInterface $operationAt;
 
     public function __construct(
-        UserId $userId,
-        WalletId $walletId,
-        WalletId $linkedWalletId,
-        CategoryId $categoryId,
-        TransactionType $transactionType,
-        Money $amount,
+        int $userId,
+        int $walletId,
+        ?int $linkedWalletId,
+        int $categoryId,
+        string $transactionType,
+        int $amount,
         ?string $description,
         DateTimeInterface $operationAt
     ) {
@@ -41,32 +36,32 @@ final class CreateTransactionCommand
         $this->operationAt = $operationAt;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    public function getWalletId(): WalletId
+    public function getWalletId(): int
     {
         return $this->walletId;
     }
 
-    public function getLinkedWalletId(): WalletId
+    public function getLinkedWalletId(): ?int
     {
         return $this->linkedWalletId;
     }
 
-    public function getCategoryId(): CategoryId
+    public function getCategoryId(): int
     {
         return $this->categoryId;
     }
 
-    public function getTransactionType(): TransactionType
+    public function getTransactionType(): string
     {
         return $this->transactionType;
     }
 
-    public function getAmount(): Money
+    public function getAmount(): int
     {
         return $this->amount;
     }

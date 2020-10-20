@@ -16,4 +16,9 @@ final class UserException extends Exception
     {
         return new self(sprintf('User with token %s not found.', $token->toString()));
     }
+
+    public static function alreadyExists(): self
+    {
+        return new self('Users with given email or username already exists');
+    }
 }

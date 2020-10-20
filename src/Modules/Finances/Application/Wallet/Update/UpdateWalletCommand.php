@@ -3,39 +3,31 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Wallet\Update;
 
-use App\Modules\Finances\Domain\Money;
-use App\Modules\Finances\Domain\User\UserId;
-use App\Modules\Finances\Domain\Wallet\WalletId;
-use Doctrine\Common\Collections\Collection;
-
 final class UpdateWalletCommand
 {
-    private WalletId $walletId;
-    private UserId $userId;
+    private int $walletId;
+    private int $userId;
     private string $name;
-    private Money $startBalance;
-    private Collection $userIds;
+    private int $startBalance;
 
     public function __construct(
-        WalletId $walletId,
-        UserId $userId,
+        int $walletId,
+        int $userId,
         string $name,
-        Money $startBalance,
-        Collection $userIds
+        int $startBalance
     ) {
         $this->walletId = $walletId;
         $this->userId = $userId;
         $this->name = $name;
         $this->startBalance = $startBalance;
-        $this->userIds = $userIds;
     }
 
-    public function getWalletId(): WalletId
+    public function getWalletId(): int
     {
         return $this->walletId;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -45,13 +37,8 @@ final class UpdateWalletCommand
         return $this->name;
     }
 
-    public function getStartBalance(): Money
+    public function getStartBalance(): int
     {
         return $this->startBalance;
-    }
-
-    public function getUserIds(): Collection
-    {
-        return $this->userIds;
     }
 }

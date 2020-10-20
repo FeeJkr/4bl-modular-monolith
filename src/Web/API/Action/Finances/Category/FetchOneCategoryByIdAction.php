@@ -3,34 +3,27 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Finances\Category;
 
-use App\Modules\Finances\Application\Category\FetchOneById\FetchOneCategoryByIdQuery;
-use App\Modules\Finances\Domain\Category\CategoryId;
-use App\Modules\Finances\Domain\User\UserId;
+use App\Web\API\Action\AbstractAction;
+use App\Web\API\Request\Finances\Category\FetchOneCategoryByIdRequest;
+use App\Web\API\Service\Finances\Category\CategoryService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class FetchOneCategoryByIdAction
+final class FetchOneCategoryByIdAction extends AbstractAction
 {
-    private MessageBusInterface $bus;
+    private CategoryService $service;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(CategoryService $service)
     {
-        $this->bus = $bus;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $query = new FetchOneCategoryByIdQuery(
-            UserId::fromInt($request->get('user_id')),
-            CategoryId::fromInt((int) $request->get('id'))
-        );
+        $request = FetchOneCategoryByIdRequest::createFromServerRequest($request);
 
-        $result = $this->bus->dispatch($query)
-            ->last(HandledStamp::class)
-            ->getResult();
+        $data = $this->service->getOneCategoryById($request);
 
-        return new JsonResponse($result);
+        return new JsonResponse($data);
     }
 }

@@ -147,6 +147,9 @@
     "symfony/amqp-messenger": {
         "version": "v5.1.5"
     },
+    "symfony/browser-kit": {
+        "version": "v5.1.7"
+    },
     "symfony/cache": {
         "version": "v5.1.2"
     },
@@ -168,6 +171,9 @@
             "bin/console"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v5.1.7"
+    },
     "symfony/dependency-injection": {
         "version": "v5.1.2"
     },
@@ -179,6 +185,9 @@
     },
     "symfony/doctrine-messenger": {
         "version": "v5.1.5"
+    },
+    "symfony/dom-crawler": {
+        "version": "v5.1.7"
     },
     "symfony/dotenv": {
         "version": "v5.1.2"
@@ -228,6 +237,9 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/http-foundation": {
         "version": "v5.1.2"

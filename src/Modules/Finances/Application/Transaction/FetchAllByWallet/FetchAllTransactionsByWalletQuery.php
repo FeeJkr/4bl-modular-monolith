@@ -3,26 +3,23 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\FetchAllByWallet;
 
-use App\Modules\Finances\Domain\User\UserId;
-use App\Modules\Finances\Domain\Wallet\WalletId;
-
 final class FetchAllTransactionsByWalletQuery
 {
-    private WalletId $walletId;
-    private UserId $userId;
+    private int $walletId;
+    private int $userId;
 
-    public function __construct(WalletId $walletId, UserId $userId)
+    public function __construct(int $walletId, int $userId)
     {
         $this->walletId = $walletId;
         $this->userId = $userId;
     }
 
-    public function getWalletId(): WalletId
+    public function getWalletId(): int
     {
         return $this->walletId;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }

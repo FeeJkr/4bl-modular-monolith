@@ -3,34 +3,28 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\Update;
 
-use App\Modules\Finances\Domain\Category\CategoryId;
-use App\Modules\Finances\Domain\Money;
-use App\Modules\Finances\Domain\Transaction\TransactionId;
-use App\Modules\Finances\Domain\Transaction\TransactionType;
-use App\Modules\Finances\Domain\User\UserId;
-use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTimeInterface;
 
 final class UpdateTransactionCommand
 {
-    private TransactionId $transactionId;
-    private UserId $userId;
-    private WalletId $walletId;
-    private WalletId $linkedWalletId;
-    private CategoryId $categoryId;
-    private TransactionType $transactionType;
-    private Money $amount;
+    private int $transactionId;
+    private int $userId;
+    private int $walletId;
+    private ?int $linkedWalletId;
+    private int $categoryId;
+    private string $transactionType;
+    private int $amount;
     private ?string $description;
     private DateTimeInterface $operationAt;
 
     public function __construct(
-        TransactionId $transactionId,
-        UserId $userId,
-        WalletId $walletId,
-        WalletId $linkedWalletId,
-        CategoryId $categoryId,
-        TransactionType $transactionType,
-        Money $amount,
+        int $transactionId,
+        int $userId,
+        int $walletId,
+        ?int $linkedWalletId,
+        int $categoryId,
+        string $transactionType,
+        int $amount,
         ?string $description,
         DateTimeInterface $operationAt
     ) {
@@ -45,37 +39,37 @@ final class UpdateTransactionCommand
         $this->operationAt = $operationAt;
     }
 
-    public function getTransactionId(): TransactionId
+    public function getTransactionId(): int
     {
         return $this->transactionId;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    public function getWalletId(): WalletId
+    public function getWalletId(): int
     {
         return $this->walletId;
     }
 
-    public function getLinkedWalletId(): WalletId
+    public function getLinkedWalletId(): ?int
     {
         return $this->linkedWalletId;
     }
 
-    public function getCategoryId(): CategoryId
+    public function getCategoryId(): int
     {
         return $this->categoryId;
     }
 
-    public function getTransactionType(): TransactionType
+    public function getTransactionType(): string
     {
         return $this->transactionType;
     }
 
-    public function getAmount(): Money
+    public function getAmount(): int
     {
         return $this->amount;
     }

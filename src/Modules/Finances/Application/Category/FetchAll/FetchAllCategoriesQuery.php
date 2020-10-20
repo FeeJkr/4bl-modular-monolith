@@ -3,18 +3,16 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Category\FetchAll;
 
-use App\Modules\Finances\Domain\User\UserId;
-
 final class FetchAllCategoriesQuery
 {
-    private UserId $userId;
+    private int $userId;
 
-    public function __construct(UserId $userId)
+    public function __construct(int $userId)
     {
         $this->userId = $userId;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }

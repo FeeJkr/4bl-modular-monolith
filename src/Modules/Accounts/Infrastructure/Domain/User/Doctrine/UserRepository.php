@@ -68,21 +68,6 @@ final class UserRepository implements UserRepositoryInterface
         );
     }
 
-    public function fetchIdByToken(Token $token): UserId
-    {
-        $data = $this->entityManager->getConnection()->executeQuery("
-            SELECT id FROM users WHERE token = :token
-        ", [
-            'token' => $token->toString(),
-        ])->fetch();
-
-        if ($data === false) {
-            return UserId::nullInstance();
-        }
-
-        return UserId::fromInt($data['id']);
-    }
-
     public function fetchByToken(Token $token): User
     {
         $data = $this->entityManager->getConnection()->executeQuery("
@@ -102,5 +87,17 @@ final class UserRepository implements UserRepositoryInterface
             $data['password'],
             new Token($data['token'])
         );
+    }
+
+    public function existsByEmailOrUsername(string $email, string $username): bool
+    {
+        $data = $this->entityManager->getConnection()->executeQuery("
+            SELECT id FROM users WHERE email = :email or username = :username
+        ", [
+            'email' => $email,
+            'username' => $username,
+        ])->rowCount();
+
+        return $data > 0;
     }
 }

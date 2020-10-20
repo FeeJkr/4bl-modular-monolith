@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\FetchOneById;
 
+use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
+use App\Modules\Finances\Domain\User\UserId;
 
 final class FetchOneTransactionByIdHandler
 {
@@ -16,6 +18,24 @@ final class FetchOneTransactionByIdHandler
 
     public function __invoke(FetchOneTransactionByIdQuery $query): TransactionDTO
     {
-        return $this->repository->fetchOneById($query->getTransactionId(), $query->getUserId());
+        $transaction = $this->repository->fetchById(
+            TransactionId::fromInt($query->getTransactionId()),
+            UserId::fromInt($query->getUserId())
+        );
+
+        return new TransactionDTO(
+            $transaction->getId()->toInt(),
+            $transaction->getLinkedTransaction() !== null
+                ? $transaction->getLinkedTransaction()->getId()->toInt()
+                : null,
+            $transaction->getUserId()->toInt(),
+            $transaction->getWalletId()->toInt(),
+            $transaction->getCategoryId()->toInt(),
+            $transaction->getType()->getValue(),
+            $transaction->getAmount()->getAmount(),
+            $transaction->getDescription(),
+            $transaction->getOperationAt(),
+            $transaction->getCreatedAt()
+        );
     }
 }

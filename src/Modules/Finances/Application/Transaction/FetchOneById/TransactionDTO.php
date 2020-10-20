@@ -3,37 +3,29 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\FetchOneById;
 
-use App\Modules\Finances\Domain\Category\CategoryId;
-use App\Modules\Finances\Domain\Money;
-use App\Modules\Finances\Domain\Transaction\TransactionId;
-use App\Modules\Finances\Domain\Transaction\TransactionType;
-use App\Modules\Finances\Domain\User\UserId;
-use App\Modules\Finances\Domain\Wallet\WalletId;
-use DateTime;
 use DateTimeInterface;
-use JsonSerializable;
 
-final class TransactionDTO implements JsonSerializable
+final class TransactionDTO
 {
-    private TransactionId $id;
-    private TransactionId $linkedTransactionId;
-    private UserId $userId;
-    private WalletId $walletId;
-    private CategoryId $categoryId;
-    private TransactionType $transactionType;
-    private Money $amount;
+    private int $id;
+    private ?int $linkedTransactionId;
+    private int $userId;
+    private int $walletId;
+    private int $categoryId;
+    private string $transactionType;
+    private int $amount;
     private ?string $description;
     private DateTimeInterface $operationAt;
     private DateTimeInterface $createdAt;
 
     public function __construct(
-        TransactionId $id,
-        TransactionId $linkedTransactionId,
-        UserId $userId,
-        WalletId $walletId,
-        CategoryId $categoryId,
-        TransactionType $transactionType,
-        Money $amount,
+        int $id,
+        ?int $linkedTransactionId,
+        int $userId,
+        int $walletId,
+        int $categoryId,
+        string $transactionType,
+        int $amount,
         ?string $description,
         DateTimeInterface $operationAt,
         DateTimeInterface $createdAt
@@ -50,37 +42,53 @@ final class TransactionDTO implements JsonSerializable
         $this->createdAt = $createdAt;
     }
 
-    public static function createFromArray(array $transaction): self
+    public function getId(): int
     {
-        return new self(
-            TransactionId::fromInt($transaction['id']),
-            $transaction['transaction_id'] === null
-                ? TransactionId::nullInstance()
-                : TransactionId::fromInt($transaction['transaction_id']),
-            UserId::fromInt($transaction['user_id']),
-            WalletId::fromInt($transaction['wallet_id']),
-            CategoryId::fromInt($transaction['category_id']),
-            new TransactionType($transaction['type']),
-            new Money($transaction['amount']),
-            $transaction['description'],
-            DateTime::createFromFormat('Y-m-d H:i:s', $transaction['operation_at']),
-            DateTime::createFromFormat('Y-m-d H:i:s', $transaction['created_at'])
-        );
+        return $this->id;
     }
 
-    public function jsonSerialize()
+    public function getLinkedTransactionId(): ?int
     {
-        return [
-            'id' => $this->id->toInt(),
-            'transaction_id' => $this->linkedTransactionId->isNull() ? null : $this->linkedTransactionId->toInt(),
-            'user_id' => $this->userId->toInt(),
-            'wallet_id' => $this->walletId->toInt(),
-            'category_id' => $this->categoryId->toInt(),
-            'transaction_type' => $this->transactionType->getValue(),
-            'amount' => $this->amount->getAmount(),
-            'description' => $this->description,
-            'operation_at' => $this->operationAt->getTimestamp(),
-            'created_at' => $this->operationAt->getTimestamp(),
-        ];
+        return $this->linkedTransactionId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    public function getWalletId(): int
+    {
+        return $this->walletId;
+    }
+
+    public function getCategoryId(): int
+    {
+        return $this->categoryId;
+    }
+
+    public function getTransactionType(): string
+    {
+        return $this->transactionType;
+    }
+
+    public function getAmount(): int
+    {
+        return $this->amount;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function getOperationAt(): DateTimeInterface
+    {
+        return $this->operationAt;
+    }
+
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }

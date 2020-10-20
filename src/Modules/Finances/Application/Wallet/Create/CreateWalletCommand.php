@@ -3,16 +3,13 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Wallet\Create;
 
-use App\Modules\Finances\Domain\Money;
-use App\Modules\Finances\Domain\User\UserId;
-
 final class CreateWalletCommand
 {
     private string $name;
-    private Money $startBalance;
-    private UserId $userId;
+    private int $startBalance;
+    private int $userId;
 
-    public function __construct(string $name, Money $startBalance, UserId $userId)
+    public function __construct(string $name, int $startBalance, int $userId)
     {
         $this->name = $name;
         $this->startBalance = $startBalance;
@@ -24,12 +21,12 @@ final class CreateWalletCommand
         return $this->name;
     }
 
-    public function getStartBalance(): Money
+    public function getStartBalance(): int
     {
         return $this->startBalance;
     }
 
-    public function getUserId(): UserId
+    public function getUserId(): int
     {
         return $this->userId;
     }

@@ -3,6 +3,9 @@ services:
     autowire: true
     public: false
 
+  App\Web\API\:
+    resource: '../../../src/Web/API/'
+
   App\Web\API\Action\:
     resource: '../../../src/Web/API/Action/'
     tags: ['controller.service_arguments']

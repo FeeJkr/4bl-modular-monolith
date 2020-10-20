@@ -6,6 +6,7 @@ namespace App\Modules\Accounts\Application\User\Register;
 use App\Modules\Accounts\Application\User\PasswordManager;
 use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\User;
+use App\Modules\Accounts\Domain\User\UserException;
 use App\Modules\Accounts\Domain\User\UserRepository;
 
 final class RegisterUserHandler
@@ -24,8 +25,12 @@ final class RegisterUserHandler
         $this->tokenManager = $tokenManager;
     }
 
-    public function __invoke(RegisterUserCommand $command)
+    public function __invoke(RegisterUserCommand $command): void
     {
+        if ($this->repository->existsByEmailOrUsername($command->getEmail(), $command->getUsername())) {
+            throw UserException::alreadyExists();
+        }
+
         $user = User::register(
             $command->getEmail(),
             $command->getUsername(),
