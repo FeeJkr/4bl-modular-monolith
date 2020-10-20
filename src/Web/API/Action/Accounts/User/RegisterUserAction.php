@@ -3,31 +3,42 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Accounts\User;
 
-use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
 use App\Web\API\Action\AbstractAction;
+use App\Web\API\Request\Accounts\User\RegisterRequest;
+use App\Web\API\Service\Accounts\User\UserRegistrationErrorException;
+use App\Web\API\Service\Accounts\User\UserService;
+use Assert\LazyAssertionException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 final class RegisterUserAction extends AbstractAction
 {
-    private MessageBusInterface $bus;
+    private UserService $service;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(UserService $service)
     {
-        $this->bus = $bus;
+        $this->service = $service;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $command = new RegisterUserCommand(
-            $request->get('email'),
-            $request->get('username'),
-            $request->get('password')
-        );
+        try {
+            $request = RegisterRequest::createFromServerRequest($request);
 
-        $this->bus->dispatch($command);
+            $this->service->register($request);
 
-        return $this->noContentResponse();
+            return $this->noContentResponse();
+        } catch (UserRegistrationErrorException $exception) {
+            return new JsonResponse(['error' => $exception->getMessage()], Response::HTTP_NOT_FOUND);
+        } catch (LazyAssertionException $validationException) {
+            $errors = [];
+
+            foreach ($validationException->getErrorExceptions() as $exception) {
+                $errors[$exception->getPropertyPath()] = $exception->getMessage();
+            }
+
+            return new JsonResponse(['error' => $errors], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

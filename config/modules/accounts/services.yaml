@@ -21,11 +21,6 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Accounts\Application\User\SignIn\SignInUserCommand
 
-  App\Modules\Accounts\Application\User\FetchByToken\FetchUserByTokenHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Accounts\Application\User\FetchByToken\FetchUserByTokenQuery
-
   App\Modules\Accounts\Application\User\SignOut\SignOutUserHandler:
     tags:
       - name: messenger.message_handler
