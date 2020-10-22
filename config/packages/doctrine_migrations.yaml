@@ -1,3 +1,4 @@
 doctrine_migrations:
     migrations_paths:
         'App\Modules\Accounts\Infrastructure\Persistence\Migrations': '%kernel.project_dir%/src/Modules/Accounts/Infrastructure/Persistence/Migrations'
+        'App\Modules\Finances\Infrastructure\Persistence\Migrations': '%kernel.project_dir%/src/Modules/Finances/Infrastructure/Persistence/Migrations'

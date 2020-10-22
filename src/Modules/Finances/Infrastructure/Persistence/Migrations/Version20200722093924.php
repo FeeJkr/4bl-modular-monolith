@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DoctrineMigrations;
+namespace App\Modules\Finances\Infrastructure\Persistence\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
