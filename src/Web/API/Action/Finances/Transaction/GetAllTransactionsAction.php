@@ -24,6 +24,6 @@ final class GetAllTransactionsAction extends AbstractAction
 
         $data = $this->service->getAllTransactions($request);
 
-        return new JsonResponse($data);
+        return new JsonResponse($data->getResponse());
     }
 }

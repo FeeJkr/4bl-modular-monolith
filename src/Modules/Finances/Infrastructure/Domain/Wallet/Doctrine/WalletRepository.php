@@ -99,7 +99,7 @@ final class WalletRepository implements WalletRepositoryInterface
                 $wallet['name'],
                 new Money($wallet['start_balance']),
                 UserId::fromInt($wallet['user_id']),
-                DateTime::createFromFormat('Y-m-d H:i:s', $data['created_at'])
+                DateTime::createFromFormat('Y-m-d H:i:s', $wallet['created_at'])
             );
         }
 

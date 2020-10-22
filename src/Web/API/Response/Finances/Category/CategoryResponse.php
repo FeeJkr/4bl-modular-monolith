@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Web\API\ViewModel\Finances\Category;
+namespace App\Web\API\Response\Finances\Category;
 
 use DateTimeInterface;
-use JsonSerializable;
 
-final class Category implements JsonSerializable
+final class CategoryResponse
 {
     private int $id;
     private int $userId;
@@ -31,37 +30,7 @@ final class Category implements JsonSerializable
         $this->createdAt = $createdAt;
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    public function getIcon(): ?string
-    {
-        return $this->icon;
-    }
-
-    public function getCreatedAt(): DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function jsonSerialize()
+    public function getResponse(): array
     {
         return [
             'id' => $this->id,

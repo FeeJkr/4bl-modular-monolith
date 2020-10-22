@@ -24,6 +24,6 @@ final class GetAllCategoriesAction extends AbstractAction
 
         $data = $this->service->getAllCategories($request);
 
-        return new JsonResponse($data);
+        return new JsonResponse($data->getResponse());
     }
 }

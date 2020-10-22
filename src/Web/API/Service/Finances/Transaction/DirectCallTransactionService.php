@@ -17,9 +17,10 @@ use App\Web\API\Request\Finances\Transaction\GetAllTransactionsByWalletIdRequest
 use App\Web\API\Request\Finances\Transaction\GetAllTransactionsRequest;
 use App\Web\API\Request\Finances\Transaction\GetTransactionByIdRequest;
 use App\Web\API\Request\Finances\Transaction\UpdateTransactionRequest;
+use App\Web\API\Response\Finances\Transaction\TransactionResponse;
+use App\Web\API\Response\Finances\Transaction\TransactionsByWalletResponse;
+use App\Web\API\Response\Finances\Transaction\TransactionsResponse;
 use App\Web\API\Service\Finances\User\UserService;
-use App\Web\API\ViewModel\Finances\Transaction\Transaction;
-use App\Web\API\ViewModel\Finances\Transaction\ViewModelMapper;
 use DateTime;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
@@ -28,13 +29,11 @@ final class DirectCallTransactionService implements TransactionService
 {
     private UserService $userService;
     private MessageBusInterface $bus;
-    private ViewModelMapper $viewModelMapper;
 
-    public function __construct(MessageBusInterface $bus, UserService $userService, ViewModelMapper $viewModelMapper)
+    public function __construct(MessageBusInterface $bus, UserService $userService)
     {
         $this->bus = $bus;
         $this->userService = $userService;
-        $this->viewModelMapper = $viewModelMapper;
     }
 
     public function createTransaction(CreateTransactionRequest $request): void
@@ -86,7 +85,7 @@ final class DirectCallTransactionService implements TransactionService
         );
     }
 
-    public function getAllTransactions(GetAllTransactionsRequest $request): array
+    public function getAllTransactions(GetAllTransactionsRequest $request): TransactionsResponse
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
         $query = new GetAllTransactionsQuery($userId);
@@ -96,10 +95,10 @@ final class DirectCallTransactionService implements TransactionService
             ->last(HandledStamp::class)
             ->getResult();
 
-        return $this->viewModelMapper->mapTransactionsCollection($result);
+        return TransactionsResponse::createFromCollection($result);
     }
 
-    public function getAllTransactionsByWalletId(GetAllTransactionsByWalletIdRequest $request): array
+    public function getAllTransactionsByWalletId(GetAllTransactionsByWalletIdRequest $request): TransactionsByWalletResponse
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
 
@@ -113,10 +112,10 @@ final class DirectCallTransactionService implements TransactionService
             ->last(HandledStamp::class)
             ->getResult();
 
-        return $this->viewModelMapper->mapTransactionCollectionByWalletId($result);
+        return TransactionsByWalletResponse::createFromCollection($result);
     }
 
-    public function getTransactionById(GetTransactionByIdRequest $request): Transaction
+    public function getTransactionById(GetTransactionByIdRequest $request): TransactionResponse
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
         $query = new GetOneTransactionByIdQuery($request->getTransactionId(), $userId);
@@ -126,6 +125,17 @@ final class DirectCallTransactionService implements TransactionService
             ->last(HandledStamp::class)
             ->getResult();
 
-        return $this->viewModelMapper->map($result);
+        return new TransactionResponse(
+            $result->getId(),
+            $result->getLinkedTransactionId(),
+            $result->getUserId(),
+            $result->getWalletId(),
+            $result->getCategoryId(),
+            $result->getTransactionType(),
+            $result->getAmount(),
+            $result->getDescription(),
+            $result->getOperationAt(),
+            $result->getCreatedAt()
+        );
     }
 }

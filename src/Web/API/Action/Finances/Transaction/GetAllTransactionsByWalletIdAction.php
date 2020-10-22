@@ -24,6 +24,6 @@ final class GetAllTransactionsByWalletIdAction extends AbstractAction
 
         $data = $this->service->getAllTransactionsByWalletId($request);
 
-        return new JsonResponse($data);
+        return new JsonResponse($data->getResponse());
     }
 }

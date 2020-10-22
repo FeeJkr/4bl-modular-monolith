@@ -24,6 +24,6 @@ final class GetOneTransactionByIdAction extends AbstractAction
 
         $data = $this->service->getTransactionById($request);
 
-        return new JsonResponse($data);
+        return new JsonResponse($data->getResponse());
     }
 }

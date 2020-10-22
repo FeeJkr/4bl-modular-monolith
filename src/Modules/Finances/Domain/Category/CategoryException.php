@@ -11,21 +11,21 @@ final class CategoryException extends Exception
     public static function notDeleted(CategoryId $categoryId, UserId $userId): self
     {
         return new self(
-            sprintf('Category with ID %s for user %s can\'t be deleted.', $categoryId->toInt(), $userId->toInt())
+            sprintf('CategoryResponse with ID %s for user %s can\'t be deleted.', $categoryId->toInt(), $userId->toInt())
         );
     }
 
     public static function notFound(CategoryId $categoryId, UserId $userId): self
     {
         return new self(
-            sprintf('Category with ID %s for user %s not found.', $categoryId->toInt(), $userId->toInt())
+            sprintf('CategoryResponse with ID %s for user %s not found.', $categoryId->toInt(), $userId->toInt())
         );
     }
 
     public static function notFoundById(CategoryId $categoryId): self
     {
         return new self(
-            sprintf('Category with ID %s not found.', $categoryId->toInt())
+            sprintf('CategoryResponse with ID %s not found.', $categoryId->toInt())
         );
     }
 }

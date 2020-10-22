@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Web\API\ViewModel\Finances\Transaction;
+namespace App\Web\API\Response\Finances\Transaction;
 
 use DateTimeInterface;
-use JsonSerializable;
 
-final class Transaction implements JsonSerializable
+final class TransactionResponse
 {
     private int $id;
     private ?int $linkedTransactionId;
@@ -43,57 +42,7 @@ final class Transaction implements JsonSerializable
         $this->createdAt = $createdAt;
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getLinkedTransactionId(): ?int
-    {
-        return $this->linkedTransactionId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    public function getWalletId(): int
-    {
-        return $this->walletId;
-    }
-
-    public function getCategoryId(): int
-    {
-        return $this->categoryId;
-    }
-
-    public function getTransactionType(): string
-    {
-        return $this->transactionType;
-    }
-
-    public function getAmount(): int
-    {
-        return $this->amount;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function getOperationAt(): DateTimeInterface
-    {
-        return $this->operationAt;
-    }
-
-    public function getCreatedAt(): DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function jsonSerialize()
+    public function getResponse(): array
     {
         return [
             'id' => $this->id,

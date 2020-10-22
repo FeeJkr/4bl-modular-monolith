@@ -9,6 +9,9 @@ use App\Web\API\Request\Finances\Transaction\GetAllTransactionsByWalletIdRequest
 use App\Web\API\Request\Finances\Transaction\GetAllTransactionsRequest;
 use App\Web\API\Request\Finances\Transaction\GetTransactionByIdRequest;
 use App\Web\API\Request\Finances\Transaction\UpdateTransactionRequest;
+use App\Web\API\Response\Finances\Transaction\TransactionResponse;
+use App\Web\API\Response\Finances\Transaction\TransactionsByWalletResponse;
+use App\Web\API\Response\Finances\Transaction\TransactionsResponse;
 use App\Web\API\ViewModel\Finances\Transaction\Transaction;
 
 interface TransactionService
@@ -16,7 +19,7 @@ interface TransactionService
     public function createTransaction(CreateTransactionRequest $request): void;
     public function deleteTransaction(DeleteTransactionRequest $request): void;
     public function updateTransaction(UpdateTransactionRequest $request): void;
-    public function getAllTransactions(GetAllTransactionsRequest $request): array;
-    public function getAllTransactionsByWalletId(GetAllTransactionsByWalletIdRequest $request): array;
-    public function getTransactionById(GetTransactionByIdRequest $request): Transaction;
+    public function getAllTransactions(GetAllTransactionsRequest $request): TransactionsResponse;
+    public function getAllTransactionsByWalletId(GetAllTransactionsByWalletIdRequest $request): TransactionsByWalletResponse;
+    public function getTransactionById(GetTransactionByIdRequest $request): TransactionResponse;
 }

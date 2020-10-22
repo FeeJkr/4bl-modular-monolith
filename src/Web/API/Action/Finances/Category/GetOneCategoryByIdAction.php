@@ -24,6 +24,6 @@ final class GetOneCategoryByIdAction extends AbstractAction
 
         $data = $this->service->getOneCategoryById($request);
 
-        return new JsonResponse($data);
+        return new JsonResponse($data->getResponse());
     }
 }

@@ -15,8 +15,9 @@ use App\Web\API\Request\Finances\Wallet\DeleteWalletRequest;
 use App\Web\API\Request\Finances\Wallet\GetAllWalletsRequest;
 use App\Web\API\Request\Finances\Wallet\GetOneWalletByIdRequest;
 use App\Web\API\Request\Finances\Wallet\UpdateWalletRequest;
+use App\Web\API\Response\Finances\Wallet\WalletResponse;
+use App\Web\API\Response\Finances\Wallet\WalletsResponse;
 use App\Web\API\Service\Finances\User\UserService;
-use App\Web\API\ViewModel\Finances\Wallet\ViewModelMapper;
 use App\Web\API\ViewModel\Finances\Wallet\Wallet;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
@@ -25,13 +26,11 @@ final class DirectCallWalletService implements WalletService
 {
     private MessageBusInterface $bus;
     private UserService $userService;
-    private ViewModelMapper $viewModelMapper;
 
-    public function __construct(MessageBusInterface $bus, UserService $userService, ViewModelMapper $viewModelMapper)
+    public function __construct(MessageBusInterface $bus, UserService $userService)
     {
         $this->bus = $bus;
         $this->userService = $userService;
-        $this->viewModelMapper = $viewModelMapper;
     }
 
     public function createWallet(CreateWalletRequest $request): void
@@ -59,7 +58,7 @@ final class DirectCallWalletService implements WalletService
         );
     }
 
-    public function getAllWallets(GetAllWalletsRequest $request): array
+    public function getAllWallets(GetAllWalletsRequest $request): WalletsResponse
     {
         $query = new GetAllWalletsQuery(
             $this->userService->getUserIdByToken($request->getUserToken())
@@ -68,25 +67,30 @@ final class DirectCallWalletService implements WalletService
         /** @var WalletsCollection $result */
         $result = $this->bus->dispatch($query)
             ->last(HandledStamp::class)
-            ->getResult()
-            ->toArray();
+            ->getResult();
 
-        return $this->viewModelMapper->mapCollection($result);
+        return WalletsResponse::createFromCollection($result);
     }
 
-    public function getOneWalletById(GetOneWalletByIdRequest $request): Wallet
+    public function getOneWalletById(GetOneWalletByIdRequest $request): WalletResponse
     {
         $query = new GetOneWalletByIdQuery(
             $request->getWalletId(),
             $this->userService->getUserIdByToken($request->getUserToken())
         );
 
-        /** @var WalletDTO $result */
-        $walletDto = $this->bus->dispatch($query)
+        /** @var WalletDTO $wallet */
+        $wallet = $this->bus->dispatch($query)
             ->last(HandledStamp::class)
             ->getResult();
 
-        return $this->viewModelMapper->map($walletDto);
+        return new WalletResponse(
+            $wallet->getId(),
+            $wallet->getName(),
+            $wallet->getStartBalance(),
+            $wallet->getUserId(),
+            $wallet->getCreatedAt()
+        );
     }
 
     public function updateWallet(UpdateWalletRequest $request): void

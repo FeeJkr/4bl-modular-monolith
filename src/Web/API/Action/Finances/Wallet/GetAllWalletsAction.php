@@ -24,6 +24,6 @@ final class GetAllWalletsAction extends AbstractAction
 
         $result = $this->service->getAllWallets($request);
 
-        return new JsonResponse($result);
+        return new JsonResponse($result->getResponse());
     }
 }

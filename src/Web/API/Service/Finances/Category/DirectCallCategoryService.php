@@ -15,9 +15,9 @@ use App\Web\API\Request\Finances\Category\DeleteCategoryRequest;
 use App\Web\API\Request\Finances\Category\GetAllCategoriesRequest;
 use App\Web\API\Request\Finances\Category\GetOneCategoryByIdRequest;
 use App\Web\API\Request\Finances\Category\UpdateCategoryRequest;
+use App\Web\API\Response\Finances\Category\CategoriesResponse;
+use App\Web\API\Response\Finances\Category\CategoryResponse;
 use App\Web\API\Service\Finances\User\UserService;
-use App\Web\API\ViewModel\Finances\Category\Category;
-use App\Web\API\ViewModel\Finances\Category\ViewModelMapper;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
@@ -25,13 +25,11 @@ final class DirectCallCategoryService implements CategoryService
 {
     private UserService $userService;
     private MessageBusInterface $bus;
-    private ViewModelMapper $viewModelMapper;
 
-    public function __construct(UserService $userService, MessageBusInterface $bus, ViewModelMapper $viewModelMapper)
+    public function __construct(UserService $userService, MessageBusInterface $bus)
     {
         $this->userService = $userService;
         $this->bus = $bus;
-        $this->viewModelMapper = $viewModelMapper;
     }
 
     public function createCategory(CreateCategoryRequest $request): void
@@ -75,7 +73,7 @@ final class DirectCallCategoryService implements CategoryService
         );
     }
 
-    public function getAllCategories(GetAllCategoriesRequest $request): array
+    public function getAllCategories(GetAllCategoriesRequest $request): CategoriesResponse
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
         $query = new GetAllCategoriesQuery($userId);
@@ -86,10 +84,10 @@ final class DirectCallCategoryService implements CategoryService
             ->last(HandledStamp::class)
             ->getResult();
 
-        return $this->viewModelMapper->mapCollection($result);
+        return CategoriesResponse::createFromCollection($result);
     }
 
-    public function getOneCategoryById(GetOneCategoryByIdRequest $request): Category
+    public function getOneCategoryById(GetOneCategoryByIdRequest $request): CategoryResponse
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
         $query = new GetOneCategoryByIdQuery($userId, $request->getCategoryId());
@@ -100,6 +98,13 @@ final class DirectCallCategoryService implements CategoryService
             ->last(HandledStamp::class)
             ->getResult();
 
-        return $this->viewModelMapper->map($result);
+        return new CategoryResponse(
+            $result->getId(),
+            $result->getUserId(),
+            $result->getName(),
+            $result->getType(),
+            $result->getIcon(),
+            $result->getCreatedAt()
+        );
     }
 }
