@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\FetchAllByWallet;
+namespace App\Modules\Finances\Application\Transaction\GetAllByWallet;
 
-final class FetchAllTransactionsByWalletQuery
+final class GetAllTransactionsByWalletQuery
 {
     private int $walletId;
     private int $userId;

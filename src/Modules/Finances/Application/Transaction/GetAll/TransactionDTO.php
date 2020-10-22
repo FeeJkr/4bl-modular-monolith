@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\FetchOneById;
+namespace App\Modules\Finances\Application\Transaction\GetAll;
 
 use DateTimeInterface;
 

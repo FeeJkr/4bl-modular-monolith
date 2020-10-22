@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\FetchOneById;
+namespace App\Modules\Finances\Application\Transaction\GetOneById;
 
 use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
 use App\Modules\Finances\Domain\User\UserId;
 
-final class FetchOneTransactionByIdHandler
+final class GetOneTransactionByIdHandler
 {
     private TransactionRepository $repository;
 
@@ -16,7 +16,7 @@ final class FetchOneTransactionByIdHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchOneTransactionByIdQuery $query): TransactionDTO
+    public function __invoke(GetOneTransactionByIdQuery $query): TransactionDTO
     {
         $transaction = $this->repository->fetchById(
             TransactionId::fromInt($query->getTransactionId()),

@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace App\Web\API\Action\Finances\Transaction;
 
 use App\Web\API\Action\AbstractAction;
-use App\Web\API\Request\Finances\Transaction\FetchAllTransactionsRequest;
+use App\Web\API\Request\Finances\Transaction\GetTransactionByIdRequest;
 use App\Web\API\Service\Finances\Transaction\TransactionService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class FetchAllTransactionsAction extends AbstractAction
+final class GetOneTransactionByIdAction extends AbstractAction
 {
     private TransactionService $service;
 
@@ -20,9 +20,9 @@ final class FetchAllTransactionsAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = FetchAllTransactionsRequest::createFromServerRequest($request);
+        $request = GetTransactionByIdRequest::createFromServerRequest($request);
 
-        $data = $this->service->getAllTransactions($request);
+        $data = $this->service->getTransactionById($request);
 
         return new JsonResponse($data);
     }

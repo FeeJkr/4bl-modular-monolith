@@ -1,14 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\FetchAllByWallet;
+namespace App\Modules\Finances\Application\Transaction\GetAll;
 
 use App\Modules\Finances\Domain\Transaction\Transaction;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
 use App\Modules\Finances\Domain\User\UserId;
-use App\Modules\Finances\Domain\Wallet\WalletId;
 
-final class FetchAllTransactionsByWalletHandler
+final class GetAllTransactionsHandler
 {
     private TransactionRepository $repository;
 
@@ -17,11 +16,10 @@ final class FetchAllTransactionsByWalletHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchAllTransactionsByWalletQuery $query): TransactionsCollection
+    public function __invoke(GetAllTransactionsQuery $query): TransactionsCollection
     {
         $data = [];
-        $transactions = $this->repository->fetchAllByWallet(
-            WalletId::fromInt($query->getWalletId()),
+        $transactions = $this->repository->fetchAll(
             UserId::fromInt($query->getUserId())
         );
 

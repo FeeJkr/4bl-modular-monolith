@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\FetchOneById;
+namespace App\Modules\Finances\Application\Transaction\GetOneById;
 
-final class FetchOneTransactionByIdQuery
+final class GetOneTransactionByIdQuery
 {
     private int $transactionId;
     private int $userId;

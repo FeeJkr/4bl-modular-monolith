@@ -75,20 +75,20 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Transaction\Update\UpdateTransactionCommand
 
-  App\Modules\Finances\Application\Transaction\FetchAll\FetchAllTransactionsHandler:
+  App\Modules\Finances\Application\Transaction\GetAll\GetAllTransactionsHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Transaction\FetchAll\FetchAllTransactionsQuery
+        handles: App\Modules\Finances\Application\Transaction\GetAll\GetAllTransactionsQuery
 
-  App\Modules\Finances\Application\Transaction\FetchAllByWallet\FetchAllTransactionsByWalletHandler:
+  App\Modules\Finances\Application\Transaction\GetAllByWallet\GetAllTransactionsByWalletHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Transaction\FetchAllByWallet\FetchAllTransactionsByWalletQuery
+        handles: App\Modules\Finances\Application\Transaction\GetAllByWallet\GetAllTransactionsByWalletQuery
 
-  App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdHandler:
+  App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdQuery
+        handles: App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdQuery
 
   App\Modules\Finances\Application\User\FetchUserIdByToken\FetchUserIdByTokenHandler:
     tags:

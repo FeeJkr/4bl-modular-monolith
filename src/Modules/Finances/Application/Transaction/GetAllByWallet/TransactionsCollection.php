@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\FetchAll;
+namespace App\Modules\Finances\Application\Transaction\GetAllByWallet;
 
 final class TransactionsCollection
 {

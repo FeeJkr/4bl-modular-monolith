@@ -60,17 +60,17 @@ api.v1.finances.wallets.delete:
 
 api.v1.finances.wallets.transactions:
   path: /api/v1/finances/wallets/{wallet_id}/transactions
-  controller: App\Web\API\Action\Finances\Transaction\FetchAllTransactionsByWalletIdAction
+  controller: App\Web\API\Action\Finances\Transaction\GetAllTransactionsByWalletIdAction
   methods: GET
 
 api.v1.finances.transactions.get-one:
   path: /api/v1/finances/transactions/{id}
-  controller: App\Web\API\Action\Finances\Transaction\FetchOneTransactionByIdAction
+  controller: App\Web\API\Action\Finances\Transaction\GetOneTransactionByIdAction
   methods: GET
 
 api.v1.finances.transactions.all:
   path: /api/v1/finances/transactions
-  controller: App\Web\API\Action\Finances\Transaction\FetchAllTransactionsAction
+  controller: App\Web\API\Action\Finances\Transaction\GetAllTransactionsAction
   methods: GET
 
 api.v1.finances.transactions.create:

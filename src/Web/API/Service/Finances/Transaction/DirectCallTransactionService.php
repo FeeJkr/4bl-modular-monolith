@@ -5,16 +5,16 @@ namespace App\Web\API\Service\Finances\Transaction;
 
 use App\Modules\Finances\Application\Transaction\Create\CreateTransactionCommand;
 use App\Modules\Finances\Application\Transaction\Delete\DeleteTransactionCommand;
-use App\Modules\Finances\Application\Transaction\FetchAll\FetchAllTransactionsQuery;
-use App\Modules\Finances\Application\Transaction\FetchAll\TransactionsCollection;
-use App\Modules\Finances\Application\Transaction\FetchAllByWallet\FetchAllTransactionsByWalletQuery;
-use App\Modules\Finances\Application\Transaction\FetchOneById\FetchOneTransactionByIdQuery;
-use App\Modules\Finances\Application\Transaction\FetchOneById\TransactionDTO;
+use App\Modules\Finances\Application\Transaction\GetAll\GetAllTransactionsQuery;
+use App\Modules\Finances\Application\Transaction\GetAll\TransactionsCollection;
+use App\Modules\Finances\Application\Transaction\GetAllByWallet\GetAllTransactionsByWalletQuery;
+use App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdQuery;
+use App\Modules\Finances\Application\Transaction\GetOneById\TransactionDTO;
 use App\Modules\Finances\Application\Transaction\Update\UpdateTransactionCommand;
 use App\Web\API\Request\Finances\Transaction\CreateTransactionRequest;
 use App\Web\API\Request\Finances\Transaction\DeleteTransactionRequest;
-use App\Web\API\Request\Finances\Transaction\FetchAllTransactionsByWalletIdRequest;
-use App\Web\API\Request\Finances\Transaction\FetchAllTransactionsRequest;
+use App\Web\API\Request\Finances\Transaction\GetAllTransactionsByWalletIdRequest;
+use App\Web\API\Request\Finances\Transaction\GetAllTransactionsRequest;
 use App\Web\API\Request\Finances\Transaction\GetTransactionByIdRequest;
 use App\Web\API\Request\Finances\Transaction\UpdateTransactionRequest;
 use App\Web\API\Service\Finances\User\UserService;
@@ -86,10 +86,10 @@ final class DirectCallTransactionService implements TransactionService
         );
     }
 
-    public function getAllTransactions(FetchAllTransactionsRequest $request): array
+    public function getAllTransactions(GetAllTransactionsRequest $request): array
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
-        $query = new FetchAllTransactionsQuery($userId);
+        $query = new GetAllTransactionsQuery($userId);
 
         /** @var TransactionsCollection $result */
         $result = $this->bus->dispatch($query)
@@ -99,16 +99,16 @@ final class DirectCallTransactionService implements TransactionService
         return $this->viewModelMapper->mapTransactionsCollection($result);
     }
 
-    public function getAllTransactionsByWalletId(FetchAllTransactionsByWalletIdRequest $request): array
+    public function getAllTransactionsByWalletId(GetAllTransactionsByWalletIdRequest $request): array
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
 
-        $query = new FetchAllTransactionsByWalletQuery(
+        $query = new GetAllTransactionsByWalletQuery(
             $request->getWalletId(),
             $userId
         );
 
-        /** @var \App\Modules\Finances\Application\Transaction\FetchAllByWallet\TransactionsCollection $result */
+        /** @var \App\Modules\Finances\Application\Transaction\GetAllByWallet\TransactionsCollection $result */
         $result = $this->bus->dispatch($query)
             ->last(HandledStamp::class)
             ->getResult();
@@ -119,7 +119,7 @@ final class DirectCallTransactionService implements TransactionService
     public function getTransactionById(GetTransactionByIdRequest $request): Transaction
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
-        $query = new FetchOneTransactionByIdQuery($request->getTransactionId(), $userId);
+        $query = new GetOneTransactionByIdQuery($request->getTransactionId(), $userId);
 
         /** @var TransactionDTO $result */
         $result = $this->bus->dispatch($query)

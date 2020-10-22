@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Web\API\ViewModel\Finances\Transaction;
 
-use App\Modules\Finances\Application\Transaction\FetchAll\TransactionsCollection;
-use App\Modules\Finances\Application\Transaction\FetchAllByWallet\TransactionsCollection as TransactionsCollectionByWalletId;
-use App\Modules\Finances\Application\Transaction\FetchOneById\TransactionDTO;
+use App\Modules\Finances\Application\Transaction\GetAll\TransactionsCollection;
+use App\Modules\Finances\Application\Transaction\GetAllByWallet\TransactionsCollection as TransactionsCollectionByWalletId;
+use App\Modules\Finances\Application\Transaction\GetOneById\TransactionDTO;
 
 final class ViewModelMapper
 {
@@ -29,7 +29,7 @@ final class ViewModelMapper
     {
         $transactions = [];
 
-        /** @var \App\Modules\Finances\Application\Transaction\FetchAll\TransactionDTO $dto */
+        /** @var \App\Modules\Finances\Application\Transaction\GetAll\TransactionDTO $dto */
         foreach ($transactionsCollection->getTransactions() as $dto) {
             $transactions[] = new Transaction(
                 $dto->getId(),
@@ -52,7 +52,7 @@ final class ViewModelMapper
     {
         $transactions = [];
 
-        /** @var \App\Modules\Finances\Application\Transaction\FetchAllByWallet\TransactionDTO $dto */
+        /** @var \App\Modules\Finances\Application\Transaction\GetAllByWallet\TransactionDTO $dto */
         foreach ($transactionsCollection->getTransactions() as $dto) {
             $transactions[] = new Transaction(
                 $dto->getId(),

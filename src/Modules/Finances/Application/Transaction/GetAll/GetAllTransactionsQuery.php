@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\FetchAll;
+namespace App\Modules\Finances\Application\Transaction\GetAll;
 
-final class FetchAllTransactionsQuery
+final class GetAllTransactionsQuery
 {
     private int $userId;
 
