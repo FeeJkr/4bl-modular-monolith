@@ -3,8 +3,11 @@ services:
     autowire: true
     public: false
 
-  App\Web\MVC\Action\:
-    resource: '../../../src/Web/MVC/Action/'
+  App\Web\MVC\:
+    resource: '../../../src/Web/MVC/'
+
+  App\Web\MVC\Controller\:
+    resource: '../../../src/Web/MVC/Controller/'
     tags: ['controller.service_arguments']
 
   App\Web\MVC\Middleware\TokenMiddleware:

@@ -1,29 +1,39 @@
 dashboard:
   path: /
-  controller: App\Web\MVC\Action\ShowDashboardAction
+  controller: App\Web\MVC\Controller\Dashboard\DashboardController::showDashboard
+  methods: GET
+
+accounts.user.sign-in.page:
+  path: /sign-in
+  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::showSignInPage
   methods: GET
 
 accounts.user.sign-in:
   path: /sign-in
-  controller: App\Web\MVC\Action\Accounts\User\SignInUserAction
-  methods: [GET, POST]
+  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::signIn
+  methods: POST
 
-accounts.user.sign-out:
-  path: /sign-out
-  controller: App\Web\MVC\Action\Accounts\User\SignOutUserAction
+accounts.user.register.page:
+  path: /register
+  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::showRegisterPage
   methods: GET
 
 accounts.user.register:
   path: /register
-  controller: App\Web\MVC\Action\Accounts\User\RegisterUserAction
-  methods: [GET, POST]
+  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::register
+  methods: POST
+
+accounts.user.sign-out:
+  path: /sign-out
+  controller: App\Web\MVC\Controller\Accounts\UserController::signOut
+  methods: GET
 
 finances.dashboard:
   path: /finances
-  controller: App\Web\MVC\Action\Finances\ShowFinancesDashboardAction
+  controller: App\Web\MVC\Controller\Finances\DashboardController::showDashboard
   methods: GET
 
 finances.category.showAll:
   path: /finances/categories
-  controller: App\Web\MVC\Action\Finances\Category\ShowAllCategoriesAction
+  controller: App\Web\MVC\Controller\Finances\CategoryController::showCategoriesPage
   methods: GET
