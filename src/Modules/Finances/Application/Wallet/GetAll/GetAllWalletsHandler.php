@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Wallet\FetchAll;
+namespace App\Modules\Finances\Application\Wallet\GetAll;
 
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\Wallet;
 use App\Modules\Finances\Domain\Wallet\WalletRepository;
 
-final class FetchAllWalletsHandler
+final class GetAllWalletsHandler
 {
     private WalletRepository $repository;
 
@@ -16,7 +16,7 @@ final class FetchAllWalletsHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchAllWalletsQuery $query): WalletsCollection
+    public function __invoke(GetAllWalletsQuery $query): WalletsCollection
     {
         $data = [];
         $wallets = $this->repository->fetchAll(UserId::fromInt($query->getUserId()));

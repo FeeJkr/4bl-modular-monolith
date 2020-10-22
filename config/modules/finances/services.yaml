@@ -45,15 +45,15 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand
 
-  App\Modules\Finances\Application\Wallet\FetchAll\FetchAllWalletsHandler:
+  App\Modules\Finances\Application\Wallet\GetAll\GetAllWalletsHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Wallet\FetchAll\FetchAllWalletsQuery
+        handles: App\Modules\Finances\Application\Wallet\GetAll\GetAllWalletsQuery
 
-  App\Modules\Finances\Application\Wallet\FetchOneById\FetchOneWalletByIdHandler:
+  App\Modules\Finances\Application\Wallet\GetOneById\GetOneWalletByIdHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Wallet\FetchOneById\FetchOneWalletByIdQuery
+        handles: App\Modules\Finances\Application\Wallet\GetOneById\GetOneWalletByIdQuery
 
   App\Modules\Finances\Application\Wallet\Update\UpdateWalletHandler:
     tags:
@@ -90,7 +90,7 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdQuery
 
-  App\Modules\Finances\Application\User\FetchUserIdByToken\FetchUserIdByTokenHandler:
+  App\Modules\Finances\Application\User\GetUserIdByToken\GetUserIdByTokenHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\User\FetchUserIdByToken\FetchUserIdByTokenQuery
+        handles: App\Modules\Finances\Application\User\GetUserIdByToken\GetUserIdByTokenQuery

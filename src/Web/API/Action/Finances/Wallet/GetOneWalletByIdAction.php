@@ -9,7 +9,7 @@ use App\Web\API\Service\Finances\Wallet\WalletService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class FetchOneWalletByIdAction extends AbstractAction
+final class GetOneWalletByIdAction extends AbstractAction
 {
     private WalletService $service;
 

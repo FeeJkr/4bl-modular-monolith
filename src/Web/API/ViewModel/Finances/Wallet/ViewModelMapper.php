@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Web\API\ViewModel\Finances\Wallet;
 
-use App\Modules\Finances\Application\Wallet\FetchAll\WalletsCollection;
-use App\Modules\Finances\Application\Wallet\FetchOneById\WalletDTO;
+use App\Modules\Finances\Application\Wallet\GetAll\WalletsCollection;
+use App\Modules\Finances\Application\Wallet\GetOneById\WalletDTO;
 
 final class ViewModelMapper
 {
@@ -23,7 +23,7 @@ final class ViewModelMapper
     {
         $wallets = [];
 
-        /** @var \App\Modules\Finances\Application\Wallet\FetchAll\WalletDTO $wallet */
+        /** @var \App\Modules\Finances\Application\Wallet\GetAll\WalletDTO $wallet */
         foreach ($walletsCollection->getWallets() as $wallet) {
             $wallets[] = new Wallet(
                 $wallet->getId(),

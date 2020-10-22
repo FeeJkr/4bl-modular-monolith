@@ -5,10 +5,10 @@ namespace App\Web\API\Service\Finances\Wallet;
 
 use App\Modules\Finances\Application\Wallet\Create\CreateWalletCommand;
 use App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand;
-use App\Modules\Finances\Application\Wallet\FetchAll\FetchAllWalletsQuery;
-use App\Modules\Finances\Application\Wallet\FetchAll\WalletsCollection;
-use App\Modules\Finances\Application\Wallet\FetchOneById\FetchOneWalletByIdQuery;
-use App\Modules\Finances\Application\Wallet\FetchOneById\WalletDTO;
+use App\Modules\Finances\Application\Wallet\GetAll\GetAllWalletsQuery;
+use App\Modules\Finances\Application\Wallet\GetAll\WalletsCollection;
+use App\Modules\Finances\Application\Wallet\GetOneById\GetOneWalletByIdQuery;
+use App\Modules\Finances\Application\Wallet\GetOneById\WalletDTO;
 use App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand;
 use App\Web\API\Request\Finances\Wallet\CreateWalletRequest;
 use App\Web\API\Request\Finances\Wallet\DeleteWalletRequest;
@@ -61,7 +61,7 @@ final class DirectCallWalletService implements WalletService
 
     public function getAllWallets(GetAllWalletsRequest $request): array
     {
-        $query = new FetchAllWalletsQuery(
+        $query = new GetAllWalletsQuery(
             $this->userService->getUserIdByToken($request->getUserToken())
         );
 
@@ -76,7 +76,7 @@ final class DirectCallWalletService implements WalletService
 
     public function getOneWalletById(GetOneWalletByIdRequest $request): Wallet
     {
-        $query = new FetchOneWalletByIdQuery(
+        $query = new GetOneWalletByIdQuery(
             $request->getWalletId(),
             $this->userService->getUserIdByToken($request->getUserToken())
         );

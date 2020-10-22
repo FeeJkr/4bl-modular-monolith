@@ -35,12 +35,12 @@ api.v1.finances.categories.delete:
 
 api.v1.finances.wallets.all:
   path: /api/v1/finances/wallets
-  controller: App\Web\API\Action\Finances\Wallet\FetchAllWalletsAction
+  controller: App\Web\API\Action\Finances\Wallet\GetAllWalletsAction
   methods: GET
 
 api.v1.finances.wallets.get-one:
   path: /api/v1/finances/wallets/{id}
-  controller: App\Web\API\Action\Finances\Wallet\FetchOneWalletByIdAction
+  controller: App\Web\API\Action\Finances\Wallet\GetOneWalletByIdAction
   methods: GET
 
 api.v1.finances.wallets.create:

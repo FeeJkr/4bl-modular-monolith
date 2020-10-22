@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Wallet\FetchOneById;
+namespace App\Modules\Finances\Application\Wallet\GetOneById;
 
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletException;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use App\Modules\Finances\Domain\Wallet\WalletRepository;
 
-final class FetchOneWalletByIdHandler
+final class GetOneWalletByIdHandler
 {
     private WalletRepository $repository;
 
@@ -17,7 +17,7 @@ final class FetchOneWalletByIdHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchOneWalletByIdQuery $query): WalletDTO
+    public function __invoke(GetOneWalletByIdQuery $query): WalletDTO
     {
         $walletId = WalletId::fromInt($query->getWalletId());
         $userId = UserId::fromInt($query->getUserId());
