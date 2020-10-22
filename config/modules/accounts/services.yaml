@@ -6,10 +6,10 @@ services:
   App\Modules\Accounts\:
     resource: '../../../src/Modules/Accounts/'
 
-  App\Modules\Accounts\Application\User\FetchToken\FetchTokenHandler:
+  App\Modules\Accounts\Application\User\GetToken\GetTokenHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Accounts\Application\User\FetchToken\FetchTokenQuery
+        handles: App\Modules\Accounts\Application\User\GetToken\GetTokenQuery
 
   App\Modules\Accounts\Application\User\Register\RegisterUserHandler:
     tags:

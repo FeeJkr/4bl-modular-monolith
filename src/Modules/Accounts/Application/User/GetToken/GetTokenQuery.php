@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Accounts\Application\User\FetchToken;
+namespace App\Modules\Accounts\Application\User\GetToken;
 
-final class FetchTokenQuery
+final class GetTokenQuery
 {
     private string $email;
 

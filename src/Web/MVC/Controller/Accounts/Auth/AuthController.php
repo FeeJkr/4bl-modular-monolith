@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Web\MVC\Controller\Accounts\Auth;
 
-use App\Modules\Accounts\Application\User\FetchToken\FetchTokenQuery;
-use App\Modules\Accounts\Application\User\FetchToken\TokenDTO;
+use App\Modules\Accounts\Application\User\GetToken\GetTokenQuery;
+use App\Modules\Accounts\Application\User\GetToken\TokenDTO;
 use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
 use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
 use App\Web\MVC\Controller\AbstractController;
@@ -74,7 +74,7 @@ final class AuthController extends AbstractController
 
         /** @var TokenDTO $token */
         $token = $this->bus
-            ->dispatch(new FetchTokenQuery($email))
+            ->dispatch(new GetTokenQuery($email))
             ->last(HandledStamp::class)
             ->getResult();
 

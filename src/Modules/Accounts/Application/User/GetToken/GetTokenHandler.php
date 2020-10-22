@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Accounts\Application\User\FetchToken;
+namespace App\Modules\Accounts\Application\User\GetToken;
 
 use App\Modules\Accounts\Domain\User\UserException;
 use App\Modules\Accounts\Domain\User\UserRepository;
 
-final class FetchTokenHandler
+final class GetTokenHandler
 {
     private UserRepository $repository;
 
@@ -15,7 +15,7 @@ final class FetchTokenHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchTokenQuery $query): TokenDTO
+    public function __invoke(GetTokenQuery $query): TokenDTO
     {
         $user = $this->repository->fetchByEmail($query->getEmail());
 

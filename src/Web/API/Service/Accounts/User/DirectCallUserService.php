@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Web\API\Service\Accounts\User;
 
-use App\Modules\Accounts\Application\User\FetchToken\FetchTokenQuery;
-use App\Modules\Accounts\Application\User\FetchToken\TokenDTO;
+use App\Modules\Accounts\Application\User\GetToken\GetTokenQuery;
+use App\Modules\Accounts\Application\User\GetToken\TokenDTO;
 use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
 use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
 use App\Web\API\Request\Accounts\User\RegisterRequest;
@@ -31,7 +31,7 @@ final class DirectCallUserService implements UserService
 
         $this->bus->dispatch($command);
 
-        $query = new FetchTokenQuery($email);
+        $query = new GetTokenQuery($email);
 
         /**@var TokenDTO $tokenDTO */
         $tokenDTO = $this->bus
