@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Category\FetchOneById;
+namespace App\Modules\Finances\Application\Category\GetOneById;
 
-final class FetchOneCategoryByIdQuery
+final class GetOneCategoryByIdQuery
 {
     private int $userId;
     private int $categoryId;

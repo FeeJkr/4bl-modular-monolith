@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Category\FetchAll;
+namespace App\Modules\Finances\Application\Category\GetAll;
 
-final class FetchAllCategoriesQuery
+final class GetAllCategoriesQuery
 {
     private int $userId;
 

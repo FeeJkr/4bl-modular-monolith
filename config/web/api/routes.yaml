@@ -10,12 +10,12 @@ api.v1.accounts.sign-in:
 
 api.v1.finances.categories.all:
   path: /api/v1/finances/categories
-  controller: App\Web\API\Action\Finances\Category\FetchAllCategoriesAction
+  controller: App\Web\API\Action\Finances\Category\GetAllCategoriesAction
   methods: GET
 
 api.v1.finances.categories.get-one:
   path: /api/v1/finances/categories/{id}
-  controller: App\Web\API\Action\Finances\Category\FetchOneCategoryByIdAction
+  controller: App\Web\API\Action\Finances\Category\GetOneCategoryByIdAction
   methods: GET
 
 api.v1.finances.categories.update:

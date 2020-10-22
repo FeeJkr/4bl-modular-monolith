@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Web\API\ViewModel\Finances\Category;
 
-use App\Modules\Finances\Application\Category\FetchAll\CategoriesCollection;
-use App\Modules\Finances\Application\Category\FetchOneById\CategoryDTO;
+use App\Modules\Finances\Application\Category\GetAll\CategoriesCollection;
+use App\Modules\Finances\Application\Category\GetOneById\CategoryDTO;
 
 final class ViewModelMapper
 {
@@ -24,7 +24,7 @@ final class ViewModelMapper
     {
         $categories = [];
 
-        /** @var \App\Modules\Finances\Application\Category\FetchAll\CategoryDTO $category */
+        /** @var \App\Modules\Finances\Application\Category\GetAll\CategoryDTO $category */
         foreach ($categoriesCollection->getCategories() as $category) {
             $categories[] = new Category(
                 $category->getId(),

@@ -7,7 +7,7 @@ use App\Web\API\Request\Request;
 use Assert\Assert;
 use Symfony\Component\HttpFoundation\Request as ServerRequest;
 
-final class FetchAllCategoriesRequest extends Request
+final class GetAllCategoriesRequest extends Request
 {
     private string $userToken;
 

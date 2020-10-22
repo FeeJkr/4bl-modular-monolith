@@ -25,15 +25,15 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Category\Update\UpdateCategoryCommand
 
-  App\Modules\Finances\Application\Category\FetchAll\FetchAllCategoriesHandler:
+  App\Modules\Finances\Application\Category\GetAll\GetAllCategoriesHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Category\FetchAll\FetchAllCategoriesQuery
+        handles: App\Modules\Finances\Application\Category\GetAll\GetAllCategoriesQuery
 
-  App\Modules\Finances\Application\Category\FetchOneById\FetchOneCategoryByIdHandler:
+  App\Modules\Finances\Application\Category\GetOneById\GetOneCategoryByIdHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Category\FetchOneById\FetchOneCategoryByIdQuery
+        handles: App\Modules\Finances\Application\Category\GetOneById\GetOneCategoryByIdQuery
 
   App\Modules\Finances\Application\Wallet\Create\CreateWalletHandler:
     tags:

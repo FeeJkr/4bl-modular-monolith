@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Category\FetchOneById;
+namespace App\Modules\Finances\Application\Category\GetOneById;
 
 use App\Modules\Finances\Domain\Category\CategoryException;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
 use App\Modules\Finances\Domain\User\UserId;
 
-final class FetchOneCategoryByIdHandler
+final class GetOneCategoryByIdHandler
 {
     private CategoryRepository $repository;
 
@@ -17,7 +17,7 @@ final class FetchOneCategoryByIdHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchOneCategoryByIdQuery $query): CategoryDTO
+    public function __invoke(GetOneCategoryByIdQuery $query): CategoryDTO
     {
         $userId = UserId::fromInt($query->getUserId());
         $categoryId = CategoryId::fromInt($query->getCategoryId());

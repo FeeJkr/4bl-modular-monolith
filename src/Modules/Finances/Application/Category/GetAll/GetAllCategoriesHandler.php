@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Category\FetchAll;
+namespace App\Modules\Finances\Application\Category\GetAll;
 
 use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
 use App\Modules\Finances\Domain\User\UserId;
 
-final class FetchAllCategoriesHandler
+final class GetAllCategoriesHandler
 {
     private CategoryRepository $repository;
 
@@ -16,7 +16,7 @@ final class FetchAllCategoriesHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(FetchAllCategoriesQuery $query): CategoriesCollection
+    public function __invoke(GetAllCategoriesQuery $query): CategoriesCollection
     {
         $data = [];
         $categories = $this->repository->fetchAll(UserId::fromInt($query->getUserId()));

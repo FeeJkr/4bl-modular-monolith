@@ -5,15 +5,15 @@ namespace App\Web\API\Service\Finances\Category;
 
 use App\Modules\Finances\Application\Category\Create\CreateCategoryCommand;
 use App\Modules\Finances\Application\Category\Delete\DeleteCategoryCommand;
-use App\Modules\Finances\Application\Category\FetchAll\CategoriesCollection;
-use App\Modules\Finances\Application\Category\FetchAll\FetchAllCategoriesQuery;
-use App\Modules\Finances\Application\Category\FetchOneById\CategoryDTO;
-use App\Modules\Finances\Application\Category\FetchOneById\FetchOneCategoryByIdQuery;
+use App\Modules\Finances\Application\Category\GetAll\CategoriesCollection;
+use App\Modules\Finances\Application\Category\GetAll\GetAllCategoriesQuery;
+use App\Modules\Finances\Application\Category\GetOneById\CategoryDTO;
+use App\Modules\Finances\Application\Category\GetOneById\GetOneCategoryByIdQuery;
 use App\Modules\Finances\Application\Category\Update\UpdateCategoryCommand;
 use App\Web\API\Request\Finances\Category\CreateCategoryRequest;
 use App\Web\API\Request\Finances\Category\DeleteCategoryRequest;
-use App\Web\API\Request\Finances\Category\FetchAllCategoriesRequest;
-use App\Web\API\Request\Finances\Category\FetchOneCategoryByIdRequest;
+use App\Web\API\Request\Finances\Category\GetAllCategoriesRequest;
+use App\Web\API\Request\Finances\Category\GetOneCategoryByIdRequest;
 use App\Web\API\Request\Finances\Category\UpdateCategoryRequest;
 use App\Web\API\Service\Finances\User\UserService;
 use App\Web\API\ViewModel\Finances\Category\Category;
@@ -75,10 +75,10 @@ final class DirectCallCategoryService implements CategoryService
         );
     }
 
-    public function getAllCategories(FetchAllCategoriesRequest $request): array
+    public function getAllCategories(GetAllCategoriesRequest $request): array
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
-        $query = new FetchAllCategoriesQuery($userId);
+        $query = new GetAllCategoriesQuery($userId);
 
         /** @var CategoriesCollection $result */
         $result = $this->bus
@@ -89,10 +89,10 @@ final class DirectCallCategoryService implements CategoryService
         return $this->viewModelMapper->mapCollection($result);
     }
 
-    public function getOneCategoryById(FetchOneCategoryByIdRequest $request): Category
+    public function getOneCategoryById(GetOneCategoryByIdRequest $request): Category
     {
         $userId = $this->userService->getUserIdByToken($request->getUserToken());
-        $query = new FetchOneCategoryByIdQuery($userId, $request->getCategoryId());
+        $query = new GetOneCategoryByIdQuery($userId, $request->getCategoryId());
 
         /** @var CategoryDTO $result */
         $result = $this->bus
