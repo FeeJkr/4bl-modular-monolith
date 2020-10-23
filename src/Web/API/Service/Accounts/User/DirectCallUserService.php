@@ -3,23 +3,22 @@ declare(strict_types=1);
 
 namespace App\Web\API\Service\Accounts\User;
 
+use App\Modules\Accounts\Application\User\Contract\UserContract;
+use App\Modules\Accounts\Application\User\Contract\UserContractException;
 use App\Modules\Accounts\Application\User\GetToken\GetTokenQuery;
-use App\Modules\Accounts\Application\User\GetToken\TokenDTO;
 use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
 use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
+use App\Modules\Accounts\Domain\User\UserException;
 use App\Web\API\Request\Accounts\User\RegisterRequest;
 use App\Web\API\Request\Accounts\User\SignInRequest;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
-use Throwable;
 
 final class DirectCallUserService implements UserService
 {
-    private MessageBusInterface $bus;
+    private UserContract $userContract;
 
-    public function __construct(MessageBusInterface $bus)
+    public function __construct(UserContract $userContract)
     {
-        $this->bus = $bus;
+        $this->userContract = $userContract;
     }
 
     public function signIn(SignInRequest $request): string
@@ -27,17 +26,13 @@ final class DirectCallUserService implements UserService
         $email = $request->getEmail();
         $password = $request->getPassword();
 
-        $command = new SignInUserCommand($email, $password);
+        $this->userContract->signIn(
+            new SignInUserCommand($email, $password)
+        );
 
-        $this->bus->dispatch($command);
-
-        $query = new GetTokenQuery($email);
-
-        /**@var TokenDTO $tokenDTO */
-        $tokenDTO = $this->bus
-            ->dispatch($query)
-            ->last(HandledStamp::class)
-            ->getResult();
+        $tokenDTO = $this->userContract->getToken(
+            new GetTokenQuery($email)
+        );
 
         return $tokenDTO->getToken();
     }
@@ -51,9 +46,9 @@ final class DirectCallUserService implements UserService
                 $request->getPassword()
             );
 
-            $this->bus->dispatch($command);
-        } catch (Throwable $exception) {
-            throw UserRegistrationErrorException::create($exception);
+            $this->userContract->register($command);
+        } catch (UserContractException $exception) {
+            throw new UserRegistrationErrorException($exception->getMessage());
         }
     }
 }
