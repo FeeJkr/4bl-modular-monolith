@@ -40,6 +40,9 @@ final class TransactionsResponse
 
     public function getResponse(): array
     {
-        return array_map(fn(TransactionResponse $transaction) => $transaction->getResponse(), $this->transactions);
+        return array_map(
+            static fn(TransactionResponse $transaction) => $transaction->getResponse(),
+            $this->transactions
+        );
     }
 }

@@ -5,7 +5,6 @@ namespace App\Web\API\Response\Finances\Wallet;
 
 use App\Modules\Finances\Application\Wallet\GetAll\WalletDTO;
 use App\Modules\Finances\Application\Wallet\GetAll\WalletsCollection;
-use App\Modules\Finances\Domain\Wallet\WalletRepository;
 
 final class WalletsResponse
 {
@@ -36,6 +35,9 @@ final class WalletsResponse
 
     public function getResponse(): array
     {
-        return array_map(fn(WalletResponse $wallet) => $wallet->getResponse(), $this->wallets);
+        return array_map(
+            static fn(WalletResponse $wallet) => $wallet->getResponse(),
+            $this->wallets
+        );
     }
 }

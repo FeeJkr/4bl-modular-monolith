@@ -35,6 +35,9 @@ final class CategoriesResponse
 
     public function getResponse(): array
     {
-        return array_map(fn(CategoryResponse $category) => $category->getResponse(), $this->categories);
+        return array_map(
+            static fn(CategoryResponse $category) => $category->getResponse(),
+            $this->categories
+        );
     }
 }
