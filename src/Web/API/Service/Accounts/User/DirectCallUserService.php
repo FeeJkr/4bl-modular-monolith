@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Web\API\Service\Accounts\User;
 
-use App\Modules\Accounts\Application\User\Contract\UserContract;
-use App\Modules\Accounts\Application\User\Contract\UserContractException;
 use App\Modules\Accounts\Application\User\GetToken\GetTokenQuery;
 use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
 use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
+use App\Modules\Accounts\Application\User\UserContract;
+use App\Modules\Accounts\Application\User\UserContractException;
 use App\Web\API\Request\Accounts\User\RegisterRequest;
 use App\Web\API\Request\Accounts\User\SignInRequest;
 

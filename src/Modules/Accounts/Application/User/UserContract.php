@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Accounts\Application\User\Contract;
+namespace App\Modules\Accounts\Application\User;
 
 use App\Modules\Accounts\Application\User\GetToken\GetTokenQuery;
 use App\Modules\Accounts\Application\User\GetToken\TokenDTO;
