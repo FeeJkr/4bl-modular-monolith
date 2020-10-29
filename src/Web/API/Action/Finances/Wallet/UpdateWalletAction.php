@@ -20,9 +20,9 @@ final class UpdateWalletAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = UpdateWalletRequest::createFromServerRequest($request);
+        $updateWalletRequest = UpdateWalletRequest::createFromServerRequest($request);
 
-        $this->service->updateWallet($request);
+        $this->service->updateWallet($updateWalletRequest);
 
         return $this->noContentResponse();
     }

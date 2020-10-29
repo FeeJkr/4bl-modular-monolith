@@ -20,10 +20,10 @@ final class GetAllWalletsAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = GetAllWalletsRequest::createFromServerRequest($request);
+        $getAllWalletsRequest = GetAllWalletsRequest::createFromServerRequest($request);
 
-        $result = $this->service->getAllWallets($request);
+        $result = $this->service->getAllWallets($getAllWalletsRequest);
 
-        return new JsonResponse($result->getResponse());
+        return $this->json($result->getResponse());
     }
 }

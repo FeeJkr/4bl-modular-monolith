@@ -24,9 +24,9 @@ final class RegisterUserAction extends AbstractAction
     public function __invoke(Request $request): JsonResponse
     {
         try {
-            $request = RegisterRequest::createFromServerRequest($request);
+            $registerUserRequest = RegisterRequest::createFromServerRequest($request);
 
-            $this->service->register($request);
+            $this->service->register($registerUserRequest);
 
             return $this->noContentResponse();
         } catch (UserRegistrationErrorException $exception) {

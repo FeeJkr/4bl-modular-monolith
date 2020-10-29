@@ -20,9 +20,9 @@ final class SignInUserAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = SignInRequest::createFromServerRequest($request);
+        $signInUserRequest = SignInRequest::createFromServerRequest($request);
 
-        $token = $this->service->signIn($request);
+        $token = $this->service->signIn($signInUserRequest);
 
         return new JsonResponse([
             'token' => $token,

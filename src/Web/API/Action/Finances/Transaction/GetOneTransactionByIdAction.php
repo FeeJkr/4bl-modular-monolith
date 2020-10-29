@@ -20,10 +20,10 @@ final class GetOneTransactionByIdAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = GetTransactionByIdRequest::createFromServerRequest($request);
+        $getTransactionByIdRequest = GetTransactionByIdRequest::createFromServerRequest($request);
 
-        $data = $this->service->getTransactionById($request);
+        $data = $this->service->getTransactionById($getTransactionByIdRequest);
 
-        return new JsonResponse($data->getResponse());
+        return $this->json($data->getResponse());
     }
 }

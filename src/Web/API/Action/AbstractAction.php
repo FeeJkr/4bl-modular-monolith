@@ -12,4 +12,9 @@ abstract class AbstractAction
     {
         return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
+
+    protected function json(array $data): JsonResponse
+    {
+        return new JsonResponse($data, Response::HTTP_OK);
+    }
 }

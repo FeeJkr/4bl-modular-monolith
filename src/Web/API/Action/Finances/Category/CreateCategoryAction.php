@@ -20,9 +20,9 @@ final class CreateCategoryAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = CreateCategoryRequest::createFromServerRequest($request);
+        $createCategoryRequest = CreateCategoryRequest::createFromServerRequest($request);
 
-        $this->service->createCategory($request);
+        $this->service->createCategory($createCategoryRequest);
 
         return $this->noContentResponse();
     }

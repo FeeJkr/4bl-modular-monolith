@@ -20,9 +20,9 @@ final class UpdateTransactionAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = UpdateTransactionRequest::createFromServerRequest($request);
+        $updateTransactionRequest = UpdateTransactionRequest::createFromServerRequest($request);
 
-        $this->service->updateTransaction($request);
+        $this->service->updateTransaction($updateTransactionRequest);
 
         return $this->noContentResponse();
     }

@@ -20,9 +20,9 @@ final class DeleteCategoryAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = DeleteCategoryRequest::createFromServerRequest($request);
+        $deleteCategoryRequest = DeleteCategoryRequest::createFromServerRequest($request);
 
-        $this->service->deleteCategory($request);
+        $this->service->deleteCategory($deleteCategoryRequest);
 
         return $this->noContentResponse();
     }

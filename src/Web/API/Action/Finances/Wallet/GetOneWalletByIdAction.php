@@ -20,10 +20,10 @@ final class GetOneWalletByIdAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = GetOneWalletByIdRequest::createFromServerRequest($request);
+        $getWalletByIdRequest = GetOneWalletByIdRequest::createFromServerRequest($request);
 
-        $result = $this->service->getOneWalletById($request);
+        $result = $this->service->getOneWalletById($getWalletByIdRequest);
 
-        return new JsonResponse($result->getResponse());
+        return $this->json($result->getResponse());
     }
 }

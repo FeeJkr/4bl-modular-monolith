@@ -20,9 +20,9 @@ final class UpdateCategoryAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = UpdateCategoryRequest::createFromServerRequest($request);
+        $updateCategoryRequest = UpdateCategoryRequest::createFromServerRequest($request);
 
-        $this->service->updateCategory($request);
+        $this->service->updateCategory($updateCategoryRequest);
 
         return $this->noContentResponse();
     }

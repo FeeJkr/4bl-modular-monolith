@@ -20,10 +20,10 @@ final class GetAllTransactionsAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = GetAllTransactionsRequest::createFromServerRequest($request);
+        $getAllTransactionsRequest = GetAllTransactionsRequest::createFromServerRequest($request);
 
-        $data = $this->service->getAllTransactions($request);
+        $data = $this->service->getAllTransactions($getAllTransactionsRequest);
 
-        return new JsonResponse($data->getResponse());
+        return $this->json($data->getResponse());
     }
 }

@@ -20,10 +20,10 @@ final class GetOneCategoryByIdAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = GetOneCategoryByIdRequest::createFromServerRequest($request);
+        $getCategoryByIdRequest = GetOneCategoryByIdRequest::createFromServerRequest($request);
 
-        $data = $this->service->getOneCategoryById($request);
+        $data = $this->service->getOneCategoryById($getCategoryByIdRequest);
 
-        return new JsonResponse($data->getResponse());
+        return $this->json($data->getResponse());
     }
 }

@@ -20,10 +20,10 @@ final class GetAllCategoriesAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = GetAllCategoriesRequest::createFromServerRequest($request);
+        $getAllCategoriesRequest = GetAllCategoriesRequest::createFromServerRequest($request);
 
-        $data = $this->service->getAllCategories($request);
+        $data = $this->service->getAllCategories($getAllCategoriesRequest);
 
-        return new JsonResponse($data->getResponse());
+        return $this->json($data->getResponse());
     }
 }

@@ -20,9 +20,9 @@ final class DeleteTransactionAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = DeleteTransactionRequest::createFromServerRequest($request);
+        $deleteTransactionRequest = DeleteTransactionRequest::createFromServerRequest($request);
 
-        $this->service->deleteTransaction($request);
+        $this->service->deleteTransaction($deleteTransactionRequest);
 
         return $this->noContentResponse();
     }

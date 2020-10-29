@@ -20,9 +20,9 @@ final class DeleteWalletAction extends AbstractAction
 
     public function __invoke(Request $request): JsonResponse
     {
-        $request = DeleteWalletRequest::createFromServerRequest($request);
+        $deleteWalletRequest = DeleteWalletRequest::createFromServerRequest($request);
 
-        $this->service->deleteWallet($request);
+        $this->service->deleteWallet($deleteWalletRequest);
 
         return $this->noContentResponse();
     }
