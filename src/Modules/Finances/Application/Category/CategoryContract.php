@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Category\Contract;
+namespace App\Modules\Finances\Application\Category;
 
 use App\Modules\Finances\Application\Category\Create\CreateCategoryCommand;
 use App\Modules\Finances\Application\Category\Delete\DeleteCategoryCommand;

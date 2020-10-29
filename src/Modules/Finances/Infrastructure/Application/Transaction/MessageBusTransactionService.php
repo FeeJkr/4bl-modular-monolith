@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\Contract;
+namespace App\Modules\Finances\Infrastructure\Application\Transaction;
 
 use App\Modules\Finances\Application\Transaction\Create\CreateTransactionCommand;
 use App\Modules\Finances\Application\Transaction\Delete\DeleteTransactionCommand;
@@ -11,11 +11,12 @@ use App\Modules\Finances\Application\Transaction\GetAllByWallet\GetAllTransactio
 use App\Modules\Finances\Application\Transaction\GetAllByWallet\TransactionsByWalletCollection;
 use App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdQuery;
 use App\Modules\Finances\Application\Transaction\GetOneById\TransactionDTO;
+use App\Modules\Finances\Application\Transaction\TransactionContract;
 use App\Modules\Finances\Application\Transaction\Update\UpdateTransactionCommand;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class TransactionService implements TransactionContract
+final class MessageBusTransactionService implements TransactionContract
 {
     private MessageBusInterface $bus;
 

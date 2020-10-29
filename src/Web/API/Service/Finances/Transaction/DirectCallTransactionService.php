@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Web\API\Service\Finances\Transaction;
 
-use App\Modules\Finances\Application\Transaction\Contract\TransactionContract;
 use App\Modules\Finances\Application\Transaction\Create\CreateTransactionCommand;
 use App\Modules\Finances\Application\Transaction\Delete\DeleteTransactionCommand;
 use App\Modules\Finances\Application\Transaction\GetAll\GetAllTransactionsQuery;
 use App\Modules\Finances\Application\Transaction\GetAllByWallet\GetAllTransactionsByWalletQuery;
 use App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdQuery;
+use App\Modules\Finances\Application\Transaction\TransactionContract;
 use App\Modules\Finances\Application\Transaction\Update\UpdateTransactionCommand;
 use App\Web\API\Request\Finances\Transaction\CreateTransactionRequest;
 use App\Web\API\Request\Finances\Transaction\DeleteTransactionRequest;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\User\Contract;
+namespace App\Modules\Finances\Application\User;
 
 use App\Modules\Finances\Application\User\GetUserIdByToken\GetUserIdByTokenQuery;
 

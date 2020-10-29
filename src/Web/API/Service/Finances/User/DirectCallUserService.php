@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Web\API\Service\Finances\User;
 
-use App\Modules\Finances\Application\User\Contract\UserContract;
 use App\Modules\Finances\Application\User\GetUserIdByToken\GetUserIdByTokenQuery;
+use App\Modules\Finances\Application\User\UserContract;
 
 final class DirectCallUserService implements UserService
 {

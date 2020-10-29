@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Wallet\Contract;
+namespace App\Modules\Finances\Infrastructure\Application\Wallet;
 
 use App\Modules\Finances\Application\Wallet\Create\CreateWalletCommand;
 use App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand;
@@ -10,10 +10,11 @@ use App\Modules\Finances\Application\Wallet\GetAll\WalletsCollection;
 use App\Modules\Finances\Application\Wallet\GetOneById\GetOneWalletByIdQuery;
 use App\Modules\Finances\Application\Wallet\GetOneById\WalletDTO;
 use App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand;
+use App\Modules\Finances\Application\Wallet\WalletContract;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class WalletService implements WalletContract
+final class MessageBusWalletService implements WalletContract
 {
     private MessageBusInterface $bus;
 

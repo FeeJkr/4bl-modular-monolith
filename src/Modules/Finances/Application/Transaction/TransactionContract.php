@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Transaction\Contract;
+namespace App\Modules\Finances\Application\Transaction;
 
 use App\Modules\Finances\Application\Transaction\Create\CreateTransactionCommand;
 use App\Modules\Finances\Application\Transaction\Delete\DeleteTransactionCommand;

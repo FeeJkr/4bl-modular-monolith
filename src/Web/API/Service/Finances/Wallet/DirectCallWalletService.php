@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Web\API\Service\Finances\Wallet;
 
-use App\Modules\Finances\Application\Wallet\Contract\WalletContract;
 use App\Modules\Finances\Application\Wallet\Create\CreateWalletCommand;
 use App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand;
 use App\Modules\Finances\Application\Wallet\GetAll\GetAllWalletsQuery;
 use App\Modules\Finances\Application\Wallet\GetOneById\GetOneWalletByIdQuery;
 use App\Modules\Finances\Application\Wallet\Update\UpdateWalletCommand;
+use App\Modules\Finances\Application\Wallet\WalletContract;
 use App\Web\API\Request\Finances\Wallet\CreateWalletRequest;
 use App\Web\API\Request\Finances\Wallet\DeleteWalletRequest;
 use App\Web\API\Request\Finances\Wallet\GetAllWalletsRequest;

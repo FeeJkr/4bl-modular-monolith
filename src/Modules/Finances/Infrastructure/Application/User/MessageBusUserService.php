@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\User\Contract;
+namespace App\Modules\Finances\Infrastructure\Application\User;
 
 use App\Modules\Finances\Application\User\GetUserIdByToken\GetUserIdByTokenQuery;
+use App\Modules\Finances\Application\User\UserContract;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class UserService implements UserContract
+final class MessageBusUserService implements UserContract
 {
     private MessageBusInterface $bus;
 

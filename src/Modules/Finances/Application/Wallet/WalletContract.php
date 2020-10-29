@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Wallet\Contract;
+namespace App\Modules\Finances\Application\Wallet;
 
 use App\Modules\Finances\Application\Wallet\Create\CreateWalletCommand;
 use App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand;

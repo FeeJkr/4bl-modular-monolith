@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Web\API\Service\Finances\Category;
 
-use App\Modules\Finances\Application\Category\Contract\CategoryContract;
+use App\Modules\Finances\Application\Category\CategoryContract;
 use App\Modules\Finances\Application\Category\Create\CreateCategoryCommand;
 use App\Modules\Finances\Application\Category\Delete\DeleteCategoryCommand;
 use App\Modules\Finances\Application\Category\GetAll\GetAllCategoriesQuery;
