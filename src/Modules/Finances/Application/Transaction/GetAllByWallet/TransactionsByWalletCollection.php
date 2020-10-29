@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Transaction\GetAllByWallet;
 
-final class TransactionsCollection
+final class TransactionsByWalletCollection
 {
     /** @var array|TransactionDTO */
     private array $transactions;

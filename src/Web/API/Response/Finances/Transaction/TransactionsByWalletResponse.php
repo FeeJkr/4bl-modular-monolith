@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Web\API\Response\Finances\Transaction;
 
 use App\Modules\Finances\Application\Transaction\GetAllByWallet\TransactionDTO;
-use App\Modules\Finances\Application\Transaction\GetAllByWallet\TransactionsCollection;
+use App\Modules\Finances\Application\Transaction\GetAllByWallet\TransactionsByWalletCollection;
 
 final class TransactionsByWalletResponse
 {
@@ -15,7 +15,7 @@ final class TransactionsByWalletResponse
         $this->transactions = $transactions;
     }
 
-    public static function createFromCollection(TransactionsCollection $collection): self
+    public static function createFromCollection(TransactionsByWalletCollection $collection): self
     {
         $data = [];
 

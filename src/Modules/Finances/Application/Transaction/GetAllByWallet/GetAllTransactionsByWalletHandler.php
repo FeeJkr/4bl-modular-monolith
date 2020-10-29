@@ -17,7 +17,7 @@ final class GetAllTransactionsByWalletHandler
         $this->repository = $repository;
     }
 
-    public function __invoke(GetAllTransactionsByWalletQuery $query): TransactionsCollection
+    public function __invoke(GetAllTransactionsByWalletQuery $query): TransactionsByWalletCollection
     {
         $data = [];
         $transactions = $this->repository->fetchAllByWallet(
@@ -43,6 +43,6 @@ final class GetAllTransactionsByWalletHandler
             );
         }
 
-        return new TransactionsCollection($data);
+        return new TransactionsByWalletCollection($data);
     }
 }
