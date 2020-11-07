@@ -20,7 +20,7 @@ final class MessageBusTransactionService implements TransactionContract
 {
     private MessageBusInterface $bus;
 
-    private function __construct(MessageBusInterface $bus)
+    public function __construct(MessageBusInterface $bus)
     {
         $this->bus = $bus;
     }
