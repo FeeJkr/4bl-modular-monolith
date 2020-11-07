@@ -6,7 +6,6 @@ services:
       - "8080:8080"
     volumes:
       - ./:/app
-      - ~/.ssh:/root/.ssh
   redis:
     image: "redis:alpine"
     ports:
