@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Web\API\Service\Finances\Wallet;
 
+use App\Modules\Finances\Application\User\GetUserIdByTokenAdapter;
 use App\Modules\Finances\Application\Wallet\Create\CreateWalletCommand;
 use App\Modules\Finances\Application\Wallet\Delete\DeleteWalletCommand;
 use App\Modules\Finances\Application\Wallet\GetAll\GetAllWalletsQuery;
@@ -20,18 +21,18 @@ use App\Web\API\Service\Finances\User\UserService;
 
 final class DirectCallWalletService implements WalletService
 {
-    private UserService $userService;
+    private GetUserIdByTokenAdapter $getUserIdByTokenAdapter;
     private WalletContract $walletContract;
 
-    public function __construct(UserService $userService, WalletContract $walletContract)
+    public function __construct(GetUserIdByTokenAdapter $getUserIdByTokenAdapter, WalletContract $walletContract)
     {
-        $this->userService = $userService;
+        $this->getUserIdByTokenAdapter = $getUserIdByTokenAdapter;
         $this->walletContract = $walletContract;
     }
 
     public function createWallet(CreateWalletRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new CreateWalletCommand(
             $request->getWalletName(),
             $request->getWalletStartBalance(),
@@ -43,7 +44,7 @@ final class DirectCallWalletService implements WalletService
 
     public function deleteWallet(DeleteWalletRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new DeleteWalletCommand(
             $request->getWalletId(),
             $userId
@@ -54,7 +55,7 @@ final class DirectCallWalletService implements WalletService
 
     public function updateWallet(UpdateWalletRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new UpdateWalletCommand(
             $request->getWalletId(),
             $userId,
@@ -68,7 +69,7 @@ final class DirectCallWalletService implements WalletService
     public function getAllWallets(GetAllWalletsRequest $request): WalletsResponse
     {
         $query = new GetAllWalletsQuery(
-            $this->userService->getUserIdByToken($request->getUserToken())
+            $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken())
         );
 
         return WalletsResponse::createFromCollection(
@@ -80,7 +81,7 @@ final class DirectCallWalletService implements WalletService
     {
         $query = new GetOneWalletByIdQuery(
             $request->getWalletId(),
-            $this->userService->getUserIdByToken($request->getUserToken())
+            $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken())
         );
 
         $wallet = $this->walletContract->getWalletById($query);

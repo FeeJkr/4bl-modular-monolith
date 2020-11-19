@@ -9,6 +9,7 @@ use App\Modules\Finances\Application\Category\Delete\DeleteCategoryCommand;
 use App\Modules\Finances\Application\Category\GetAll\GetAllCategoriesQuery;
 use App\Modules\Finances\Application\Category\GetOneById\GetOneCategoryByIdQuery;
 use App\Modules\Finances\Application\Category\Update\UpdateCategoryCommand;
+use App\Modules\Finances\Application\User\GetUserIdByTokenAdapter;
 use App\Web\API\Request\Finances\Category\CreateCategoryRequest;
 use App\Web\API\Request\Finances\Category\DeleteCategoryRequest;
 use App\Web\API\Request\Finances\Category\GetAllCategoriesRequest;
@@ -16,22 +17,21 @@ use App\Web\API\Request\Finances\Category\GetOneCategoryByIdRequest;
 use App\Web\API\Request\Finances\Category\UpdateCategoryRequest;
 use App\Web\API\Response\Finances\Category\CategoriesResponse;
 use App\Web\API\Response\Finances\Category\CategoryResponse;
-use App\Web\API\Service\Finances\User\UserService;
 
 final class DirectCallCategoryService implements CategoryService
 {
-    private UserService $userService;
+    private GetUserIdByTokenAdapter $getUserIdByTokenAdapter;
     private CategoryContract $categoryContract;
 
-    public function __construct(UserService $userService, CategoryContract $categoryContract)
+    public function __construct(GetUserIdByTokenAdapter $getUserIdByTokenAdapter, CategoryContract $categoryContract)
     {
-        $this->userService = $userService;
+        $this->getUserIdByTokenAdapter = $getUserIdByTokenAdapter;
         $this->categoryContract = $categoryContract;
     }
 
     public function createCategory(CreateCategoryRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new CreateCategoryCommand(
             $userId,
             $request->getCategoryName(),
@@ -44,7 +44,7 @@ final class DirectCallCategoryService implements CategoryService
 
     public function deleteCategory(DeleteCategoryRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new DeleteCategoryCommand(
             $request->getCategoryId(),
             $userId
@@ -55,7 +55,7 @@ final class DirectCallCategoryService implements CategoryService
 
     public function updateCategory(UpdateCategoryRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new UpdateCategoryCommand(
             $request->getCategoryId(),
             $userId,
@@ -69,7 +69,7 @@ final class DirectCallCategoryService implements CategoryService
 
     public function getAllCategories(GetAllCategoriesRequest $request): CategoriesResponse
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $query = new GetAllCategoriesQuery($userId);
 
         return CategoriesResponse::createFromCollection(
@@ -79,7 +79,7 @@ final class DirectCallCategoryService implements CategoryService
 
     public function getOneCategoryById(GetOneCategoryByIdRequest $request): CategoryResponse
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $query = new GetOneCategoryByIdQuery($userId, $request->getCategoryId());
 
         $category = $this->categoryContract->getOneCategoryById($query);

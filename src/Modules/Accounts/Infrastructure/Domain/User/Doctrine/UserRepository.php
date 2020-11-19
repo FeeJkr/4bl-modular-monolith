@@ -53,7 +53,7 @@ final class UserRepository implements UserRepositoryInterface
             SELECT * FROM users WHERE email = :email
         ", [
             'email' => $email,
-        ])->fetch();
+        ])->fetchAssociative();
 
         if ($data === false) {
             return null;
@@ -74,7 +74,7 @@ final class UserRepository implements UserRepositoryInterface
             SELECT * FROM users WHERE token = :token
         ", [
             'token' => $token->toString(),
-        ])->fetch();
+        ])->fetchAssociative();
 
         if ($data === false) {
             throw UserException::notFoundByToken($token);

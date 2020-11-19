@@ -26,6 +26,11 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Accounts\Application\User\SignOut\SignOutUserCommand
 
+  App\Modules\Accounts\Application\User\GetUserByToken\GetUserByTokenHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Accounts\Application\User\GetUserByToken\GetUserByTokenQuery
+
   App\Modules\Accounts\Infrastructure\Domain\User\JWTTokenManager:
     arguments:
       $jwtSecretKey: '%jwt.secret_key%'

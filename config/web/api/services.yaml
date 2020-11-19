@@ -12,3 +12,6 @@ services:
 
   App\Web\API\Middleware\TokenMiddleware:
     tags: [ 'kernel.event_subscriber' ]
+
+  App\Web\API\Middleware\ErrorHandlerMiddleware:
+    tags: ['kernel.event_subscriber']

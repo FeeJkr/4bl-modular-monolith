@@ -10,6 +10,7 @@ use App\Modules\Finances\Application\Transaction\GetAllByWallet\GetAllTransactio
 use App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdQuery;
 use App\Modules\Finances\Application\Transaction\TransactionContract;
 use App\Modules\Finances\Application\Transaction\Update\UpdateTransactionCommand;
+use App\Modules\Finances\Application\User\GetUserIdByTokenAdapter;
 use App\Web\API\Request\Finances\Transaction\CreateTransactionRequest;
 use App\Web\API\Request\Finances\Transaction\DeleteTransactionRequest;
 use App\Web\API\Request\Finances\Transaction\GetAllTransactionsByWalletIdRequest;
@@ -24,18 +25,20 @@ use DateTime;
 
 final class DirectCallTransactionService implements TransactionService
 {
-    private UserService $userService;
+    private GetUserIdByTokenAdapter $getUserIdByTokenAdapter;
     private TransactionContract $transactionContract;
 
-    public function __construct(UserService $userService, TransactionContract $transactionContract)
-    {
-        $this->userService = $userService;
+    public function __construct(
+        GetUserIdByTokenAdapter $getUserIdByTokenAdapter,
+        TransactionContract $transactionContract
+    ) {
+        $this->getUserIdByTokenAdapter = $getUserIdByTokenAdapter;
         $this->transactionContract = $transactionContract;
     }
 
     public function createTransaction(CreateTransactionRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new CreateTransactionCommand(
             $userId,
             $request->getWalletId(),
@@ -52,7 +55,7 @@ final class DirectCallTransactionService implements TransactionService
 
     public function deleteTransaction(DeleteTransactionRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new DeleteTransactionCommand(
             $request->getTransactionId(),
             $userId
@@ -63,7 +66,7 @@ final class DirectCallTransactionService implements TransactionService
 
     public function updateTransaction(UpdateTransactionRequest $request): void
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $command = new UpdateTransactionCommand(
             $request->getTransactionId(),
             $userId,
@@ -81,7 +84,7 @@ final class DirectCallTransactionService implements TransactionService
 
     public function getAllTransactions(GetAllTransactionsRequest $request): TransactionsResponse
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $query = new GetAllTransactionsQuery($userId);
 
         return TransactionsResponse::createFromCollection(
@@ -91,7 +94,7 @@ final class DirectCallTransactionService implements TransactionService
 
     public function getAllTransactionsByWalletId(GetAllTransactionsByWalletIdRequest $request): TransactionsByWalletResponse
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $query = new GetAllTransactionsByWalletQuery(
             $request->getWalletId(),
             $userId
@@ -104,7 +107,7 @@ final class DirectCallTransactionService implements TransactionService
 
     public function getTransactionById(GetTransactionByIdRequest $request): TransactionResponse
     {
-        $userId = $this->userService->getUserIdByToken($request->getUserToken());
+        $userId = $this->getUserIdByTokenAdapter->getUserIdByToken($request->getUserToken());
         $query = new GetOneTransactionByIdQuery($request->getTransactionId(), $userId);
 
         $transaction = $this->transactionContract->getTransactionById($query);

@@ -89,8 +89,3 @@ services:
     tags:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdQuery
-
-  App\Modules\Finances\Application\User\GetUserIdByToken\GetUserIdByTokenHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\User\GetUserIdByToken\GetUserIdByTokenQuery

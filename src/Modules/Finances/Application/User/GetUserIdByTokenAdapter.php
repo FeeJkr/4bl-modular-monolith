@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Web\API\Service\Finances\User;
+namespace App\Modules\Finances\Application\User;
 
-interface UserService
+interface GetUserIdByTokenAdapter
 {
     public function getUserIdByToken(string $token): int;
 }

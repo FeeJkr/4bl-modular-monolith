@@ -17,12 +17,10 @@ final class RegisterUserHandler
 
     public function __construct(
         UserRepository $repository,
-        PasswordManager $passwordManager,
-        TokenManager $tokenManager
+        PasswordManager $passwordManager
     ) {
         $this->repository = $repository;
         $this->passwordManager = $passwordManager;
-        $this->tokenManager = $tokenManager;
     }
 
     public function __invoke(RegisterUserCommand $command): void

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\User\GetUserIdByToken;
+namespace App\Modules\Accounts\Application\User\GetUserByToken;
 
-final class GetUserIdByTokenQuery
+final class GetUserByTokenQuery
 {
     private string $token;
 
