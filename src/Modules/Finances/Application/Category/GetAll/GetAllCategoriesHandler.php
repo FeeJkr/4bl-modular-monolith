@@ -5,21 +5,24 @@ namespace App\Modules\Finances\Application\Category\GetAll;
 
 use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
+use App\Modules\Finances\Domain\User\UserContext;
 use App\Modules\Finances\Domain\User\UserId;
 
 final class GetAllCategoriesHandler
 {
     private CategoryRepository $repository;
+    private UserContext $userContext;
 
-    public function __construct(CategoryRepository $repository)
+    public function __construct(CategoryRepository $repository, UserContext $userContext)
     {
         $this->repository = $repository;
+        $this->userContext = $userContext;
     }
 
     public function __invoke(GetAllCategoriesQuery $query): CategoriesCollection
     {
         $data = [];
-        $categories = $this->repository->fetchAll(UserId::fromInt($query->getUserId()));
+        $categories = $this->repository->fetchAll($this->userContext->getUserId());
 
         /** @var Category $category */
         foreach ($categories as $category) {

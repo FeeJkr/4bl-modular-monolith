@@ -3,29 +3,39 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Accounts\User;
 
+use App\Modules\Accounts\Application\User\GetToken\GetTokenQuery;
+use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
 use App\Web\API\Action\AbstractAction;
 use App\Web\API\Request\Accounts\User\SignInRequest;
-use App\Web\API\Service\Accounts\User\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class SignInUserAction extends AbstractAction
 {
-    private UserService $service;
+    private MessageBusInterface $bus;
 
-    public function __construct(UserService $service)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->service = $service;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
         $signInUserRequest = SignInRequest::createFromServerRequest($request);
 
-        $token = $this->service->signIn($signInUserRequest);
+        $this->bus->dispatch(
+            new SignInUserCommand($signInUserRequest->getEmail(), $signInUserRequest->getPassword())
+        );
+
+        $token = $this->bus
+            ->dispatch(new GetTokenQuery($signInUserRequest->getEmail()))
+            ->last(HandledStamp::class)
+            ->getResult();
 
         return new JsonResponse([
-            'token' => $token,
+            'token' => $token->getToken(),
         ]);
     }
 }

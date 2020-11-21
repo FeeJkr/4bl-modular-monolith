@@ -5,22 +5,24 @@ namespace App\Modules\Finances\Application\Transaction\GetAll;
 
 use App\Modules\Finances\Domain\Transaction\Transaction;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
-use App\Modules\Finances\Domain\User\UserId;
+use App\Modules\Finances\Domain\User\UserContext;
 
 final class GetAllTransactionsHandler
 {
     private TransactionRepository $repository;
+    private UserContext $userContext;
 
-    public function __construct(TransactionRepository $repository)
+    public function __construct(TransactionRepository $repository, UserContext $userContext)
     {
         $this->repository = $repository;
+        $this->userContext = $userContext;
     }
 
     public function __invoke(GetAllTransactionsQuery $query): TransactionsCollection
     {
         $data = [];
         $transactions = $this->repository->fetchAll(
-            UserId::fromInt($query->getUserId())
+            $this->userContext->getUserId()
         );
 
         /** @var Transaction $transaction */

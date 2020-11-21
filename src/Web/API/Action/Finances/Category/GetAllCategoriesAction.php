@@ -3,27 +3,31 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Finances\Category;
 
+use App\Modules\Finances\Application\Category\GetAll\CategoriesCollection;
+use App\Modules\Finances\Application\Category\GetAll\GetAllCategoriesQuery;
 use App\Web\API\Action\AbstractAction;
 use App\Web\API\Request\Finances\Category\GetAllCategoriesRequest;
-use App\Web\API\Service\Finances\Category\CategoryService;
+use App\Web\API\Response\Finances\Category\CategoriesResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class GetAllCategoriesAction extends AbstractAction
 {
-    private CategoryService $service;
+    private MessageBusInterface $bus;
 
-    public function __construct(CategoryService $service)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->service = $service;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $getAllCategoriesRequest = GetAllCategoriesRequest::createFromServerRequest($request);
+        /** @var CategoriesCollection $data */
+        $collection = $this->bus->dispatch(new GetAllCategoriesQuery())->last(HandledStamp::class)->getResult();
+        $response = CategoriesResponse::createFromCollection($collection);
 
-        $data = $this->service->getAllCategories($getAllCategoriesRequest);
-
-        return $this->json($data->getResponse());
+        return $this->json($response->getResponse());
     }
 }

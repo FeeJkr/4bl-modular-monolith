@@ -6,21 +6,14 @@ namespace App\Modules\Finances\Application\Transaction\GetOneById;
 final class GetOneTransactionByIdQuery
 {
     private int $transactionId;
-    private int $userId;
 
-    public function __construct(int $transactionId, int $userId)
+    public function __construct(int $transactionId)
     {
         $this->transactionId = $transactionId;
-        $this->userId = $userId;
     }
 
     public function getTransactionId(): int
     {
         return $this->transactionId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 }

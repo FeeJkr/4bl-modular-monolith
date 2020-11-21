@@ -3,26 +3,32 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Finances\Category;
 
+use App\Modules\Finances\Application\Category\Create\CreateCategoryCommand;
 use App\Web\API\Action\AbstractAction;
 use App\Web\API\Request\Finances\Category\CreateCategoryRequest;
-use App\Web\API\Service\Finances\Category\CategoryService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class CreateCategoryAction extends AbstractAction
 {
-    private CategoryService $service;
+    private MessageBusInterface $bus;
 
-    public function __construct(CategoryService $service)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->service = $service;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
         $createCategoryRequest = CreateCategoryRequest::createFromServerRequest($request);
-
-        $this->service->createCategory($createCategoryRequest);
+        $this->bus->dispatch(
+            new CreateCategoryCommand(
+                $createCategoryRequest->getCategoryName(),
+                $createCategoryRequest->getCategoryType(),
+                $createCategoryRequest->getCategoryIcon()
+            )
+        );
 
         return $this->noContentResponse();
     }

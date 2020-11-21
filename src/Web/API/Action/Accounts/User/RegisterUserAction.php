@@ -3,33 +3,34 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Accounts\User;
 
+use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
 use App\Web\API\Action\AbstractAction;
 use App\Web\API\Request\Accounts\User\RegisterRequest;
-use App\Web\API\Service\Accounts\User\UserRegistrationErrorException;
-use App\Web\API\Service\Accounts\User\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class RegisterUserAction extends AbstractAction
 {
-    private UserService $service;
+    private MessageBusInterface $bus;
 
-    public function __construct(UserService $service)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->service = $service;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        try {
-            $registerUserRequest = RegisterRequest::createFromServerRequest($request);
+        $registerUserRequest = RegisterRequest::createFromServerRequest($request);
 
-            $this->service->register($registerUserRequest);
+        $this->bus->dispatch(
+            new RegisterUserCommand(
+                $registerUserRequest->getEmail(),
+                $registerUserRequest->getUsername(),
+                $registerUserRequest->getPassword()
+            )
+        );
 
-            return $this->noContentResponse();
-        } catch (UserRegistrationErrorException $exception) {
-            return new JsonResponse(['error' => $exception->getMessage()], Response::HTTP_NOT_FOUND);
-        }
+        return $this->noContentResponse();
     }
 }

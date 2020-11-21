@@ -7,7 +7,6 @@ use DateTimeInterface;
 
 final class CreateTransactionCommand
 {
-    private int $userId;
     private int $walletId;
     private ?int $linkedWalletId;
     private int $categoryId;
@@ -17,7 +16,6 @@ final class CreateTransactionCommand
     private DateTimeInterface $operationAt;
 
     public function __construct(
-        int $userId,
         int $walletId,
         ?int $linkedWalletId,
         int $categoryId,
@@ -26,7 +24,6 @@ final class CreateTransactionCommand
         ?string $description,
         DateTimeInterface $operationAt
     ) {
-        $this->userId = $userId;
         $this->walletId = $walletId;
         $this->linkedWalletId = $linkedWalletId;
         $this->categoryId = $categoryId;
@@ -34,11 +31,6 @@ final class CreateTransactionCommand
         $this->amount = $amount;
         $this->description = $description;
         $this->operationAt = $operationAt;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     public function getWalletId(): int

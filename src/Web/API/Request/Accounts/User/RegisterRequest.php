@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Web\API\Request\Accounts\User;
 
+use App\Modules\Accounts\Application\User\Register\RegisterUserCommand;
 use App\Web\API\Request\Request;
 use Assert\Assert;
 use Symfony\Component\HttpFoundation\Request as ServerRequest;

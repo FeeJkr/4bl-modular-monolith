@@ -8,22 +8,25 @@ use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\Transaction\Transaction;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
+use App\Modules\Finances\Domain\User\UserContext;
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 
 final class CreateTransactionHandler
 {
     private TransactionRepository $repository;
+    private UserContext $userContext;
 
-    public function __construct(TransactionRepository $repository)
+    public function __construct(TransactionRepository $repository, UserContext $userContext)
     {
         $this->repository = $repository;
+        $this->userContext = $userContext;
     }
 
     public function __invoke(CreateTransactionCommand $command): void
     {
         $transaction = Transaction::createNew(
-            UserId::fromInt($command->getUserId()),
+            $this->userContext->getUserId(),
             WalletId::fromInt($command->getWalletId()),
             WalletId::fromInt($command->getLinkedWalletId()),
             CategoryId::fromInt($command->getCategoryId()),

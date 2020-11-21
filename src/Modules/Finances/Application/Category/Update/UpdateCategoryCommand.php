@@ -6,20 +6,17 @@ namespace App\Modules\Finances\Application\Category\Update;
 final class UpdateCategoryCommand
 {
     private int $categoryId;
-    private int $userId;
     private string $categoryName;
     private string $categoryType;
     private string $categoryIcon;
 
     public function __construct(
         int $categoryId,
-        int $userId,
         string $categoryName,
         string $categoryType,
         string $categoryIcon
     ) {
         $this->categoryId = $categoryId;
-        $this->userId = $userId;
         $this->categoryName = $categoryName;
         $this->categoryType = $categoryType;
         $this->categoryIcon = $categoryIcon;
@@ -28,11 +25,6 @@ final class UpdateCategoryCommand
     public function getCategoryId(): int
     {
         return $this->categoryId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     public function getCategoryName(): string

@@ -6,23 +6,25 @@ namespace App\Modules\Finances\Application\Category\GetOneById;
 use App\Modules\Finances\Domain\Category\CategoryException;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
+use App\Modules\Finances\Domain\User\UserContext;
 use App\Modules\Finances\Domain\User\UserId;
 
 final class GetOneCategoryByIdHandler
 {
     private CategoryRepository $repository;
+    private UserContext $userContext;
 
-    public function __construct(CategoryRepository $repository)
+    public function __construct(CategoryRepository $repository, UserContext $userContext)
     {
         $this->repository = $repository;
+        $this->userContext = $userContext;
     }
 
     public function __invoke(GetOneCategoryByIdQuery $query): CategoryDTO
     {
-        $userId = UserId::fromInt($query->getUserId());
         $categoryId = CategoryId::fromInt($query->getCategoryId());
 
-        $category = $this->repository->fetchById($categoryId, $userId);
+        $category = $this->repository->fetchById($categoryId, $this->userContext->getUserId());
 
         if ($category === null) {
             throw CategoryException::notFoundById($categoryId);

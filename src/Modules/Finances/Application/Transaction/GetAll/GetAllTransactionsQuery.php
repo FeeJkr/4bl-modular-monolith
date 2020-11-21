@@ -5,15 +5,4 @@ namespace App\Modules\Finances\Application\Transaction\GetAll;
 
 final class GetAllTransactionsQuery
 {
-    private int $userId;
-
-    public function __construct(int $userId)
-    {
-        $this->userId = $userId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
 }

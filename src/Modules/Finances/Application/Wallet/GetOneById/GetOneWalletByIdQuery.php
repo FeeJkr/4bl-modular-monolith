@@ -6,21 +6,14 @@ namespace App\Modules\Finances\Application\Wallet\GetOneById;
 final class GetOneWalletByIdQuery
 {
     private int $walletId;
-    private int $userId;
 
-    public function __construct(int $walletId, int $userId)
+    public function __construct(int $walletId)
     {
         $this->walletId = $walletId;
-        $this->userId = $userId;
     }
 
     public function getWalletId(): int
     {
         return $this->walletId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 }

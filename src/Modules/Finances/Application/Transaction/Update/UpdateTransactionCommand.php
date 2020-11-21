@@ -8,7 +8,6 @@ use DateTimeInterface;
 final class UpdateTransactionCommand
 {
     private int $transactionId;
-    private int $userId;
     private int $walletId;
     private ?int $linkedWalletId;
     private int $categoryId;
@@ -19,7 +18,6 @@ final class UpdateTransactionCommand
 
     public function __construct(
         int $transactionId,
-        int $userId,
         int $walletId,
         ?int $linkedWalletId,
         int $categoryId,
@@ -29,7 +27,6 @@ final class UpdateTransactionCommand
         DateTimeInterface $operationAt
     ) {
         $this->transactionId = $transactionId;
-        $this->userId = $userId;
         $this->walletId = $walletId;
         $this->linkedWalletId = $linkedWalletId;
         $this->categoryId = $categoryId;
@@ -42,11 +39,6 @@ final class UpdateTransactionCommand
     public function getTransactionId(): int
     {
         return $this->transactionId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     public function getWalletId(): int

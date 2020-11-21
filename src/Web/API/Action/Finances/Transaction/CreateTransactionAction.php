@@ -3,26 +3,37 @@ declare(strict_types=1);
 
 namespace App\Web\API\Action\Finances\Transaction;
 
+use App\Modules\Finances\Application\Transaction\Create\CreateTransactionCommand;
 use App\Web\API\Action\AbstractAction;
 use App\Web\API\Request\Finances\Transaction\CreateTransactionRequest;
-use App\Web\API\Service\Finances\Transaction\TransactionService;
+use DateTime;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class CreateTransactionAction extends AbstractAction
 {
-    private TransactionService $service;
+    private MessageBusInterface $bus;
 
-    public function __construct(TransactionService $service)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->service = $service;
+        $this->bus = $bus;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
         $createTransactionRequest = CreateTransactionRequest::createFromServerRequest($request);
-
-        $this->service->createTransaction($createTransactionRequest);
+        $this->bus->dispatch(
+            new CreateTransactionCommand(
+                $createTransactionRequest->getWalletId(),
+                $createTransactionRequest->getLinkedWalletId(),
+                $createTransactionRequest->getCategoryId(),
+                $createTransactionRequest->getTransactionType(),
+                $createTransactionRequest->getAmount(),
+                $createTransactionRequest->getDescription(),
+                (new DateTime)->setTimestamp($createTransactionRequest->getOperationAt())
+            )
+        );
 
         return $this->noContentResponse();
     }

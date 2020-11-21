@@ -5,16 +5,19 @@ namespace App\Modules\Finances\Application\Transaction\GetAllByWallet;
 
 use App\Modules\Finances\Domain\Transaction\Transaction;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
+use App\Modules\Finances\Domain\User\UserContext;
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 
 final class GetAllTransactionsByWalletHandler
 {
     private TransactionRepository $repository;
+    private UserContext $userContext;
 
-    public function __construct(TransactionRepository $repository)
+    public function __construct(TransactionRepository $repository, UserContext $userContext)
     {
         $this->repository = $repository;
+        $this->userContext = $userContext;
     }
 
     public function __invoke(GetAllTransactionsByWalletQuery $query): TransactionsByWalletCollection
@@ -22,7 +25,7 @@ final class GetAllTransactionsByWalletHandler
         $data = [];
         $transactions = $this->repository->fetchAllByWallet(
             WalletId::fromInt($query->getWalletId()),
-            UserId::fromInt($query->getUserId())
+            $this->userContext->getUserId()
         );
 
         /** @var Transaction $transaction */

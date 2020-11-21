@@ -5,18 +5,11 @@ namespace App\Modules\Finances\Application\Category\GetOneById;
 
 final class GetOneCategoryByIdQuery
 {
-    private int $userId;
     private int $categoryId;
 
-    public function __construct(int $userId, int $categoryId)
+    public function __construct(int $categoryId)
     {
-        $this->userId = $userId;
         $this->categoryId = $categoryId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     public function getCategoryId(): int

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Web\API\Middleware;
 
+use App\Common\Infrastructure\Request\HttpRequestContext;
 use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\Token;
 use App\Web\API\Action\AbstractAction;
@@ -12,7 +13,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use function get_class;
 use function in_array;
@@ -20,15 +20,17 @@ use function in_array;
 final class TokenMiddleware implements EventSubscriberInterface
 {
     private TokenManager $tokenManager;
+    private HttpRequestContext $httpRequestContext;
 
     protected array $allowedActions = [
         SignInUserAction::class,
         RegisterUserAction::class,
     ];
 
-    public function __construct(TokenManager $tokenManager)
+    public function __construct(TokenManager $tokenManager, HttpRequestContext $httpRequestContext)
     {
         $this->tokenManager = $tokenManager;
+        $this->httpRequestContext = $httpRequestContext;
     }
 
     public function onKernelController(ControllerEvent $event): void
@@ -38,7 +40,7 @@ final class TokenMiddleware implements EventSubscriberInterface
                 return;
             }
 
-            $token = new Token($event->getRequest()->headers->get('X-Authorization'));
+            $token = new Token($this->httpRequestContext->getUserToken());
 
             if ($this->tokenManager->isValid($token)) {
                 return;
