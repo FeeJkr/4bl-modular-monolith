@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Web\MVC\Middleware;
 
+use App\Common\Infrastructure\Request\HttpRequestContext;
 use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\Token;
 use App\Web\MVC\Controller\AbstractController;
@@ -18,11 +19,16 @@ final class TokenMiddleware implements EventSubscriberInterface
 {
     private TokenManager $tokenManager;
     private UrlGeneratorInterface $urlGenerator;
+    private HttpRequestContext $requestContext;
 
-    public function __construct(TokenManager $tokenManager, UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        TokenManager $tokenManager,
+        UrlGeneratorInterface $urlGenerator,
+        HttpRequestContext $requestContext
+    ) {
         $this->tokenManager = $tokenManager;
         $this->urlGenerator = $urlGenerator;
+        $this->requestContext = $requestContext;
     }
 
     public function onKernelController(ControllerEvent $event): void
@@ -31,7 +37,7 @@ final class TokenMiddleware implements EventSubscriberInterface
 
         if (is_array($controller) && $controller[0] instanceof AbstractController) {
             $isAllowedAction = $controller[0] instanceof AuthController;
-            $token = new Token($event->getRequest()->getSession()->get('user.token'));
+            $token = new Token($this->requestContext->getUserToken());
 
             if ($this->tokenManager->isValid($token)) {
                 if ($isAllowedAction) {

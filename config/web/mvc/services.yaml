@@ -12,3 +12,6 @@ services:
 
   App\Web\MVC\Middleware\TokenMiddleware:
     tags: [ 'kernel.event_subscriber' ]
+
+  App\Web\MVC\WebHttpRequestContext:
+    public: true

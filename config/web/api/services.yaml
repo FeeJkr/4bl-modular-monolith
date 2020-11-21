@@ -16,5 +16,5 @@ services:
   App\Web\API\Middleware\ErrorHandlerMiddleware:
     tags: ['kernel.event_subscriber']
 
-  App\Common\Infrastructure\Request\HttpRequestContext:
-    class: App\Web\API\ApiHttpRequestContext
+  App\Web\API\ApiHttpRequestContext:
+    public: true
