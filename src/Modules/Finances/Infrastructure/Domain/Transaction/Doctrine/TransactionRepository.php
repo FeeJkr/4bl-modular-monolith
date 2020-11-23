@@ -40,7 +40,7 @@ final class TransactionRepository implements TransactionRepositoryInterface
             'description' => $transaction->getDescription(),
             'operationAt' => $transaction->getOperationAt()->format('Y-m-d H:i:s'),
             'createdAt' => $transaction->getCreatedAt()->format('Y-m-d H:i:s'),
-        ])->fetch();
+        ])->fetchAssociative();
 
         if ($transaction->getLinkedTransaction() !== null) {
              $linkedTransactionId = $this->entityManager->getConnection()->executeQuery("
@@ -57,7 +57,7 @@ final class TransactionRepository implements TransactionRepositoryInterface
                  'description' => $transaction->getDescription(),
                  'operationAt' => $transaction->getOperationAt()->format('Y-m-d H:i:s'),
                  'createdAt' => $transaction->getCreatedAt()->format('Y-m-d H:i:s'),
-             ])->fetch()['id'];
+             ])->fetchAssociative()['id'];
 
              $this->entityManager->getConnection()->executeQuery(
                  "UPDATE transactions SET transaction_id = :transactionId WHERE id = :id",
@@ -101,7 +101,7 @@ final class TransactionRepository implements TransactionRepositoryInterface
                     'description' => $transaction->getDescription(),
                     'operationAt' => $transaction->getOperationAt()->format('Y-m-d H:i:s'),
                     'createdAt' => $transaction->getCreatedAt()->format('Y-m-d H:i:s'),
-                ])->fetch()['id'];
+                ])->fetchAssociative()['id'];
 
                 $linkedTransactionId = TransactionId::fromInt($data);
             } else {
@@ -173,7 +173,7 @@ final class TransactionRepository implements TransactionRepositoryInterface
         ", [
             'transactionId' => $transactionId->toInt(),
             'userId' => $userId->toInt(),
-        ])->fetch();
+        ])->fetchAssociative();
 
         if ($data === false) {
             throw TransactionException::notFound($transactionId, $userId);
@@ -213,7 +213,7 @@ final class TransactionRepository implements TransactionRepositoryInterface
         ", [
             'walletId' => $walletId->toInt(),
             'userId' => $userId->toInt(),
-        ])->fetchAll();
+        ])->fetchAllAssociative();
 
         foreach ($data as $transaction) {
             $linkedTransaction = $transaction['transaction_id'] !== null
@@ -252,7 +252,7 @@ final class TransactionRepository implements TransactionRepositoryInterface
             ) SELECT * FROM wallet_transactions UNION SELECT * FROM linked_transactions;
         ", [
             'userId' => $userId->toInt(),
-        ])->fetchAll();
+        ])->fetchAllAssociative();
 
         foreach ($data as $transaction) {
             $linkedTransaction = $transaction['transaction_id'] !== null

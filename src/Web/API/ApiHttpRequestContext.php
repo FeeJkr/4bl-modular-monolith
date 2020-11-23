@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Web\API;
 
 use App\Common\Infrastructure\Request\HttpRequestContext;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -16,7 +17,7 @@ final class ApiHttpRequestContext implements HttpRequestContext
         $request = $requestStack->getCurrentRequest();
 
         if ($request === null) {
-            throw new \RuntimeException('Error in API Http Request Context');
+            throw new RuntimeException('Error in API Http Request Context');
         }
 
         $this->request = $request;

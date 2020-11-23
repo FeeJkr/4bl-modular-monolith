@@ -9,7 +9,6 @@ use App\Modules\Finances\Domain\Transaction\TransactionId;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
 use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\User\UserContext;
-use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 
 final class UpdateTransactionHandler

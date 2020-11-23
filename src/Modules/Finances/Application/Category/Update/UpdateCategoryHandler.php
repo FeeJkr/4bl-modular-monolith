@@ -7,7 +7,6 @@ use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
 use App\Modules\Finances\Domain\Category\CategoryType;
 use App\Modules\Finances\Domain\User\UserContext;
-use App\Modules\Finances\Domain\User\UserId;
 
 final class UpdateCategoryHandler
 {

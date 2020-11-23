@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Web\API\Middleware;
 
-use App\Web\API\Response\ValidationErrorResponse;
+use App\Web\API\ValidationErrorResponse;
 use Assert\LazyAssertionException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

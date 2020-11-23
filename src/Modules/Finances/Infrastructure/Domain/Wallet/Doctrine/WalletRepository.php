@@ -55,7 +55,7 @@ final class WalletRepository implements WalletRepositoryInterface
         ", [
             'user_id' => $userId->toInt(),
             'id' => $walletId->toInt(),
-        ])->fetch();
+        ])->fetchAssociative();
 
         if ($data === false) {
             throw WalletException::notFound($walletId, $userId);
@@ -91,7 +91,7 @@ final class WalletRepository implements WalletRepositoryInterface
             [
                 'user_id' => $userId->toInt()
             ]
-        )->fetchAll();
+        )->fetchAllAssociative();
 
         foreach ($data as $wallet) {
             $collection[] = new Wallet(

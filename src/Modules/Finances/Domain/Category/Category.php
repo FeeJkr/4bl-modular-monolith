@@ -87,11 +87,7 @@ final class Category
 
     public function getIcon(): string
     {
-        if ($this->icon === null) {
-            return self::DEFAULT_ICON;
-        }
-
-        return $this->icon;
+        return $this->icon ?? self::DEFAULT_ICON;
     }
 
     public function getCreatedAt(): DateTimeInterface

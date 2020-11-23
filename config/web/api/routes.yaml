@@ -1,89 +1,89 @@
 api.v1.accounts.register:
   path: /api/v1/accounts/register
-  controller: App\Web\API\Action\Accounts\User\RegisterUserAction
+  controller: App\Web\API\Action\Accounts\User\Register\RegisterUserAction
   methods: POST
 
 api.v1.accounts.sign-in:
   path: /api/v1/accounts/sign-in
-  controller: App\Web\API\Action\Accounts\User\SignInUserAction
+  controller: App\Web\API\Action\Accounts\User\SignIn\SignInUserAction
   methods: POST
 
 api.v1.finances.categories.all:
   path: /api/v1/finances/categories
-  controller: App\Web\API\Action\Finances\Category\GetAllCategoriesAction
+  controller: App\Web\API\Action\Finances\Category\GetAllCategories\GetAllCategoriesAction
   methods: GET
 
 api.v1.finances.categories.get-one:
   path: /api/v1/finances/categories/{id}
-  controller: App\Web\API\Action\Finances\Category\GetOneCategoryByIdAction
+  controller: App\Web\API\Action\Finances\Category\GetOneCategoryById\GetOneCategoryByIdAction
   methods: GET
 
 api.v1.finances.categories.update:
   path: /api/v1/finances/categories/{id}
-  controller: App\Web\API\Action\Finances\Category\UpdateCategoryAction
+  controller: App\Web\API\Action\Finances\Category\UpdateCategory\UpdateCategoryAction
   methods: PATCH
 
 api.v1.finances.categories.create:
   path: /api/v1/finances/categories
-  controller: App\Web\API\Action\Finances\Category\CreateCategoryAction
+  controller: App\Web\API\Action\Finances\Category\CreateCategory\CreateCategoryAction
   methods: POST
 
 api.v1.finances.categories.delete:
   path: /api/v1/finances/categories/{id}
-  controller: App\Web\API\Action\Finances\Category\DeleteCategoryAction
+  controller: App\Web\API\Action\Finances\Category\DeleteCategory\DeleteCategoryAction
   methods: DELETE
 
 api.v1.finances.wallets.all:
   path: /api/v1/finances/wallets
-  controller: App\Web\API\Action\Finances\Wallet\GetAllWalletsAction
+  controller: App\Web\API\Action\Finances\Wallet\GetAllWallets\GetAllWalletsAction
   methods: GET
 
 api.v1.finances.wallets.get-one:
   path: /api/v1/finances/wallets/{id}
-  controller: App\Web\API\Action\Finances\Wallet\GetOneWalletByIdAction
+  controller: App\Web\API\Action\Finances\Wallet\GetOneWalletById\GetOneWalletByIdAction
   methods: GET
 
 api.v1.finances.wallets.create:
   path: /api/v1/finances/wallets
-  controller: App\Web\API\Action\Finances\Wallet\CreateWalletAction
+  controller: App\Web\API\Action\Finances\Wallet\CreateWallet\CreateWalletAction
   methods: POST
 
 api.v1.finances.wallets.update:
   path: /api/v1/finances/wallets/{id}
-  controller: App\Web\API\Action\Finances\Wallet\UpdateWalletAction
+  controller: App\Web\API\Action\Finances\Wallet\UpdateWallet\UpdateWalletAction
   methods: PATCH
 
 api.v1.finances.wallets.delete:
   path: /api/v1/finances/wallets/{id}
-  controller: App\Web\API\Action\Finances\Wallet\DeleteWalletAction
+  controller: App\Web\API\Action\Finances\Wallet\DeleteWallet\DeleteWalletAction
   methods: DELETE
 
 api.v1.finances.wallets.transactions:
   path: /api/v1/finances/wallets/{wallet_id}/transactions
-  controller: App\Web\API\Action\Finances\Transaction\GetAllTransactionsByWalletIdAction
+  controller: App\Web\API\Action\Finances\Transaction\GetAllTransactionsByWalletId\GetAllTransactionsByWalletIdAction
   methods: GET
 
 api.v1.finances.transactions.get-one:
   path: /api/v1/finances/transactions/{id}
-  controller: App\Web\API\Action\Finances\Transaction\GetOneTransactionByIdAction
+  controller: App\Web\API\Action\Finances\Transaction\GetOneTransactionById\GetOneTransactionByIdAction
   methods: GET
 
 api.v1.finances.transactions.all:
   path: /api/v1/finances/transactions
-  controller: App\Web\API\Action\Finances\Transaction\GetAllTransactionsAction
+  controller: App\Web\API\Action\Finances\Transaction\GetAllTransactions\GetAllTransactionsAction
   methods: GET
 
 api.v1.finances.transactions.create:
   path: /api/v1/finances/transactions
-  controller: App\Web\API\Action\Finances\Transaction\CreateTransactionAction
+  controller: App\Web\API\Action\Finances\Transaction\CreateTransaction\CreateTransactionAction
   methods: POST
 
 api.v1.finances.transactions.update:
   path: /api/v1/finances/transactions/{id}
-  controller: App\Web\API\Action\Finances\Transaction\UpdateTransactionAction
+  controller: App\Web\API\Action\Finances\Transaction\UpdateTransaction\UpdateTransactionAction
   methods: PATCH
 
 api.v1.finances.transactions.delete:
   path: /api/v1/finances/transactions/{id}
-  controller: App\Web\API\Action\Finances\Transaction\DeleteTransactionAction
+  controller: App\Web\API\Action\Finances\Transaction\DeleteTransaction\DeleteTransactionAction
   methods: DELETE

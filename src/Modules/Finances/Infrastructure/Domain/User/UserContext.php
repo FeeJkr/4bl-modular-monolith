@@ -6,7 +6,6 @@ namespace App\Modules\Finances\Infrastructure\Domain\User;
 use App\Common\Infrastructure\Request\HttpRequestContext;
 use App\Modules\Accounts\Application\User\GetUserByToken\GetUserByTokenQuery;
 use App\Modules\Accounts\Application\User\GetUserByToken\UserDTO;
-use App\Modules\Accounts\Domain\User\User;
 use App\Modules\Finances\Domain\User\UserContext as UserContextInterface;
 use App\Modules\Finances\Domain\User\UserId;
 use Symfony\Component\Messenger\MessageBusInterface;

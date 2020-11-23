@@ -13,7 +13,6 @@ final class RegisterUserHandler
 {
     private UserRepository $repository;
     private PasswordManager $passwordManager;
-    private TokenManager $tokenManager;
 
     public function __construct(
         UserRepository $repository,

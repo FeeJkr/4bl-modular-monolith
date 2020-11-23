@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Application\Wallet\GetOneById;
 
 use App\Modules\Finances\Domain\User\UserContext;
-use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletException;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use App\Modules\Finances\Domain\Wallet\WalletRepository;

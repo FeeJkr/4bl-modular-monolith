@@ -6,7 +6,6 @@ namespace App\Modules\Finances\Application\Transaction\GetAllByWallet;
 use App\Modules\Finances\Domain\Transaction\Transaction;
 use App\Modules\Finances\Domain\Transaction\TransactionRepository;
 use App\Modules\Finances\Domain\User\UserContext;
-use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 
 final class GetAllTransactionsByWalletHandler

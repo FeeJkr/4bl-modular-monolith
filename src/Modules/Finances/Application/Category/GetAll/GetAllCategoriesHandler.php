@@ -6,7 +6,6 @@ namespace App\Modules\Finances\Application\Category\GetAll;
 use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
 use App\Modules\Finances\Domain\User\UserContext;
-use App\Modules\Finances\Domain\User\UserId;
 
 final class GetAllCategoriesHandler
 {

@@ -57,7 +57,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
         ", [
             'id' => $categoryId->toInt(),
             'user_id' => $userId->toInt(),
-        ])->fetch();
+        ])->fetchAssociative();
 
         if ($data === false) {
             throw CategoryException::notFound($categoryId, $userId);
@@ -92,7 +92,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
         $data = $this->entityManager->getConnection()->executeQuery(
             "SELECT * FROM categories WHERE user_id = :user_id",
             ['user_id' => $userId->toInt()]
-        )->fetchAll();
+        )->fetchAllAssociative();
 
         foreach ($data as $category) {
             $collection[] = new Category(

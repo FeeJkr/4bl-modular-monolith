@@ -5,7 +5,6 @@ namespace App\Modules\Finances\Application\Wallet\Update;
 
 use App\Modules\Finances\Domain\Money;
 use App\Modules\Finances\Domain\User\UserContext;
-use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use App\Modules\Finances\Domain\Wallet\WalletRepository;
 
