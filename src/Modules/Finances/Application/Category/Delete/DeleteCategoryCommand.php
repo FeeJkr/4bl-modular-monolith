@@ -5,12 +5,7 @@ namespace App\Modules\Finances\Application\Category\Delete;
 
 final class DeleteCategoryCommand
 {
-    private int $categoryId;
-
-    public function __construct(int $categoryId)
-    {
-        $this->categoryId = $categoryId;
-    }
+    public function __construct(private int $categoryId) {}
 
     public function getCategoryId(): int
     {

@@ -10,22 +10,15 @@ use App\Modules\Finances\Domain\User\UserContext;
 
 final class CreateCategoryHandler
 {
-    private CategoryRepository $repository;
-    private UserContext $userContext;
-
-    public function __construct(CategoryRepository $repository, UserContext $userContext)
-    {
-        $this->repository = $repository;
-        $this->userContext = $userContext;
-    }
+    public function __construct(private CategoryRepository $repository, private UserContext $userContext) {}
 
     public function __invoke(CreateCategoryCommand $command): void
     {
         $category = Category::createNew(
             $this->userContext->getUserId(),
-            $command->getCategoryName(),
-            new CategoryType($command->getCategoryType()),
-            $command->getCategoryIcon()
+            $command->getName(),
+            new CategoryType($command->getType()),
+            $command->getIcon()
         );
 
         $this->repository->store($category);

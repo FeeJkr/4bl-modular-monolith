@@ -5,32 +5,24 @@ namespace App\Modules\Finances\Application\Category\Create;
 
 final class CreateCategoryCommand
 {
-    private string $categoryName;
-    private string $categoryType;
-    private ?string $categoryIcon;
-
     public function __construct(
-        string $categoryName,
-        string $categoryType,
-        ?string $categoryIcon
-    ) {
-        $this->categoryName = $categoryName;
-        $this->categoryType = $categoryType;
-        $this->categoryIcon = $categoryIcon;
+        private string $name,
+        private string $type,
+        private ?string $icon
+    ) {}
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
-    public function getCategoryName(): string
+    public function getType(): string
     {
-        return $this->categoryName;
+        return $this->type;
     }
 
-    public function getCategoryType(): string
+    public function getIcon(): ?string
     {
-        return $this->categoryType;
-    }
-
-    public function getCategoryIcon(): ?string
-    {
-        return $this->categoryIcon;
+        return $this->icon;
     }
 }

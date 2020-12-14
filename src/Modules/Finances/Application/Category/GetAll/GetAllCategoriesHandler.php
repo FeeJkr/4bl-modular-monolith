@@ -9,14 +9,7 @@ use App\Modules\Finances\Domain\User\UserContext;
 
 final class GetAllCategoriesHandler
 {
-    private CategoryRepository $repository;
-    private UserContext $userContext;
-
-    public function __construct(CategoryRepository $repository, UserContext $userContext)
-    {
-        $this->repository = $repository;
-        $this->userContext = $userContext;
-    }
+    public function __construct(private CategoryRepository $repository, private UserContext $userContext) {}
 
     public function __invoke(GetAllCategoriesQuery $query): CategoriesCollection
     {
