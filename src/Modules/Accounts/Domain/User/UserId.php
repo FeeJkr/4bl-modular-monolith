@@ -7,5 +7,4 @@ use App\Common\Id;
 
 final class UserId extends Id
 {
-
 }

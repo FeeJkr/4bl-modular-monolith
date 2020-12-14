@@ -35,7 +35,7 @@ final class JWTTokenManager implements TokenManager
             JWT::decode($token->toString(), $this->jwtSecretKey, $this->algorithms);
 
             return true;
-        } catch (Throwable $exception) {
+        } catch (Throwable) {
             return false;
         }
     }
