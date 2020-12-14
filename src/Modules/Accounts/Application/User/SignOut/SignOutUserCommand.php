@@ -5,12 +5,7 @@ namespace App\Modules\Accounts\Application\User\SignOut;
 
 final class SignOutUserCommand
 {
-    private string $token;
-
-    public function __construct(string $token)
-    {
-        $this->token = $token;
-    }
+    public function __construct(private string $token) {}
 
     public function getToken(): string
     {

@@ -4,29 +4,24 @@ declare(strict_types=1);
 namespace App\Modules\Accounts\Application\User\Register;
 
 use App\Modules\Accounts\Application\User\PasswordManager;
-use App\Modules\Accounts\Application\User\TokenManager;
+use App\Modules\Accounts\Application\User\ValidationException;
 use App\Modules\Accounts\Domain\User\User;
-use App\Modules\Accounts\Domain\User\UserException;
 use App\Modules\Accounts\Domain\User\UserRepository;
 
 final class RegisterUserHandler
 {
-    private UserRepository $repository;
-    private PasswordManager $passwordManager;
-
     public function __construct(
-        UserRepository $repository,
-        PasswordManager $passwordManager
-    ) {
-        $this->repository = $repository;
-        $this->passwordManager = $passwordManager;
-    }
+        private UserRepository $repository,
+        private PasswordManager $passwordManager,
+        private RegisterUserValidator $validator
+    ) {}
 
+    /**
+     * @throws ValidationException
+     */
     public function __invoke(RegisterUserCommand $command): void
     {
-        if ($this->repository->existsByEmailOrUsername($command->getEmail(), $command->getUsername())) {
-            throw UserException::alreadyExists();
-        }
+        $this->validator->validate($command);
 
         $user = User::register(
             $command->getEmail(),

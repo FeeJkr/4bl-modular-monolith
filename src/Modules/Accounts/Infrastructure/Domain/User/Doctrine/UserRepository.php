@@ -9,20 +9,15 @@ use App\Modules\Accounts\Domain\User\UserException;
 use App\Modules\Accounts\Domain\User\UserId;
 use App\Modules\Accounts\Domain\User\UserRepository as UserRepositoryInterface;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\DBAL\Connection;
 
 final class UserRepository implements UserRepositoryInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+    public function __construct(private Connection $db) {}
 
     public function store(User $user): void
     {
-        $this->entityManager->getConnection()->executeQuery(
+        $this->db->executeQuery(
             "INSERT INTO users (email, username, password, token, created_at) VALUES (:email, :username, :password, :token, :created_at)",
             [
                 'email' => $user->getEmail(),
@@ -36,7 +31,7 @@ final class UserRepository implements UserRepositoryInterface
 
     public function save(User $user): void
     {
-        $this->entityManager->getConnection()->executeQuery("
+        $this->db->executeQuery("
             UPDATE users SET email = :email, username = :username, password = :password, token = :token WHERE id = :id;
         ", [
             'email' => $user->getEmail(),
@@ -49,7 +44,7 @@ final class UserRepository implements UserRepositoryInterface
 
     public function fetchByEmail(string $email): ?User
     {
-        $data = $this->entityManager->getConnection()->executeQuery("
+        $data = $this->db->executeQuery("
             SELECT * FROM users WHERE email = :email
         ", [
             'email' => $email,
@@ -70,7 +65,7 @@ final class UserRepository implements UserRepositoryInterface
 
     public function fetchByToken(Token $token): User
     {
-        $data = $this->entityManager->getConnection()->executeQuery("
+        $data = $this->db->executeQuery("
             SELECT * FROM users WHERE token = :token
         ", [
             'token' => $token->toString(),
@@ -91,7 +86,7 @@ final class UserRepository implements UserRepositoryInterface
 
     public function existsByEmailOrUsername(string $email, string $username): bool
     {
-        $data = $this->entityManager->getConnection()->executeQuery("
+        $data = $this->db->executeQuery("
             SELECT id FROM users WHERE email = :email or username = :username
         ", [
             'email' => $email,

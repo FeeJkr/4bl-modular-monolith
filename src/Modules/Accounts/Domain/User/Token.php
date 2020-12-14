@@ -3,15 +3,13 @@ declare(strict_types=1);
 
 namespace App\Modules\Accounts\Domain\User;
 
+use JetBrains\PhpStorm\Pure;
+
 final class Token
 {
-    private ?string $token;
+    public function __construct(private ?string $token) {}
 
-    public function __construct(?string $token)
-    {
-        $this->token = $token;
-    }
-
+    #[Pure]
     public static function nullInstance(): self
     {
         return new self(null);

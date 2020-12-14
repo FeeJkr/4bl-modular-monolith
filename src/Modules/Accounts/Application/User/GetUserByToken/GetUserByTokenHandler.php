@@ -8,17 +8,11 @@ use App\Modules\Accounts\Domain\User\UserRepository;
 
 final class GetUserByTokenHandler
 {
-    private UserRepository $repository;
-
-    public function __construct(UserRepository $repository)
-    {
-        $this->repository = $repository;
-    }
+    public function __construct(private UserRepository $repository) {}
 
     public function __invoke(GetUserByTokenQuery $query): UserDTO
     {
         $token = new Token($query->getToken());
-
         $user = $this->repository->fetchByToken($token);
 
         return new UserDTO(

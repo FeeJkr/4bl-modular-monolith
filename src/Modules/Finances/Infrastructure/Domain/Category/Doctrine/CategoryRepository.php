@@ -10,20 +10,20 @@ use App\Modules\Finances\Domain\Category\CategoryRepository as CategoryRepositor
 use App\Modules\Finances\Domain\Category\CategoryType;
 use App\Modules\Finances\Domain\User\UserId;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\DBAL\Connection;
 
 final class CategoryRepository implements CategoryRepositoryInterface
 {
-    private EntityManagerInterface $entityManager;
+    private Connection $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(Connection $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
     public function store(Category $category): void
     {
-        $this->entityManager->getConnection()->executeQuery(
+        $this->entityManager->executeQuery(
             "INSERT INTO categories (user_id, name, type, icon, created_at) VALUES (:user_id, :name, :type, :icon, :created_at)",
             [
                 'user_id' => $category->getUserId()->toInt(),
@@ -37,7 +37,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
 
     public function delete(CategoryId $categoryId, UserId $userId): void
     {
-        $isDeleted = $this->entityManager->getConnection()->executeQuery(
+        $isDeleted = $this->entityManager->executeQuery(
             "DELETE FROM categories WHERE user_id = :user_id AND id = :category_id",
             [
                 'user_id' => $userId->toInt(),
@@ -52,7 +52,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
 
     public function fetchById(CategoryId $categoryId, UserId $userId): Category
     {
-        $data = $this->entityManager->getConnection()->executeQuery("
+        $data = $this->entityManager->executeQuery("
             SELECT * FROM categories WHERE id = :id AND user_id = :user_id
         ", [
             'id' => $categoryId->toInt(),
@@ -75,7 +75,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
 
     public function save(Category $category): void
     {
-        $this->entityManager->getConnection()->executeQuery("
+        $this->entityManager->executeQuery("
             UPDATE categories SET name = :name, type = :type, icon = :icon WHERE id = :id;
         ", [
             'name' => $category->getName(),

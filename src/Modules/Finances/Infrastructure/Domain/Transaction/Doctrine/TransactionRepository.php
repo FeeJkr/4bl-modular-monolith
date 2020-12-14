@@ -14,13 +14,13 @@ use App\Modules\Finances\Domain\Transaction\TransactionType;
 use App\Modules\Finances\Domain\User\UserId;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\DBAL\Connection;
 
 final class TransactionRepository implements TransactionRepositoryInterface
 {
-    private EntityManagerInterface $entityManager;
+    private Connection $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(Connection $entityManager)
     {
         $this->entityManager = $entityManager;
     }

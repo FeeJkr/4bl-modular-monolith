@@ -5,20 +5,13 @@ namespace App\Modules\Accounts\Application\User\GetUserByToken;
 
 final class UserDTO
 {
-    private int $id;
-    private string $email;
-    private string $username;
-    private string $password;
-    private string $token;
-
-    public function __construct(int $id, string $email, string $username, string $password, string $token)
-    {
-        $this->id = $id;
-        $this->email = $email;
-        $this->username = $username;
-        $this->password = $password;
-        $this->token = $token;
-    }
+    public function __construct(
+        private int $id,
+        private string $email,
+        private string $username,
+        private string $password,
+        private string $token
+    ) {}
 
     public function getId(): int
     {

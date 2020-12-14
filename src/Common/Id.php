@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Common;
 
+use JetBrains\PhpStorm\Pure;
+
 abstract class Id
 {
     private ?int $id;
@@ -12,12 +14,14 @@ abstract class Id
         $this->id = $id;
     }
 
-    public static function fromInt(int $id): self
+    #[Pure]
+    public static function fromInt(int $id): static
     {
         return new static($id);
     }
 
-    public static function nullInstance(): self
+    #[Pure]
+    public static function nullInstance(): static
     {
         return new static(null);
     }

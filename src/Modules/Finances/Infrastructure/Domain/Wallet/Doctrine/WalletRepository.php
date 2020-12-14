@@ -10,13 +10,13 @@ use App\Modules\Finances\Domain\Wallet\WalletException;
 use App\Modules\Finances\Domain\Wallet\WalletId;
 use App\Modules\Finances\Domain\Wallet\WalletRepository as WalletRepositoryInterface;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\DBAL\Connection;
 
 final class WalletRepository implements WalletRepositoryInterface
 {
-    private EntityManagerInterface $entityManager;
+    private Connection $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(Connection $entityManager)
     {
         $this->entityManager = $entityManager;
     }

@@ -8,12 +8,7 @@ use App\Modules\Accounts\Domain\User\UserRepository;
 
 final class SignOutUserHandler
 {
-    private UserRepository $repository;
-
-    public function __construct(UserRepository $repository)
-    {
-        $this->repository = $repository;
-    }
+    public function __construct(private UserRepository $repository) {}
 
     public function __invoke(SignOutUserCommand $command): void
     {

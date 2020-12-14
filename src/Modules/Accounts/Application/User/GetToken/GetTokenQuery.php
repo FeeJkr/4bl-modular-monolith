@@ -5,12 +5,7 @@ namespace App\Modules\Accounts\Application\User\GetToken;
 
 final class GetTokenQuery
 {
-    private string $email;
-
-    public function __construct(string $email)
-    {
-        $this->email = $email;
-    }
+    public function __construct(private string $email) {}
 
     public function getEmail(): string
     {

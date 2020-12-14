@@ -5,12 +5,7 @@ namespace App\Modules\Accounts\Application\User\GetToken;
 
 final class TokenDTO
 {
-    private string $token;
-
-    public function __construct(string $token)
-    {
-        $this->token = $token;
-    }
+    public function __construct(private string $token) {}
 
     public function getToken(): string
     {

@@ -3,23 +3,19 @@ declare(strict_types=1);
 
 namespace App\Modules\Accounts\Domain\User;
 
+use JetBrains\PhpStorm\Pure;
+
 final class User
 {
-    private UserId $id;
-    private string $email;
-    private string $username;
-    private string $password;
-    private Token $token;
+    public function __construct(
+        private UserId $id,
+        private string $email,
+        private string $username,
+        private string $password,
+        private Token $token
+    ) {}
 
-    public function __construct(UserId $id, string $email, string $username, string $password, Token $token)
-    {
-        $this->id = $id;
-        $this->email = $email;
-        $this->username = $username;
-        $this->password = $password;
-        $this->token = $token;
-    }
-
+    #[Pure]
     public static function register(string $email, string $username, string $password): self
     {
         return new self(
