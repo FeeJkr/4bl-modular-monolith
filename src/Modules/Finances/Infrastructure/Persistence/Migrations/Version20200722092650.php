@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\Persistence\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
-final class Version20200722092650 extends AbstractMigration
+final class Version20200722092650
 {
     public function getDescription() : string
     {
@@ -15,15 +14,16 @@ final class Version20200722092650 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $table = $schema->createTable('wallets');
-
-        $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('user_id', 'integer');
-        $table->addColumn('name', 'string');
-        $table->addColumn('start_balance', 'integer', ['default' => 0]);
-        $table->addColumn('created_at', 'datetime');
-
-        $table->setPrimaryKey(['id']);
+        $sql = '
+            create table wallets
+            (
+                id serial not null constraint wallets_pk primary key,
+                user_id int not null constraint wallets_users_id_fk references users on delete cascade,
+                name varchar(255) not null,
+                start_balance int default 0 not null,
+                created_at timestamp default now() not null
+            );
+        ';
     }
 
     public function down(Schema $schema) : void

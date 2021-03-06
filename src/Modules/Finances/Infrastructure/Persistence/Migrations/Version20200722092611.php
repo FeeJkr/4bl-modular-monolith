@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\Persistence\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
-final class Version20200722092611 extends AbstractMigration
+final class Version20200722092611
 {
     public function getDescription() : string
     {
@@ -15,20 +14,21 @@ final class Version20200722092611 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $table = $schema->createTable('categories');
-
-        $table->addColumn('id', 'integer', ['autoincrement' => true,]);
-        $table->addColumn('user_id', 'integer');
-        $table->addColumn('name', 'string');
-        $table->addColumn('type', 'string');
-        $table->addColumn('icon', 'string', ['default' => 'home']);
-        $table->addColumn('created_at', 'datetime');
-
-        $table->setPrimaryKey(['id']);
+        $sql = '
+            create table categories
+            (
+                id serial not null constraint categories_pk primary key,
+                user_id int not null constraint categories_users_id_fk references users on delete cascade,
+                name varchar(255) not null,
+                type varchar(255) not null,
+                icon varchar(255) default \'home\' not null,
+                created_at timestamp default now() not null
+            );
+        ';
     }
 
     public function down(Schema $schema) : void
     {
-        $schema->dropTable('categories');
+        // implement down method
     }
 }

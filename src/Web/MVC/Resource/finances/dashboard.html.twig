@@ -2,35 +2,78 @@
 
 {% block main_content %}
     <div class="container-fluid mt-3">
-        <div class="card-deck">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Category</h5>
-                    <p class="card-text">
-                        <a href="{{ path('finances.category.showAll') }}" style="text-decoration: none; color: black;">
-                            <button class="btn btn-block btn-success">Go to categories</button>
-                        </a>
-                    </p>
+        <div class="row row-cols-3 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Categories</h5>
+                        <p class="card-text">
+                            <a href="{{ path('finances.category.showAll') }}" style="text-decoration: none; color: black;">
+                                <button class="btn btn-block btn-success">Go to categories</button>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Wallets</h5>
-                    <p class="card-text">
-                        <button class="btn btn-block btn-success">Go to wallets</button>
-                    </p>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Wallets</h5>
+                        <p class="card-text">
+                            <a href="{{ path('finances.category.showAll') }}" style="text-decoration: none; color: black;">
+                                <button class="btn btn-block btn-success">Go to categories</button>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Transactions</h5>
-                    <p class="card-text">
-                        <button class="btn btn-block btn-success">Go to transactions</button>
-                    </p>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Transactions</h5>
+                        <p class="card-text">
+                            <a href="{{ path('finances.category.showAll') }}" style="text-decoration: none; color: black;">
+                                <button class="btn btn-block btn-success">Go to categories</button>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
         {% block submodules %}{% endblock %}
     </div>
+
+{#    <div class="container-fluid mt-3">#}
+{#        <div class="card-deck">#}
+{#            <div class="card">#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title text-center">Category</h5>#}
+{#                    <p class="card-text">#}
+{#                        <a href="{{ path('finances.category.showAll') }}" style="text-decoration: none; color: black;">#}
+{#                            <button class="btn btn-block btn-success">Go to categories</button>#}
+{#                        </a>#}
+{#                    </p>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="card">#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title text-center">Wallets</h5>#}
+{#                    <p class="card-text">#}
+{#                        <button class="btn btn-block btn-success">Go to wallets</button>#}
+{#                    </p>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="card">#}
+{#                <div class="card-body text-center">#}
+{#                    <h5 class="card-title">Transactions</h5>#}
+{#                    <p class="card-text">#}
+{#                        <button class="btn btn-block btn-success">Go to transactions</button>#}
+{#                    </p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+{#        {% block submodules %}{% endblock %}#}
+{#    </div>#}
 {% endblock %}

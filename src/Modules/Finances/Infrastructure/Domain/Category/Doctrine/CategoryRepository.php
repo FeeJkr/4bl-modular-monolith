@@ -14,16 +14,16 @@ use Doctrine\DBAL\Connection;
 
 final class CategoryRepository implements CategoryRepositoryInterface
 {
-    private Connection $entityManager;
+    private Connection $connection;
 
-    public function __construct(Connection $entityManager)
+    public function __construct(Connection $connection)
     {
-        $this->entityManager = $entityManager;
+        $this->connection = $connection;
     }
 
     public function store(Category $category): void
     {
-        $this->entityManager->executeQuery(
+        $this->connection->executeQuery(
             "INSERT INTO categories (user_id, name, type, icon, created_at) VALUES (:user_id, :name, :type, :icon, :created_at)",
             [
                 'user_id' => $category->getUserId()->toInt(),
@@ -37,7 +37,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
 
     public function delete(CategoryId $categoryId, UserId $userId): void
     {
-        $isDeleted = $this->entityManager->executeQuery(
+        $isDeleted = $this->connection->executeQuery(
             "DELETE FROM categories WHERE user_id = :user_id AND id = :category_id",
             [
                 'user_id' => $userId->toInt(),
@@ -52,7 +52,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
 
     public function fetchById(CategoryId $categoryId, UserId $userId): Category
     {
-        $data = $this->entityManager->executeQuery("
+        $data = $this->connection->executeQuery("
             SELECT * FROM categories WHERE id = :id AND user_id = :user_id
         ", [
             'id' => $categoryId->toInt(),
@@ -75,7 +75,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
 
     public function save(Category $category): void
     {
-        $this->entityManager->executeQuery("
+        $this->connection->executeQuery("
             UPDATE categories SET name = :name, type = :type, icon = :icon WHERE id = :id;
         ", [
             'name' => $category->getName(),
@@ -89,7 +89,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
     {
         $collection = [];
 
-        $data = $this->entityManager->getConnection()->executeQuery(
+        $data = $this->connection->executeQuery(
             "SELECT * FROM categories WHERE user_id = :user_id",
             ['user_id' => $userId->toInt()]
         )->fetchAllAssociative();
@@ -106,5 +106,18 @@ final class CategoryRepository implements CategoryRepositoryInterface
         }
 
         return $collection;
+    }
+
+    public function fetchAllGroupedByType(UserId $userId): array
+    {
+        $data = [];
+        $categories = $this->fetchAll($userId);
+
+        /** @var Category $category */
+        foreach ($categories as $category) {
+            $data[$category->getType()->getValue()][] = $category;
+        }
+
+        return $data;
     }
 }

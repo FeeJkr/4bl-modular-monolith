@@ -37,3 +37,13 @@ finances.category.showAll:
   path: /finances/categories
   controller: App\Web\MVC\Controller\Finances\CategoryController::showCategoriesPage
   methods: GET
+
+finances.category.create.page:
+  path: /finances/categories/create
+  controller: App\Web\MVC\Controller\Finances\CategoryController::showCreateCategoryPage
+  methods: GET
+
+finances.category.create:
+  path: /finances/categories/create
+  controller: App\Web\MVC\Controller\Finances\CategoryController::createCategory
+  methods: POST

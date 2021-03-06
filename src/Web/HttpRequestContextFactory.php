@@ -22,7 +22,7 @@ final class HttpRequestContextFactory
 
     public function build(): HttpRequestContext
     {
-        if (strpos($this->requestContext->getPathInfo(), '/api/') !== false) {
+        if (str_contains($this->requestContext->getPathInfo(), '/api/')) {
             return $this->container->get(ApiHttpRequestContext::class);
         }
 

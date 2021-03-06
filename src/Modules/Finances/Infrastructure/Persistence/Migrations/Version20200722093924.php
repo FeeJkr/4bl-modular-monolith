@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace App\Modules\Finances\Infrastructure\Persistence\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
-final class Version20200722093924 extends AbstractMigration
+final class Version20200722093924
 {
     public function getDescription() : string
     {
@@ -15,33 +14,24 @@ final class Version20200722093924 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $table = $schema->createTable('transactions');
-
-        $table->addColumn('id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('transaction_id', 'integer', ['notnull' => false]);
-        $table->addColumn('user_id', 'integer');
-        $table->addColumn('wallet_id', 'integer');
-        $table->addColumn('category_id', 'integer');
-        $table->addColumn('type', 'string');
-        $table->addColumn('amount', 'integer');
-        $table->addColumn('description', 'string', ['notnull' => false]);
-        $table->addColumn('operation_at', 'datetime');
-        $table->addColumn('created_at', 'datetime');
-
-        $table->addForeignKeyConstraint('transactions', ['transaction_id'], ['id'], ['onDelete' => 'SET NULL'], 'transactions_transactions_foreign_key');
-        $table->addForeignKeyConstraint('wallets', ['wallet_id'], ['id'], ['onDelete' => 'CASCADE'], 'transactions_wallets_foreign_key');
-        $table->addForeignKeyConstraint('categories', ['category_id'], ['id'], ['onDelete' => 'CASCADE'], 'transactions_categories_foreign_key');
-
-        $table->setPrimaryKey(['id']);
+        $sql = '
+            create table transactions
+            (
+                id serial not null constraint transactions_pk primary key,
+                transaction_id int constraint transactions_transactions_id_fk references transactions on delete set null,
+                user_id int not null constraint transactions_users_id_fk references users on delete cascade,
+                wallet_id int not null constraint transactions_wallets_id_fk references wallets on delete cascade,
+                category_id int not null constraint transactions_categories_id_fk references categories on delete cascade,
+                type varchar(255) not null,
+                amount int not null,
+                description text,
+                operation_at timestamp not null,
+                created_at timestamp default now() not null
+            );
+        ';
     }
 
     public function down(Schema $schema) : void
     {
-        $table = $schema->getTable('transactions');
-        $table->removeForeignKey('transactions_transactions_foreign_key');
-        $table->removeForeignKey('transactions_wallets_foreign_key');
-        $table->removeForeignKey('transactions_categories_foreign_key');
-
-        $schema->dropTable('transactions');
     }
 }

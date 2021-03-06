@@ -12,4 +12,5 @@ interface CategoryRepository
     public function delete(CategoryId $categoryId, UserId $userId): void;
     public function fetchById(CategoryId $categoryId, UserId $userId): Category;
     public function fetchAll(UserId $userId): array;
+    public function fetchAllGroupedByType(UserId $userId): array;
 }

@@ -35,6 +35,11 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Category\GetOneById\GetOneCategoryByIdQuery
 
+  App\Modules\Finances\Application\Category\GetAllGroupedByType\GetAllGroupedByTypeHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Category\GetAllGroupedByType\GetAllGroupedByTypeQuery
+
   App\Modules\Finances\Application\Wallet\Create\CreateWalletHandler:
     tags:
       - name: messenger.message_handler

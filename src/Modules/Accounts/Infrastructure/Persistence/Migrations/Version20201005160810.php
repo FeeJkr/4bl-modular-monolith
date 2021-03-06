@@ -14,7 +14,7 @@ final class Version20201005160810
     public function up() : void
     {
         $sql = '
-            create table public.users(
+            create table users(
                 id serial not null constraint users_pkey primary key,
                 email varchar(255) not null,
                 username varchar(255) not null,
