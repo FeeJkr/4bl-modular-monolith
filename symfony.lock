@@ -80,6 +80,18 @@
             "config/packages/nelmio_cors.yaml"
         ]
     },
+    "paquettg/php-html-parser": {
+        "version": "3.1.1"
+    },
+    "paquettg/string-encode": {
+        "version": "1.0.1"
+    },
+    "php-http/httplug": {
+        "version": "2.2.0"
+    },
+    "php-http/promise": {
+        "version": "1.1.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

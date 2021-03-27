@@ -10,6 +10,8 @@ use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
 use App\Web\MVC\Controller\AbstractController;
 use Assert\Assert;
 use Assert\LazyAssertionException;
+use DateTime;
+use PHPHtmlParser\Dom;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -60,7 +62,7 @@ final class AuthController extends AbstractController
         return $this->render('accounts/user/sign-in.html.twig');
     }
 
-    private function generateFakturaData()
+    public function generateInvoiceData(Request $request): Response
     {
         $netPrice = $request->get('price');
         $vatPrice = ($netPrice / 100) * 23;
@@ -70,24 +72,24 @@ final class AuthController extends AbstractController
         $additionVatPrice = ($additionNetPrice / 100) * 23;
         $additionBruttoPrice = $additionNetPrice + $additionVatPrice;
 
-        $dom = new Dom();
-        $dom->loadFromUrl(
-            sprintf('https://slownie.pl/%s', number_format($bruttoPrice + $additionBruttoPrice, 2, ',', ''))
-        );
-        /** @var Dom\Node\HtmlNode $p */
-        $p = $dom->find('#dataWord')[0];
+//        $dom = new Dom();
+//        $dom->loadFromUrl(
+//            sprintf('https://slownie.pl/%s', number_format($bruttoPrice + $additionBruttoPrice, 2, ',', ''))
+//        );
+//        /** @var Dom\Node\HtmlNode $p */
+//        $p = $dom->find('#dataWord')[0];
 
         $now = new DateTime;
         $previsionMonth = (new DateTime)->setTimestamp(strtotime("-1 months"));
 
-        return $this->render('accounts/user/sign-in.html.twig', [
+        return $this->render('invoice.html.twig', [
             'nettoPrice' => $request->get('price'),
             'vatPrice' => $vatPrice,
             'bruttoPrice' => $bruttoPrice,
             'totalNetto' => $netPrice + $additionNetPrice,
             'totalVat' => $vatPrice + $additionVatPrice,
             'totalBrutto' => $bruttoPrice + $additionBruttoPrice,
-            'textPrice' => $p->innerText,
+            'textPrice' => $p->innerText ?? '',
             'month' => (new DateTime)->format('m'),
             'generateDay' => $previsionMonth->format('t-m-Y'),
             'paymentDay' => $now->format('10-m-Y'),
