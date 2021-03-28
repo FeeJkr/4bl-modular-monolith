@@ -5,6 +5,7 @@ namespace App\Web\MVC\Controller\Finances;
 
 use App\Web\MVC\Controller\AbstractController;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 
 final class DashboardController extends AbstractController
