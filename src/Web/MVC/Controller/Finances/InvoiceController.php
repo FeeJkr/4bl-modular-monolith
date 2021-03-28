@@ -89,7 +89,6 @@ final class InvoiceController extends AbstractController
             'body' => $file,
         ]);
 
-        fclose($file);
         unlink($filename);
 
         return new Response('success');
