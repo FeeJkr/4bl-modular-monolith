@@ -70,7 +70,7 @@ final class InvoiceController extends AbstractController
             JSON_THROW_ON_ERROR
         )['data']['defaultKeyValueStoreId'];
 
-        $filename = (new DateTime)->format('YmdHis') . '.pdf';
+        $filename = (new DateTime)->format('d_m_y_His') . '.pdf';
 
         $file = fopen($filename, 'w+');
 
