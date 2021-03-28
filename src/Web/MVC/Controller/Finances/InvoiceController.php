@@ -59,7 +59,7 @@ final class InvoiceController extends AbstractController
 
     public function webhook(Request $request): Response
     {
-        $resource = $request->get('resource');
+        $resource = json_decode($request->getContent(), true)['resource'];
         $id = $resource['id'];
         $actId = $resource['actId'];
 
