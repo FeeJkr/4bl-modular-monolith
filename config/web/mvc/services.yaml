@@ -15,3 +15,6 @@ services:
 
   App\Web\MVC\WebHttpRequestContext:
     public: true
+
+  GuzzleHttp\Client:
+    class: GuzzleHttp\Client

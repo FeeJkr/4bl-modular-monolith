@@ -8,6 +8,7 @@ use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\Token;
 use App\Web\MVC\Controller\AbstractController;
 use App\Web\MVC\Controller\Accounts\Auth\AuthController;
+use App\Web\MVC\Controller\Finances\InvoiceController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,7 @@ final class TokenMiddleware implements EventSubscriberInterface
         $controller = $event->getController();
 
         if (is_array($controller) && $controller[0] instanceof AbstractController) {
-            $isAllowedAction = $controller[0] instanceof AuthController;
+            $isAllowedAction = $controller[0] instanceof AuthController || $controller[0] instanceof InvoiceController;
             $token = new Token($this->requestContext->getUserToken());
 
             if ($this->tokenManager->isValid($token)) {

@@ -23,5 +23,12 @@
         </div>
     </nav>
 
+    <div>
+        <form action="{{ path('finances.invoice.generate') }}" method="POST">
+            <label id="price">Price: </label><input id="price" type="text" name="price">
+            <input type="submit" value="Generate invoice">
+        </form>
+    </div>
+
     {% block main_content %}{% endblock %}
 {% endblock %}

@@ -5,7 +5,7 @@ dashboard:
 
 invoice:
   path: /invoice
-  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::generateInvoiceData
+  controller: App\Web\MVC\Controller\Finances\InvoiceController::renderInvoice
   methods: GET
 
 accounts.user.sign-in.page:
@@ -51,4 +51,14 @@ finances.category.create.page:
 finances.category.create:
   path: /finances/categories/create
   controller: App\Web\MVC\Controller\Finances\CategoryController::createCategory
+  methods: POST
+
+finances.invoice.generate:
+  path: /finances/invoice/generate
+  controller: App\Web\MVC\Controller\Finances\InvoiceGeneratorController::generateInvoice
+  methods: POST
+
+webhook.invoice:
+  path: /webhook/invoice
+  controller: App\Web\MVC\Controller\Finances\InvoiceController::webhook
   methods: POST
