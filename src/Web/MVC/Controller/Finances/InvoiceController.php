@@ -78,6 +78,10 @@ final class InvoiceController extends AbstractController
             'sink' => $file
         ]);
 
+        fclose($file);
+
+        $file = fopen($filename, 'rb');
+
         $response = $this->client->post('https://content.dropboxapi.com/2/files/upload', [
             'headers' => [
                 'Authorization' => 'Bearer HqpfVbqOZmgAAAAAAAAAAcud5BqvET4TW8A9l5Zw_Tv9SmBrJCN9Uk5gEOuMxjcS',
