@@ -20,7 +20,7 @@ final class InvoiceGeneratorController extends AbstractController
             'https://api.apify.com/v2/actor-tasks/hc8Wo1kIaahP86ofu/runs?token=PNPFdbmnACY8dYWBmuPGhjaC6',
             [
                 'json' => [
-                    'url' => "https://mardeus.dev/invoice?price={$price}",
+                    'url' => "https://mardeus.dev/invoice?price={$price}&token=" . InvoiceController::API_TOKEN,
                     'sleepMillis' => 2000,
                     'pdfOptions' => [
                         'format' => 'a4'

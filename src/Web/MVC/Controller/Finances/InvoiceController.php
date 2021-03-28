@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class InvoiceController extends AbstractController
 {
-    private const API_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWFyZGV1cyBTZXJnaWkgU2lyeWkiLCJ0eXBlIjoiaW52b2ljZV9nZW5lcmF0b3JfYXBwbGljYXRpb24iLCJ0b2tlblR5cGUiOiJjcmVhdGVfZm9yX2FwaWZ5In0._YSdCntfCssqYtRsD3L8vnnuBfpnvlWR_6l23yknBn4';
+    public const API_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWFyZGV1cyBTZXJnaWkgU2lyeWkiLCJ0eXBlIjoiaW52b2ljZV9nZW5lcmF0b3JfYXBwbGljYXRpb24iLCJ0b2tlblR5cGUiOiJjcmVhdGVfZm9yX2FwaWZ5In0._YSdCntfCssqYtRsD3L8vnnuBfpnvlWR_6l23yknBn4';
 
     public function __construct(private Client $client){}
 
