@@ -5,22 +5,23 @@ namespace App\Modules\Finances\Infrastructure\Persistence\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 
-final class Version20200722092650
+final class CreateCategoriesTableMigration
 {
     public function getDescription() : string
     {
-        return 'Create wallets table';
+        return 'Create categories table';
     }
 
     public function up(Schema $schema) : void
     {
         $sql = '
-            create table wallets
+            create table categories
             (
-                id serial not null constraint wallets_pk primary key,
-                user_id int not null constraint wallets_users_id_fk references users on delete cascade,
+                id serial not null constraint categories_pk primary key,
+                user_id int not null constraint categories_users_id_fk references users on delete cascade,
                 name varchar(255) not null,
-                start_balance int default 0 not null,
+                type varchar(255) not null,
+                icon varchar(255) default \'home\' not null,
                 created_at timestamp default now() not null
             );
         ';
@@ -28,6 +29,6 @@ final class Version20200722092650
 
     public function down(Schema $schema) : void
     {
-        $schema->dropTable('wallets');
+        // implement down method
     }
 }

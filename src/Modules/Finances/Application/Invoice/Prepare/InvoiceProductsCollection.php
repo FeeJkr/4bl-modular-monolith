@@ -14,16 +14,37 @@ class InvoiceProductsCollection
 
     public function getTotalNetPrice(): float
     {
+        $price = 0;
 
+        /** @var InvoiceProductDTO $product */
+        foreach ($this->products as $product) {
+            $price += $product->getNetPrice();
+        }
+
+        return $price;
     }
 
     public function getTotalTaxPrice(): float
     {
+        $price = 0;
 
+        /** @var InvoiceProductDTO $product */
+        foreach ($this->products as $product) {
+            $price += $product->getTaxPrice();
+        }
+
+        return $price;
     }
 
     public function getTotalGrossPrice(): float
     {
+        $price = 0;
 
+        /** @var InvoiceProductDTO $product */
+        foreach ($this->products as $product) {
+            $price += $product->getGrossPrice();
+        }
+
+        return $price;
     }
 }

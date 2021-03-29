@@ -1,14 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Domain\Company;
+namespace App\Modules\Finances\Application\Company\GetOneById;
 
-final class Company
+final class CompanyDTO
 {
     public function __construct(
-        private CompanyId $id,
+        private int $id,
         private string $name,
-        private CompanyAddress $companyAddress,
+        private string $street,
+        private string $zipCode,
+        private string $city,
         private string $identificationNumber,
         private ?string $email,
         private ?string $phoneNumber,
@@ -18,7 +20,7 @@ final class Company
         private ?string $accountNumber,
     ){}
 
-    public function getId(): CompanyId
+    public function getId(): int
     {
         return $this->id;
     }
@@ -28,9 +30,19 @@ final class Company
         return $this->name;
     }
 
-    public function getCompanyAddress(): CompanyAddress
+    public function getStreet(): string
     {
-        return $this->companyAddress;
+        return $this->street;
+    }
+
+    public function getZipCode(): string
+    {
+        return $this->zipCode;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
     }
 
     public function getIdentificationNumber(): string

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Invoice\Prepare;
 
-final class CompanyDTO
+final class InvoiceCompanyDTO
 {
     public function __construct(
         private string $name,
@@ -11,8 +11,12 @@ final class CompanyDTO
         private string $zipCode,
         private string $city,
         private string $identificationNumber,
-        private ?string $email = null,
-        private ?string $phoneNumber = null
+        private ?string $email,
+        private ?string $phoneNumber,
+        private ?string $paymentType,
+        private ?string $paymentLastDate,
+        private ?string $bank,
+        private ?string $accountNumber,
     ){}
 
     public function getName(): string

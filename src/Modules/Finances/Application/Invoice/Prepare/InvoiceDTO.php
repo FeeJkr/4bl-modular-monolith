@@ -10,10 +10,11 @@ final class InvoiceDTO
         private string $generateDate,
         private string $sellDate,
         private string $generatePlace,
-        private CompanyDTO $seller,
-        private CompanyDTO $buyer,
+        private InvoiceCompanyDTO $seller,
+        private InvoiceCompanyDTO $buyer,
         private InvoiceProductsCollection $products,
-        private CompanyPaymentDTO $payment,
+        private float $alreadyTakenPrice,
+        private string $translatePrice,
     ){}
 
     public function getInvoiceNumber(): string
@@ -36,12 +37,12 @@ final class InvoiceDTO
         return $this->generatePlace;
     }
 
-    public function getSeller(): CompanyDTO
+    public function getSeller(): InvoiceCompanyDTO
     {
         return $this->seller;
     }
 
-    public function getBuyer(): CompanyDTO
+    public function getBuyer(): InvoiceCompanyDTO
     {
         return $this->buyer;
     }
@@ -51,8 +52,18 @@ final class InvoiceDTO
         return $this->products;
     }
 
-    public function getPayment(): CompanyPaymentDTO
+    public function getAlreadyTakenPrice(): float
     {
-        return $this->payment;
+        return $this->alreadyTakenPrice;
+    }
+
+    public function getToPayPrice(): float
+    {
+        return $this->products->getTotalGrossPrice() - $this->getAlreadyTakenPrice();
+    }
+
+    public function getTranslatePrice(): string
+    {
+        return $this->translatePrice;
     }
 }
