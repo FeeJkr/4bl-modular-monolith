@@ -3,11 +3,6 @@ dashboard:
   controller: App\Web\MVC\Controller\Dashboard\DashboardController::showDashboard
   methods: GET
 
-invoice:
-  path: /invoice
-  controller: App\Web\MVC\Controller\Finances\InvoiceController::renderInvoice
-  methods: GET
-
 accounts.user.sign-in.page:
   path: /sign-in
   controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::showSignInPage
@@ -57,6 +52,11 @@ finances.invoice.generate:
   path: /finances/invoice/generate
   controller: App\Web\MVC\Controller\Finances\InvoiceGeneratorController::generateInvoice
   methods: POST
+
+finances.invoice.render:
+  path: /finances/invoice/render
+  controller: App\Web\MVC\Controller\Finances\InvoiceController::renderInvoice
+  methods: GET
 
 webhook.invoice:
   path: /webhook/invoice

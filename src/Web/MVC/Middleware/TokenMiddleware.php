@@ -9,6 +9,7 @@ use App\Modules\Accounts\Domain\User\Token;
 use App\Web\MVC\Controller\AbstractController;
 use App\Web\MVC\Controller\Accounts\Auth\AuthController;
 use App\Web\MVC\Controller\Finances\InvoiceController;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +38,7 @@ final class TokenMiddleware implements EventSubscriberInterface
         $controller = $event->getController();
 
         if (is_array($controller) && $controller[0] instanceof AbstractController) {
-            $isAllowedAction = $controller[0] instanceof AuthController || $controller[0] instanceof InvoiceController;
+            $isAllowedAction = $this->isAllowedAction($controller);
             $token = new Token($this->requestContext->getUserToken());
 
             if ($this->tokenManager->isValid($token)) {
@@ -62,6 +63,12 @@ final class TokenMiddleware implements EventSubscriberInterface
         }
     }
 
+    private function isAllowedAction(array $controller): bool
+    {
+        return $controller[0] instanceof AuthController || $controller[0] instanceof InvoiceController;
+    }
+
+    #[ArrayShape([KernelEvents::CONTROLLER => "string"])]
     public static function getSubscribedEvents(): array
     {
         return [

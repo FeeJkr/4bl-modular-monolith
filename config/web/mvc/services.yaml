@@ -1,20 +1,28 @@
+parameters:
+    invoice.token: '%env(resolve:INVOICE_TOKEN)%'
+
 services:
-  _defaults:
-    autowire: true
-    public: false
+    _defaults:
+        autowire: true
+        public: false
 
-  App\Web\MVC\:
-    resource: '../../../src/Web/MVC/'
+    App\Web\MVC\:
+        resource: '../../../src/Web/MVC/'
 
-  App\Web\MVC\Controller\:
-    resource: '../../../src/Web/MVC/Controller/'
-    tags: ['controller.service_arguments']
+    App\Web\MVC\Controller\:
+        resource: '../../../src/Web/MVC/Controller/'
+        tags: ['controller.service_arguments']
 
-  App\Web\MVC\Middleware\TokenMiddleware:
-    tags: [ 'kernel.event_subscriber' ]
+    App\Web\MVC\Middleware\TokenMiddleware:
+        tags: [ 'kernel.event_subscriber' ]
 
-  App\Web\MVC\WebHttpRequestContext:
-    public: true
+    App\Web\MVC\Middleware\InvoiceTokenMiddleware:
+        arguments:
+            $invoiceToken: '%invoice.token%'
+        tags: [ 'kernel.event_subscriber' ]
 
-  GuzzleHttp\Client:
-    class: GuzzleHttp\Client
+    App\Web\MVC\WebHttpRequestContext:
+        public: true
+
+    GuzzleHttp\Client:
+        class: GuzzleHttp\Client
