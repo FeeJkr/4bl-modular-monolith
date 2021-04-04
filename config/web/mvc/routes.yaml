@@ -53,12 +53,15 @@ finances.invoice.generate:
   controller: App\Web\MVC\Controller\Finances\InvoiceGeneratorController::generateInvoice
   methods: POST
 
-finances.invoice.render:
-  path: /finances/invoice/render
-  controller: App\Web\MVC\Controller\Finances\InvoiceController::renderInvoice
-  methods: GET
+finances.invoice.generate.page:
+  path: /finances/invoice
+  controller: App\Web\MVC\Controller\Finances\InvoiceGeneratorController::showGenerateInvoicePage
 
-webhook.invoice:
-  path: /webhook/invoice
-  controller: App\Web\MVC\Controller\Finances\InvoiceController::webhook
+multimedia.finances.invoice:
+  path: /multimedia/finances/invoice
+  controller: App\Web\MVC\Controller\Finances\InvoiceController::renderInvoice
+
+webhook.invoice.was_generated_from_html:
+  path: /webhook/invoice/was_generated_from_html
+  controller: App\Web\MVC\Controller\WebhookController::invoiceWasGeneratedFromHtml
   methods: POST

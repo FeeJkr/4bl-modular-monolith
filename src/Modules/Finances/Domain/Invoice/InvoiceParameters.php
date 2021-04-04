@@ -1,20 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Finances\Application\Invoice\Prepare;
+namespace App\Modules\Finances\Domain\Invoice;
 
-final class InvoiceDTO
+class InvoiceParameters
 {
     public function __construct(
         private string $invoiceNumber,
         private string $generateDate,
         private string $sellDate,
         private string $generatePlace,
-        private InvoiceCompanyDTO $seller,
-        private InvoiceCompanyDTO $buyer,
-        private InvoiceProductsCollection $products,
+        private int $sellerId,
+        private int $buyerId,
         private float $alreadyTakenPrice,
         private string $translatePrice,
+        private string $currencyCode,
+        private InvoiceProductsCollection $products,
     ){}
 
     public function getInvoiceNumber(): string
@@ -37,14 +38,14 @@ final class InvoiceDTO
         return $this->generatePlace;
     }
 
-    public function getSeller(): InvoiceCompanyDTO
+    public function getSellerId(): int
     {
-        return $this->seller;
+        return $this->sellerId;
     }
 
-    public function getBuyer(): InvoiceCompanyDTO
+    public function getBuyerId(): int
     {
-        return $this->buyer;
+        return $this->buyerId;
     }
 
     public function getProducts(): InvoiceProductsCollection
@@ -65,5 +66,10 @@ final class InvoiceDTO
     public function getTranslatePrice(): string
     {
         return $this->translatePrice;
+    }
+
+    public function getCurrencyCode(): string
+    {
+        return $this->currencyCode;
     }
 }

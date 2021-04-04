@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final class TokenMiddleware implements EventSubscriberInterface
+final class AuthTokenMiddleware implements EventSubscriberInterface
 {
     private TokenManager $tokenManager;
     private UrlGeneratorInterface $urlGenerator;
@@ -65,7 +65,7 @@ final class TokenMiddleware implements EventSubscriberInterface
 
     private function isAllowedAction(array $controller): bool
     {
-        return $controller[0] instanceof AuthController || $controller[0] instanceof InvoiceController;
+        return $controller[0] instanceof AuthController;
     }
 
     #[ArrayShape([KernelEvents::CONTROLLER => "string"])]

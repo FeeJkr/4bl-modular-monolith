@@ -3,16 +3,21 @@ declare(strict_types=1);
 
 namespace App\Web\MVC\Controller\Finances;
 
+use App\Modules\Finances\Application\Company\GetAll\CompaniesCollection;
+use App\Modules\Finances\Application\Company\GetAll\GetAllCompaniesQuery;
+use App\Modules\Finances\Application\Invoice\Prepare\PrepareInvoiceCommand;
 use App\Web\MVC\Controller\AbstractController;
 use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class InvoiceGeneratorController extends AbstractController
 {
-    public function __construct(private Client $client){}
+    public function __construct(private Client $client, private MessageBusInterface $bus){}
 
-    public function generateInvoice(Request $request): Response
+    public function oldGenerateInvoice(Request $request): Response
     {
         $price = $request->get('price');
 
@@ -30,5 +35,37 @@ final class InvoiceGeneratorController extends AbstractController
         );
 
         return $this->redirectToRoute('dashboard');
+    }
+
+    public function showGenerateInvoicePage(): Response
+    {
+        /** @var CompaniesCollection $companies */
+        $companies = $this->bus
+            ->dispatch(new GetAllCompaniesQuery())
+            ->last(HandledStamp::class)
+            ->getResult();
+
+        return $this->render('finances/invoice/generate.html.twig', [
+            'companies' => $companies->toArray(),
+        ]);
+    }
+
+    public function generateInvoice(Request $request): Response
+    {
+        $command = new PrepareInvoiceCommand(
+            $request->get('invoiceNumber'),
+            $request->get('generateDate'),
+            $request->get('sellDate'),
+            $request->get('generatePlace'),
+            (int) $request->get('sellerId'),
+            (int) $request->get('buyerId'),
+            $request->get('products'),
+            (float) $request->get('alreadyTakenPrice'),
+            $request->get('currencyCode'),
+        );
+
+        $this->bus->dispatch($command);
+
+        return $this->redirectToRoute('finances.dashboard');
     }
 }

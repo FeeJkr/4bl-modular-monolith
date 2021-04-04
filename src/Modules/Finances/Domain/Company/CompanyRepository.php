@@ -8,4 +8,5 @@ use App\Modules\Finances\Domain\User\UserId;
 interface CompanyRepository
 {
     public function fetchById(CompanyId $id, UserId $userId): Company;
+    public function fetchAll(): array;
 }

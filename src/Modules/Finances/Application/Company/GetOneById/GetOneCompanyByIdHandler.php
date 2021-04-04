@@ -19,7 +19,18 @@ final class GetOneCompanyByIdHandler
         );
 
         return new CompanyDTO(
-            $company->getId(),
+            $company->getId()->toInt(),
+            $company->getName(),
+            $company->getCompanyAddress()->getStreet(),
+            $company->getCompanyAddress()->getZipCode(),
+            $company->getCompanyAddress()->getCity(),
+            $company->getIdentificationNumber(),
+            $company->getEmail(),
+            $company->getPhoneNumber(),
+            $company->getPaymentType(),
+            $company->getPaymentLastDate(),
+            $company->getBank(),
+            $company->getAccountNumber(),
         );
     }
 }

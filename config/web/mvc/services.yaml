@@ -1,6 +1,3 @@
-parameters:
-    invoice.token: '%env(resolve:INVOICE_TOKEN)%'
-
 services:
     _defaults:
         autowire: true
@@ -13,12 +10,15 @@ services:
         resource: '../../../src/Web/MVC/Controller/'
         tags: ['controller.service_arguments']
 
-    App\Web\MVC\Middleware\TokenMiddleware:
+    App\Web\MVC\Middleware\AuthTokenMiddleware:
         tags: [ 'kernel.event_subscriber' ]
 
-    App\Web\MVC\Middleware\InvoiceTokenMiddleware:
+    App\Web\MVC\Middleware\SecurityTokenMiddleware:
         arguments:
             $invoiceToken: '%invoice.token%'
+        tags: [ 'kernel.event_subscriber' ]
+
+    App\Web\MVC\Middleware\WebhookMiddleware:
         tags: [ 'kernel.event_subscriber' ]
 
     App\Web\MVC\WebHttpRequestContext:

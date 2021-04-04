@@ -14,6 +14,7 @@ final class PrepareInvoiceCommand
         private int $buyerId,
         private array $products,
         private float $alreadyTakenPrice,
+        private string $currency
     ){}
 
     public function getInvoiceNumber(): string
@@ -54,5 +55,10 @@ final class PrepareInvoiceCommand
     public function getAlreadyTakenPrice(): float
     {
         return $this->alreadyTakenPrice;
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->currency;
     }
 }

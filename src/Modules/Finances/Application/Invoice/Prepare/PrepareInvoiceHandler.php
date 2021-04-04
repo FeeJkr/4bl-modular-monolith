@@ -3,69 +3,56 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Application\Invoice\Prepare;
 
-use App\Modules\Finances\Application\Company\GetOneById\CompanyDTO;
-use App\Modules\Finances\Application\Company\GetOneById\GetOneCompanyByIdQuery;
+use App\Modules\Finances\Domain\Invoice\PdfFromHtmlGenerator;
+use App\Modules\Finances\Domain\Invoice\InvoiceParameters;
+use App\Modules\Finances\Domain\Invoice\InvoiceProduct;
+use App\Modules\Finances\Domain\Invoice\InvoiceProductsCollection;
+use App\Modules\Finances\Domain\Invoice\InvoiceRepository;
+use App\Modules\Finances\Domain\Invoice\InvoiceService;
 use App\Modules\Finances\Domain\Invoice\PriceTransformer;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class PrepareInvoiceHandler
 {
-    public function __construct(private MessageBusInterface $messageBus, private PriceTransformer $priceTransformer){}
+    public function __construct(
+        private PriceTransformer $priceTransformer,
+        private InvoiceService $service,
+        private InvoiceRepository $repository,
+        private PdfFromHtmlGenerator $pdfFromHtmlGenerator,
+    ){}
 
-    public function __invoke(PrepareInvoiceCommand $command): InvoiceDTO
+    public function __invoke(PrepareInvoiceCommand $command): void
     {
-        $seller = $this->getInvoiceCompanyDTO($command->getSellerId());
-        $buyer = $this->getInvoiceCompanyDTO($command->getBuyerId());
         $products = $this->getInvoiceProductsCollection($command->getProducts());
-
-        return new InvoiceDTO(
-            $command->getInvoiceNumber(),
-            $command->getGenerateDate(),
-            $command->getSellDate(),
-            $command->getGeneratePlace(),
-            $seller,
-            $buyer,
-            $products,
-            $command->getAlreadyTakenPrice(),
-            $this->priceTransformer->transformToText($products->getTotalGrossPrice()),
+        $invoice = $this->service->create(
+            new InvoiceParameters(
+                $command->getInvoiceNumber(),
+                $command->getGenerateDate(),
+                $command->getSellDate(),
+                $command->getGeneratePlace(),
+                $command->getSellerId(),
+                $command->getBuyerId(),
+                $command->getAlreadyTakenPrice(),
+                $this->priceTransformer->transformToText($products->getTotalGrossPrice()),
+                $command->getCurrency(),
+                $products
+            )
         );
-    }
+        $this->repository->store($invoice);
 
-    private function getInvoiceCompanyDTO(int $companyId): InvoiceCompanyDTO
-    {
-        /** @var CompanyDTO $company */
-        $company = $this->messageBus
-            ->dispatch(new GetOneCompanyByIdQuery($companyId))
-            ->last(HandledStamp::class)
-            ->getResult();
-
-        return new InvoiceCompanyDTO(
-            $company->getName(),
-            $company->getStreet(),
-            $company->getZipCode(),
-            $company->getCity(),
-            $company->getIdentificationNumber(),
-            $company->getEmail(),
-            $company->getPhoneNumber(),
-            $company->getPaymentType(),
-            $company->getPaymentLastDate(),
-            $company->getBank(),
-            $company->getACcountNumber(),
-        );
+        $this->pdfFromHtmlGenerator->generate($invoice);
     }
 
     private function getInvoiceProductsCollection(array $products): InvoiceProductsCollection
     {
-        $productDTOs = [];
+        $invoiceProducts = [];
 
         foreach ($products as $product) {
-            $productDTOs[] = new InvoiceProductDTO(
+            $invoiceProducts[] = new InvoiceProduct(
                 $product['name'],
-                (float) $product['net_price'],
+                (float) $product['netPrice'],
             );
         }
 
-        return new InvoiceProductsCollection($productDTOs);
+        return new InvoiceProductsCollection($invoiceProducts);
     }
 }

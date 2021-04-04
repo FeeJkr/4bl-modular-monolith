@@ -80,7 +80,6 @@ final class AuthController extends AbstractController
             ->last(HandledStamp::class)
             ->getResult();
 
-
         $request->getSession()->set('user.token', $token->getToken());
 
         return $this->redirectToRoute('dashboard');
