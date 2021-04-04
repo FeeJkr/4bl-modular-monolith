@@ -14,17 +14,17 @@ final class CreateCategoriesTableMigration
 
     public function up(Schema $schema) : void
     {
-        $sql = '
+        $sql = "
             create table categories
             (
                 id serial not null constraint categories_pk primary key,
                 user_id int not null constraint categories_users_id_fk references users on delete cascade,
                 name varchar(255) not null,
                 type varchar(255) not null,
-                icon varchar(255) default \'home\' not null,
+                icon varchar(255) default 'home' not null,
                 created_at timestamp default now() not null
             );
-        ';
+        ";
     }
 
     public function down(Schema $schema) : void

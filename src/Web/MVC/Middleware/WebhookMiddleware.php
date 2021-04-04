@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class WebhookMiddleware implements EventSubscriberInterface
 {
-    public function __construct(private string $invoiceToken, private UrlGeneratorInterface $urlGenerator){}
+    public function __construct(private UrlGeneratorInterface $urlGenerator){}
 
     public function onKernelController(ControllerEvent $event): void
     {
