@@ -23,10 +23,6 @@ class WebhookMiddleware implements EventSubscriberInterface
         if (is_array($controller) && $this->isWebhookController($controller)) {
             return;
         }
-
-        $event->setController(function (): Response {
-            return new RedirectResponse($this->urlGenerator->generate('dashboard'));
-        });
     }
 
     private function isWebhookController(array $controller): bool
