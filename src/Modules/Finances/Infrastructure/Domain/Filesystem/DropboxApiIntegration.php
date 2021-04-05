@@ -20,7 +20,11 @@ class DropboxApiIntegration implements Dropbox
     {
         try {
             $file = fopen($filepath, 'rb');
-            $targetPath = sprintf('%s/%s', $customTargetPath ?? self::DROPBOX_DEFAULT_TARGET_PATH, $filepath);
+            $targetPath = sprintf(
+                '%s/%s',
+                rtrim($customTargetPath ?? self::DROPBOX_DEFAULT_TARGET_PATH, '/'),
+                $filepath
+            );
 
             $this->httpClient->post(self::DROPBOX_UPLOAD_URL, [
                 'headers' => [
