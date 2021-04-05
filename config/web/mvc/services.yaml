@@ -10,10 +10,7 @@ services:
         resource: '../../../src/Web/MVC/Controller/'
         tags: ['controller.service_arguments']
 
-    App\Web\MVC\Middleware\AuthTokenMiddleware:
-        tags: [ 'kernel.event_subscriber' ]
-
-    App\Web\MVC\Middleware\SecurityTokenMiddleware:
+    App\Web\MVC\Middleware\RouteAccessMiddleware:
         arguments:
             $invoiceToken: '%invoice.token%'
         tags: [ 'kernel.event_subscriber' ]
