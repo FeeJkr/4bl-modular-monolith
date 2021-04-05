@@ -21,9 +21,9 @@ final class GetOneCompanyByIdHandler
         return new CompanyDTO(
             $company->getId()->toInt(),
             $company->getName(),
-            $company->getCompanyAddress()->getStreet(),
-            $company->getCompanyAddress()->getZipCode(),
-            $company->getCompanyAddress()->getCity(),
+            $company->getStreet(),
+            $company->getZipCode(),
+            $company->getCity(),
             $company->getIdentificationNumber(),
             $company->getEmail(),
             $company->getPhoneNumber(),

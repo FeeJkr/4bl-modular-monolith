@@ -11,7 +11,7 @@ use App\Modules\Finances\Domain\User\UserContext;
 
 final class GetAllCompaniesHandler
 {
-    public function __construct(private CompanyRepository $repository) {}
+    public function __construct(private CompanyRepository $repository, private UserContext $userContext) {}
 
     public function __invoke(GetAllCompaniesQuery $query): CompaniesCollection
     {
@@ -20,9 +20,9 @@ final class GetAllCompaniesHandler
                 return new CompanyDTO(
                     $company->getId()->toInt(),
                     $company->getName(),
-                    $company->getCompanyAddress()->getStreet(),
-                    $company->getCompanyAddress()->getZipCode(),
-                    $company->getCompanyAddress()->getCity(),
+                    $company->getStreet(),
+                    $company->getZipCode(),
+                    $company->getCity(),
                     $company->getIdentificationNumber(),
                     $company->getEmail(),
                     $company->getPhoneNumber(),
@@ -32,7 +32,7 @@ final class GetAllCompaniesHandler
                     $company->getAccountNumber(),
                 );
             },
-            $this->repository->fetchAll()
+            $this->repository->fetchAll($this->userContext->getUserId())
         );
 
         return new CompaniesCollection($companies);

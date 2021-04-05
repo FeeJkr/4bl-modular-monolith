@@ -122,6 +122,21 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Filesystem\MoveFileFromApifyToDropbox\MoveFileFromApifyToDropboxCommand
 
+  App\Modules\Finances\Application\Company\Create\CreateCompanyHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Company\Create\CreateCompanyCommand
+
+  App\Modules\Finances\Application\Company\Delete\DeleteCompanyHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Company\Delete\DeleteCompanyCommand
+
+  App\Modules\Finances\Application\Company\Update\UpdateCompanyHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Finances\Application\Company\Update\UpdateCompanyCommand
+
   App\Modules\Finances\Domain\Invoice\PdfFromHtmlGenerator:
     class: App\Modules\Finances\Infrastructure\Domain\Invoice\ApifyPdfFromHtmlGenerator
     arguments:

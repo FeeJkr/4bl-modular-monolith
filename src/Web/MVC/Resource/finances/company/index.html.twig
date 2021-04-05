@@ -1,0 +1,67 @@
+{% extends 'finances/dashboard.html.twig' %}
+
+{% block submodules %}
+    <div class="mt-5">
+        <div>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="offset-md-11 col-md-1">
+                <a href="{{ path('finances.company.create.page') }}" class="btn btn-success" style="text-decoration: none;">
+                    Create new
+                </a>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Company name</th>
+                <th scope="col" class="text-center">Identification number</th>
+                <th scope="col" class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for company in companies %}
+                <tr>
+                    <th scope="row" class="text-center">{{ company.id }}</th>
+                    <td class="text-center">{{ company.name }}</td>
+                    <td class="text-center" style="font-size: 22px;">{{ company.identificationNumber }}</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <a href="{{ path('finances.company.edit.page', {'id': company.id}) }}">
+                                <button type="button" class="btn btn-sm btn-warning">Edit</button>
+                            </a>
+                            <button type="button" class="btn btn-sm btn-danger delete-company-button" data-company-id="{{ company.id }}">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.delete-company-button').on('click', function () {
+                const companyId = $(this).data('company-id');
+                let route = '{{ path('finances.company.delete', {'id': '__companyId__'}) }}';
+
+                fetch(route.replace('__companyId__', companyId), {
+                    method: 'DELETE',
+                    mode: 'cors',
+                }).then(() => {
+                    window.location.href = '{{ path('finances.company.showAll') }}';
+                });
+            });
+        });
+    </script>
+{% endblock %}

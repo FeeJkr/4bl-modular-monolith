@@ -18,7 +18,8 @@ final class CreateCompaniesTableMigration
             create table companies
             (
                 id serial not null constraint companies_pk primary key,
-                company_addresses_id int not null constraint companies_company_addresses_id_fk references company_addresses on delete cascade,
+                user_id int not null constraint companies_users_id_fk references users on delete cascade,
+                company_address_id int not null constraint companies_company_address_id_fk references company_addresses on delete cascade,
                 name varchar(255) not null,
                 identification_number varchar(30) not null,
                 email varchar(255),

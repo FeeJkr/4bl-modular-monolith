@@ -48,6 +48,36 @@ finances.category.create:
   controller: App\Web\MVC\Controller\Finances\CategoryController::createCategory
   methods: POST
 
+finances.company.showAll:
+  path: /finances/companies
+  controller: App\Web\MVC\Controller\Finances\CompanyController::showCompaniesPage
+  methods: GET
+
+finances.company.create.page:
+  path: /finances/companies/create
+  controller: App\Web\MVC\Controller\Finances\CompanyController::showCreateCompanyPage
+  methods: GET
+
+finances.company.create:
+  path: /finances/companies/create
+  controller: App\Web\MVC\Controller\Finances\CompanyController::createCompany
+  methods: POST
+
+finances.company.edit.page:
+  path: /finances/companies/edit/{id}
+  controller: App\Web\MVC\Controller\Finances\CompanyController::showEditCompanyPage
+  methods: GET
+
+finances.company.edit:
+  path: /finances/companies/edit/{id}
+  controller: App\Web\MVC\Controller\Finances\CompanyController::editCompany
+  methods: POST
+
+finances.company.delete:
+  path: /finances/companies/delete/{id}
+  controller: App\Web\MVC\Controller\Finances\CompanyController::deleteCompany
+  methods: DELETE
+
 finances.invoice.generate:
   path: /finances/invoice/generate
   controller: App\Web\MVC\Controller\Finances\InvoiceGeneratorController::generateInvoice
