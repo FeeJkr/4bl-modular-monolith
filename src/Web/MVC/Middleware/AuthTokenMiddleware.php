@@ -9,6 +9,7 @@ use App\Modules\Accounts\Domain\User\Token;
 use App\Web\MVC\Controller\AbstractController;
 use App\Web\MVC\Controller\Accounts\Auth\AuthController;
 use App\Web\MVC\Controller\Finances\InvoiceController;
+use App\Web\MVC\Controller\WebhookController;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -38,6 +39,13 @@ final class AuthTokenMiddleware implements EventSubscriberInterface
         $controller = $event->getController();
 
         if (is_array($controller) && $controller[0] instanceof AbstractController) {
+            $isWebhookAction = $this->isWebhookAction($controller);
+
+            // if is webhook action - allow action
+            if ($isWebhookAction) {
+                return;
+            }
+
             $isAllowedAction = $this->isAllowedAction($controller);
             $token = new Token($this->requestContext->getUserToken());
 
@@ -66,6 +74,11 @@ final class AuthTokenMiddleware implements EventSubscriberInterface
     private function isAllowedAction(array $controller): bool
     {
         return $controller[0] instanceof AuthController;
+    }
+
+    private function isWebhookAction(array $controller): bool
+    {
+        return $controller[0] instanceof WebhookController;
     }
 
     #[ArrayShape([KernelEvents::CONTROLLER => "string"])]

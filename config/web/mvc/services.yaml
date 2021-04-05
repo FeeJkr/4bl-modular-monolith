@@ -18,9 +18,6 @@ services:
             $invoiceToken: '%invoice.token%'
         tags: [ 'kernel.event_subscriber' ]
 
-    App\Web\MVC\Middleware\WebhookMiddleware:
-        tags: [ 'kernel.event_subscriber' ]
-
     App\Web\MVC\WebHttpRequestContext:
         public: true
 
