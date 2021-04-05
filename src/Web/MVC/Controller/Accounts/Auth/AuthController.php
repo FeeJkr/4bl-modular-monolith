@@ -10,6 +10,8 @@ use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
 use App\Web\MVC\Controller\AbstractController;
 use Assert\Assert;
 use Assert\LazyAssertionException;
+use DateTime;
+use PHPHtmlParser\Dom;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -77,7 +79,6 @@ final class AuthController extends AbstractController
             ->dispatch(new GetTokenQuery($email))
             ->last(HandledStamp::class)
             ->getResult();
-
 
         $request->getSession()->set('user.token', $token->getToken());
 

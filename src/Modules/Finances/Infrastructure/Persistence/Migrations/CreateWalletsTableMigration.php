@@ -5,7 +5,7 @@ namespace App\Modules\Finances\Infrastructure\Persistence\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 
-final class Version20200722092650
+final class CreateWalletsTableMigration
 {
     public function getDescription() : string
     {
