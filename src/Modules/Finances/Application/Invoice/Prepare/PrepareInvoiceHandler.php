@@ -10,6 +10,7 @@ use App\Modules\Finances\Domain\Invoice\InvoiceProductsCollection;
 use App\Modules\Finances\Domain\Invoice\InvoiceRepository;
 use App\Modules\Finances\Domain\Invoice\InvoiceService;
 use App\Modules\Finances\Domain\Invoice\PriceTransformer;
+use DateTime;
 
 class PrepareInvoiceHandler
 {
@@ -26,8 +27,8 @@ class PrepareInvoiceHandler
         $invoice = $this->service->create(
             new InvoiceParameters(
                 $command->getInvoiceNumber(),
-                $command->getGenerateDate(),
-                $command->getSellDate(),
+                DateTime::createFromFormat('Y-m-d', $command->getGenerateDate()),
+                DateTime::createFromFormat('Y-m-d', $command->getSellDate()),
                 $command->getGeneratePlace(),
                 $command->getSellerId(),
                 $command->getBuyerId(),

@@ -7,6 +7,7 @@ use App\Modules\Finances\Application\Company\GetOneById\CompanyDTO;
 use App\Modules\Finances\Application\Company\GetOneById\GetOneCompanyByIdQuery;
 use App\Modules\Finances\Domain\Invoice\HtmlGenerator;
 use App\Modules\Finances\Domain\Invoice\InvoiceParameters;
+use DateInterval;
 use Exception;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
@@ -22,11 +23,13 @@ class TwigHtmlGenerator implements HtmlGenerator
         try {
             $seller = $this->getCompanyInformationById($invoiceParameters->getSellerId());
             $buyer = $this->getCompanyInformationById($invoiceParameters->getBuyerId());
+            $paymentLastDate = clone $invoiceParameters->getSellDate();
+            $paymentLastDate->add(new DateInterval(sprintf('P%dD', $seller->getPaymentLastDate())));
 
             return $this->twig->render('finances/invoice/invoice.html.twig', [
                 'invoiceNumber' => $invoiceParameters->getInvoiceNumber(),
-                'generateDate' => $invoiceParameters->getGenerateDate(),
-                'sellDate' => $invoiceParameters->getSellDate(),
+                'generateDate' => $invoiceParameters->getGenerateDate()->format('d-m-Y'),
+                'sellDate' => $invoiceParameters->getSellDate()->format('d-m-Y'),
                 'generatePlace' => $invoiceParameters->getGeneratePlace(),
                 'seller' => [
                     'name' => $seller->getName(),
@@ -51,7 +54,7 @@ class TwigHtmlGenerator implements HtmlGenerator
                 'totalTaxPrice' => $invoiceParameters->getProducts()->getTotalTaxPrice(),
                 'totalGrossPrice' => $invoiceParameters->getProducts()->getTotalGrossPrice(),
                 'paymentType' => $seller->getPaymentType(),
-                'paymentLastDate' => $seller->getPaymentLastDate(),
+                'paymentLastDate' => $paymentLastDate->format('d-m-Y'),
                 'paymentBankName' => $seller->getBank(),
                 'paymentAccountNumber' => $seller->getAccountNumber(),
                 'alreadyTakenPrice' => $invoiceParameters->getAlreadyTakenPrice(),

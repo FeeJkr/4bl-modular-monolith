@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace App\Modules\Finances\Domain\Invoice;
 
+use DateTimeInterface;
+
 class InvoiceParameters
 {
     public function __construct(
         private string $invoiceNumber,
-        private string $generateDate,
-        private string $sellDate,
+        private DateTimeInterface $generateDate,
+        private DateTimeInterface $sellDate,
         private string $generatePlace,
         private int $sellerId,
         private int $buyerId,
@@ -23,12 +25,12 @@ class InvoiceParameters
         return $this->invoiceNumber;
     }
 
-    public function getGenerateDate(): string
+    public function getGenerateDate(): DateTimeInterface
     {
         return $this->generateDate;
     }
 
-    public function getSellDate(): string
+    public function getSellDate(): DateTimeInterface
     {
         return $this->sellDate;
     }
