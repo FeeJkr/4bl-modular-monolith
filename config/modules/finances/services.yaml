@@ -1,9 +1,3 @@
-parameters:
-  jwt.secret_key: '%env(resolve:JWT_SECRET_KEY)%'
-  invoice.token: '%env(resolve:INVOICE_TOKEN)%'
-  app.host: '%env(resolve:APP_HOST)%'
-  integrations.dropbox.auth_token: '%env(resolve:DROPBOX_AUTH_TOKEN)%'
-
 services:
   _defaults:
     autowire: true
@@ -96,54 +90,3 @@ services:
     tags:
       - name: messenger.message_handler
         handles: App\Modules\Finances\Application\Transaction\GetOneById\GetOneTransactionByIdQuery
-
-  App\Modules\Finances\Application\Invoice\Prepare\PrepareInvoiceHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Invoice\Prepare\PrepareInvoiceCommand
-
-  App\Modules\Finances\Application\Company\GetOneById\GetOneCompanyByIdHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Company\GetOneById\GetOneCompanyByIdQuery
-
-  App\Modules\Finances\Application\Company\GetAll\GetAllCompaniesHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Company\GetAll\GetAllCompaniesQuery
-
-  App\Modules\Finances\Application\Invoice\GetOneById\GetInvoiceByIdHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Invoice\GetOneById\GetInvoiceByIdQuery
-
-  App\Modules\Finances\Application\Filesystem\MoveFileFromApifyToDropbox\MoveFileFromApifyToDropboxHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Filesystem\MoveFileFromApifyToDropbox\MoveFileFromApifyToDropboxCommand
-
-  App\Modules\Finances\Application\Company\Create\CreateCompanyHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Company\Create\CreateCompanyCommand
-
-  App\Modules\Finances\Application\Company\Delete\DeleteCompanyHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Company\Delete\DeleteCompanyCommand
-
-  App\Modules\Finances\Application\Company\Update\UpdateCompanyHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Finances\Application\Company\Update\UpdateCompanyCommand
-
-  App\Modules\Finances\Domain\Invoice\PdfFromHtmlGenerator:
-    class: App\Modules\Finances\Infrastructure\Domain\Invoice\ApifyPdfFromHtmlGenerator
-    arguments:
-      $host: '%app.host%'
-      $token: '%invoice.token%'
-
-  App\Modules\Finances\Domain\Filesystem\Dropbox:
-    class: App\Modules\Finances\Infrastructure\Domain\Filesystem\DropboxApiIntegration
-    arguments:
-      $dropboxAuthorizationToken: '%integrations.dropbox.auth_token%'

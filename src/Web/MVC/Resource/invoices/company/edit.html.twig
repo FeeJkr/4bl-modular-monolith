@@ -1,0 +1,255 @@
+{% extends 'invoices/dashboard.html.twig' %}
+
+{% block submodules %}
+    <div class="container-fluid">
+        <div style="display: flex !important; align-items: center !important; justify-content: space-between !important;">
+            <h4 style="font-size: 18px; font-weight: 600;text-transform: uppercase;color: #495057;">Edit {{ company.name }}</h4>
+            <div>
+                <nav>
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{ path('invoices.company.showAll') }}" style="text-decoration: none; color: #495057;">Companies</a>
+                        </li>
+                        <li class="active breadcrumb-item">
+                            <a href="{{ path('invoices.company.edit.page', {'id': company.id}) }}" style="text-decoration: none; color: #74788d;">Edit Company</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-4" style="font-size: 15px; margin: 0 0 7px; font-weight: 600;">Basic Information</div>
+                        <form id="edit-company-form" data-company-id="{{ company.id }}">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3 form-group">
+                                        <label for="name" style="margin-bottom: .5rem; font-weight: 500;">Company name</label>
+                                        <input id="name" name="name" placeholder="Enter company name..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.name }}">
+                                    </div>
+                                    <div class="mb-3 form-group">
+                                        <label for="identificationNumber" style="margin-bottom: .5rem; font-weight: 500;">Identification Number</label>
+                                        <input id="identificationNumber" name="identificationNumber" placeholder="Enter identification number..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.identificationNumber }}">
+                                    </div>
+                                    <div class="mb-3 form-group">
+                                        <label for="phoneNumber" style="margin-bottom: .5rem; font-weight: 500;">Phone number</label>
+                                        <input id="phoneNumber" name="phoneNumber" placeholder="Enter company phone number..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.phoneNumber }}">
+                                    </div>
+                                    <div class="mb-3 form-group">
+                                        <label for="email" style="margin-bottom: .5rem; font-weight: 500;">Email</label>
+                                        <input id="email" name="email" placeholder="Enter company email..." type="email" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.email }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="mb-3 form-group">
+                                        <label for="street" style="margin-bottom: .5rem; font-weight: 500;">Street</label>
+                                        <input id="street" name="street" placeholder="Enter company location street..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.street }}">
+                                    </div>
+                                    <div class="mb-3 form-group">
+                                        <label for="city" style="margin-bottom: .5rem; font-weight: 500;">City</label>
+                                        <input id="city" name="city" placeholder="Enter company location city..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.city }}">
+                                    </div>
+                                    <div class="mb-3 form-group">
+                                        <label for="zipCode" style="margin-bottom: .5rem; font-weight: 500;">Zip code</label>
+                                        <input id="zipCode" name="zipCode" placeholder="Enter company location zip code..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.zipCode }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="justify-content-end row">
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-primary" id="edit-company-button" style="font-size: 13px;">Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4" style="font-size: 15px; margin: 0 0 7px; font-weight: 600;">Payment Information</div>
+                <form id="edit-company-payment-information-form">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-3 form-group">
+                                <label for="paymentType" style="margin-bottom: .5rem; font-weight: 500;">Payment type</label>
+                                <input id="paymentType" name="paymentType" placeholder="Enter payment type..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.paymentType }}">
+                            </div>
+                            <div class="mb-3 form-group">
+                                <label for="paymentLastDate" style="margin-bottom: .5rem; font-weight: 500;">Days For Payment After Sell</label>
+                                <input id="paymentLastDate" name="paymentLastDate" placeholder="Enter days for payment after sell date..." type="number" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.paymentLastDate }}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="mb-3 form-group">
+                                <label for="bank" style="margin-bottom: .5rem; font-weight: 500;">Bank</label>
+                                <input id="bank" name="bank" placeholder="Enter bank name..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.bank }}">
+                            </div>
+                            <div class="mb-3 form-group">
+                                <label for="accountNumber" style="margin-bottom: .5rem; font-weight: 500;">Account number</label>
+                                <input id="accountNumber" name="accountNumber" placeholder="Enter account number..." type="text" class="form-control" style="padding: .47rem .75rem; font-size: .8125rem; display: block; font-weight: 400; line-height: 1.5;" value="{{ company.accountNumber }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="justify-content-end row">
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-primary" id="edit-company-payment-information-button" style="font-size: 13px;">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100; margin-bottom: 80px;">
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Edit company button.
+            $('#edit-company-button').on('click', function (event) {
+                event.preventDefault();
+                $('#edit-company-form div.form-group').each(function () {
+                    $(this).find('span').remove();
+                    $(this).find('input').removeClass('error-form-input');
+                });
+
+                let formData = new FormData;
+
+                $('#edit-company-form').serializeArray().map(function (element) {
+                    if (element.value !== '') {
+                        formData.append(element.name, element.value);
+                    }
+                });
+
+                const companyId = $('#edit-company-form').data('company-id');
+                let route = '{{ path('api.v1.invoices.companies.update', {'id': '__companyId__'}) }}';
+
+                fetch(route.replace('__companyId__', companyId), {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': 'Bearer {{ app.session.get('user.token') }}'
+                    }
+                }).then((response) => {
+                    if (response.status === 204) {
+                        return response;
+                    }
+
+                    return response.json();
+                }).then((response) => {
+                    if (response.errors) {
+                        response.errors.forEach(function (error) {
+                            let errorElement = $(`input[name='${error.propertyPath}']`);
+
+                            errorElement.addClass('error-form-input');
+                            errorElement.after(`<span style="font-size: 9px; color: red;">${error.message}</span>`)
+                        });
+
+                        return;
+                    }
+
+                    const uniqueId = 'updateLiveToast' + Math.floor(Math.random() * 100000);
+                    let toastContainer = $('.toast-container');
+                    const toastHTML = `
+                        <div>
+                            <div id="${uniqueId}" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: #00ca72">
+                                <div class="toast-header" style="background-color: #00ca72; border-bottom: 0;">
+                                    <strong class="me-auto" style="color: #fff;">Success!</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="toast" style="color: #fff" aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body" style="color: #fff;">
+                                    Company was successfully updated.
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    toastContainer.append(toastHTML);
+
+                    const toast = new bootstrap.Toast(document.querySelector('#' + uniqueId), {
+                        'delay': 3000,
+                    });
+                    toast.show();
+                });
+            });
+
+            // Edit company payment information button.
+            $('#edit-company-payment-information-button').on('click', function (event) {
+                event.preventDefault();
+                $('#edit-company-payment-information-form div.form-group').each(function () {
+                    $(this).find('span').remove();
+                    $(this).find('input').removeClass('error-form-input');
+                });
+
+                let formData = new FormData;
+
+                $('#edit-company-payment-information-form').serializeArray().map(function (element) {
+                    if (element.value !== '') {
+                        formData.append(element.name, element.value);
+                    }
+                });
+
+                const companyId = $('#edit-company-form').data('company-id');
+                let route = '{{ path('api.v1.invoices.companies.updatePaymentInformation', {'id': '__companyId__'}) }}';
+
+                fetch(route.replace('__companyId__', companyId), {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': 'Bearer {{ app.session.get('user.token') }}'
+                    }
+                }).then((response) => {
+                    if (response.status === 204) {
+                        return response;
+                    }
+
+                    return response.json();
+                }).then((response) => {
+                    if (response.errors) {
+                        response.errors.forEach(function (error) {
+                            let errorElement = $(`input[name='${error.propertyPath}']`);
+
+                            errorElement.addClass('error-form-input');
+                            errorElement.after(`<span style="font-size: 9px; color: red;">${error.message}</span>`)
+                        });
+
+                        return;
+                    }
+
+                    const uniqueId = 'updatePaymentInformationLiveToast' + Math.floor(Math.random() * 100000);
+                    let toastContainer = $('.toast-container');
+                    const toastHTML = `
+                        <div>
+                            <div id="${uniqueId}" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: #00ca72">
+                                <div class="toast-header" style="background-color: #00ca72; border-bottom: 0;">
+                                    <strong class="me-auto" style="color: #fff;">Success!</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="toast" style="color: #fff" aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body" style="color: #fff;">
+                                    Company payment information was successfully updated.
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    toastContainer.append(toastHTML);
+
+                    const toast = new bootstrap.Toast(document.querySelector('#' + uniqueId), {
+                        'delay': 3000,
+                    });
+                    toast.show();
+                });
+            });
+        });
+    </script>
+{% endblock %}

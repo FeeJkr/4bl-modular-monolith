@@ -49,7 +49,7 @@ final class ErrorHandlerMiddleware implements EventSubscriberInterface
         if ($exception instanceof LazyAssertionException) {
             $event->setResponse(
                 new JsonResponse(
-                    ValidationErrorResponse::getResponse(...$exception->getErrorExceptions()),
+                    ['errors' => ValidationErrorResponse::getResponse(...$exception->getErrorExceptions())],
                     Response::HTTP_BAD_REQUEST
                 )
             );

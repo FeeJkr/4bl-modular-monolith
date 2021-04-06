@@ -87,3 +87,28 @@ api.v1.finances.transactions.delete:
   path: /api/v1/finances/transactions/{id}
   controller: App\Web\API\Action\Finances\Transaction\DeleteTransaction\DeleteTransactionAction
   methods: DELETE
+
+api.v1.invoices.companies.delete:
+  path: /api/v1/invoices/companies/{id}
+  controller: App\Web\API\Action\Invoices\Company\Delete\DeleteCompanyAction
+  methods: DELETE
+
+api.v1.invoices.companies.getAll:
+  path: /api/v1/invoices/companies
+  controller: App\Web\API\Action\Invoices\Company\GetAll\GetAllCompaniesAction
+  methods: GET
+
+api.v1.invoices.companies.create:
+  path: /api/v1/invoices/companies
+  controller: App\Web\API\Action\Invoices\Company\Create\CreateCompanyAction
+  methods: POST
+
+api.v1.invoices.companies.update:
+  path: /api/v1/invoices/companies/{id}
+  controller: App\Web\API\Action\Invoices\Company\Update\UpdateCompanyAction
+  methods: POST
+
+api.v1.invoices.companies.updatePaymentInformation:
+  path: /api/v1/invoices/companies/{id}/payment-information
+  controller: App\Web\API\Action\Invoices\Company\UpdatePaymentInformation\UpdateCompanyPaymentInformationAction
+  methods: POST

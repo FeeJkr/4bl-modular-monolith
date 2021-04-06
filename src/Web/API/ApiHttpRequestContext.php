@@ -36,6 +36,6 @@ final class ApiHttpRequestContext implements HttpRequestContext
 
     private function isBearerToken(string $token): bool
     {
-        return strpos($token, 'Bearer ') !== false;
+        return str_contains($token, 'Bearer ');
     }
 }

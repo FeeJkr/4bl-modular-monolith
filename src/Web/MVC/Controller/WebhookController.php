@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Web\MVC\Controller;
 
-use App\Modules\Finances\Application\Filesystem\MoveFileFromApifyToDropbox\MoveFileFromApifyToDropboxCommand;
+use App\Modules\Invoices\Application\Filesystem\MoveFileFromApifyToDropbox\MoveFileFromApifyToDropboxCommand;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;

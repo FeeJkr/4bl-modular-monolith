@@ -1,27 +1,82 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url('dashboard') }}">4BL</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div style="box-sizing: border-box;display: block;position:relative;min-height: 100%;">
+        <header style="height: 70px; position: fixed; top: 0; right: 0; left: 0; z-index: 1002; box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03); background-color: #fff">
+            <div style="display: flex; justify-content: space-between;align-items: center;margin: 0 auto;height: 70px; padding: 0 12px 0 0;">
+                <div style="display: flex !important;">
+                    <div style="padding: 0 1.5rem; width: 250px; text-align: center; background: #2a3042; height: 70px;">
+                        <span style="color: white; line-height: 70px;">4BL Project</span>
+                    </div>
+                </div>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url('dashboard') }}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('finances.dashboard') }}">Finances</a>
-                </li>
-            </ul>
+                <div style="display: flex !important;">
+                    <div>
+                        <button style="height: 70px; box-shadow: none !important;border:0;border-radius:0;line-height:1.5;background-color: transparent; padding: .47rem .75rem; font-size: .8125rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;text-align: center;vertical-align: middle;">
+                            <span>Admin</span>
+                            <i class="bi bi-arrow-down-short"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-            <a href="{{ url('accounts.user.sign-out') }}" style="color: black; text-decoration: none;">
-                <button class="btn btn-outline-success my-2 my-sm-0">Sign-out</button>
-            </a>
+        </header>
+
+        <div style="width: 250px; z-index: 1001; bottom: 0; margin-top: 0; position: fixed; top: 70px; box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);background: #2a3042;">
+            <div style="padding: 10px 0 30px;">
+                <ul style="padding-left: 0; list-style: none;">
+                    <li class="menu-title" style="color: #6a7187; padding: 12px 20px!important;letter-spacing: .05em;pointer-events: none;cursor: default;font-size: 11px;text-transform: uppercase;font-weight: 600;">Menu</li>
+
+                    <li style="display: block; width: 100%;">
+                        <a href="{{ path('dashboard') }}" style="padding: 0.625rem 1.5rem; position: relative; font-size: 13px; transition: all .4s; color: #79829c; cursor: pointer;width: 100%; display: block; text-decoration: none;">
+                            <i class="bi bi-house-door" style="min-width: 2rem; display:inline-block;padding-bottom: .125em;font-size: 1.25rem;line-height: 1.40625rem;vertical-align: middle;transition: all .4s;"></i>
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li style="display: block; width: 100%;">
+                        <a style="padding: .625rem 1.5rem; position: relative; font-size: 13px;transition: all .4s; color: #79829c; cursor: pointer;width: 100%; display: block; text-decoration: none;" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="bi bi-receipt" style="min-width: 2rem; display:inline-block;padding-bottom: .125em;font-size: 1.25rem;line-height: 1.40625rem;vertical-align: middle;transition: all .4s;"></i>
+                            Invoices
+
+                            <i class="bi bi-arrow-down-short" style="float: right;font-size: 1.2rem;"></i>
+                        </a>
+                        <ul style="padding: 0;" id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                            <li style="display: block; width: 100%; cursor: pointer;">
+                                <a href="#" style="padding: .4rem 1.5rem .4rem 3.5rem; font-size: 13px;color: #79829c; display: block; position: relative; text-decoration: none;">
+                                    Invoice List
+                                </a>
+                            </li>
+                            <li style="display: block; width: 100%; cursor: pointer;">
+                                <a href="{{ path('invoices.company.showAll') }}" style="padding: .4rem 1.5rem .4rem 3.5rem; font-size: 13px;color: #79829c; display: block; position: relative; text-decoration: none;">
+                                    Companies
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </nav>
 
-    {% block main_content %}{% endblock %}
+        <div style="margin-left: 250px; background-color: #f8f8fb;">
+            <div style="padding: 94px 12px 60px">
+                {% block main_content %}{% endblock %}
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        2021 © Mardeus Sergii Siryi
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="text-align: right !important;">
+                            Design & Develop by Sergii Siryi
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 {% endblock %}

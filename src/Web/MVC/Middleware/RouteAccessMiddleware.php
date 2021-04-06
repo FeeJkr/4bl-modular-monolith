@@ -8,7 +8,7 @@ use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\Token;
 use App\Web\MVC\Controller\AbstractController;
 use App\Web\MVC\Controller\Accounts\Auth\AuthController;
-use App\Web\MVC\Controller\Finances\InvoiceController;
+use App\Web\MVC\Controller\Invoices\InvoiceController;
 use App\Web\MVC\Controller\WebhookController;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

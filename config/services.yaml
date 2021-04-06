@@ -17,5 +17,6 @@ services:
 imports:
     - {resource: 'modules/finances/services.yaml'}
     - {resource: 'modules/accounts/services.yaml'}
+    - {resource: 'modules/invoices/services.yaml'}
     - {resource: 'web/mvc/services.yaml'}
     - {resource: 'web/api/services.yaml'}

@@ -6,59 +6,8 @@ services:
   App\Web\API\:
     resource: '../../../src/Web/API/'
 
-  # Actions
-  App\Web\API\Action\Accounts\User\Register\RegisterUserAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Accounts\User\SignIn\SignInUserAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Category\CreateCategory\CreateCategoryAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Category\DeleteCategory\DeleteCategoryAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Category\GetAllCategories\GetAllCategoriesAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Category\GetOneCategoryById\GetOneCategoryByIdAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Category\UpdateCategory\UpdateCategoryAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Transaction\CreateTransaction\CreateTransactionAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Transaction\DeleteTransaction\DeleteTransactionAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Transaction\GetAllTransactions\GetAllTransactionsAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Transaction\GetAllTransactionsByWalletId\GetAllTransactionsByWalletIdAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Transaction\GetOneTransactionById\GetOneTransactionByIdAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Transaction\UpdateTransaction\UpdateTransactionAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Wallet\CreateWallet\CreateWalletAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Wallet\DeleteWallet\DeleteWalletAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Wallet\GetAllWallets\GetAllWalletsAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Wallet\GetOneWalletById\GetOneWalletByIdAction:
-    tags: ['controller.service_arguments']
-
-  App\Web\API\Action\Finances\Wallet\UpdateWallet\UpdateWalletAction:
+  App\Web\API\Action\:
+    resource: '../../../src/Web/API/Action/*/*/*/*Action*'
     tags: ['controller.service_arguments']
 
   # Middlewares
