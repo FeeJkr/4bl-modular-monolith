@@ -30,33 +30,18 @@ accounts.user.sign-out:
 
 invoices.company.showAll:
   path: /invoices/companies
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::showCompaniesPage
+  controller: App\Web\MVC\Controller\Invoices\CompanyController::list
   methods: GET
 
 invoices.company.create.page:
   path: /invoices/companies/create
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::showCreateCompanyPage
+  controller: App\Web\MVC\Controller\Invoices\CompanyController::create
   methods: GET
-
-invoices.company.create:
-  path: /invoices/companies/create
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::createCompany
-  methods: POST
 
 invoices.company.edit.page:
   path: /invoices/companies/edit/{id}
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::showEditCompanyPage
+  controller: App\Web\MVC\Controller\Invoices\CompanyController::edit
   methods: GET
-
-invoices.company.edit:
-  path: /invoices/companies/edit/{id}
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::editCompany
-  methods: POST
-
-invoices.company.delete:
-  path: /invoices/companies/delete/{id}
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::deleteCompany
-  methods: DELETE
 
 invoices.invoice.generate:
   path: /invoices/invoice/generate
