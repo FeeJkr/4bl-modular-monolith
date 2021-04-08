@@ -5,23 +5,13 @@ dashboard:
 
 accounts.user.sign-in.page:
   path: /sign-in
-  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::showSignInPage
-  methods: GET
-
-accounts.user.sign-in:
-  path: /sign-in
   controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::signIn
-  methods: POST
+  methods: GET
 
 accounts.user.register.page:
   path: /register
-  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::showRegisterPage
-  methods: GET
-
-accounts.user.register:
-  path: /register
   controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::register
-  methods: POST
+  methods: GET
 
 accounts.user.sign-out:
   path: /sign-out

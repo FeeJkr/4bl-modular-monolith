@@ -24,36 +24,38 @@ final class ErrorHandlerMiddleware implements EventSubscriberInterface
      */
     public function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getThrowable();
+    	if (str_contains($event->getRequest()->getPathInfo(), '/api/')) {
+			$exception = $event->getThrowable();
 
-        // Modules exceptions handler
-        if ($exception instanceof HandlerFailedException) {
-            $exception = $exception->getPrevious();
+			// Modules exceptions handler
+			if ($exception instanceof HandlerFailedException) {
+				$exception = $exception->getPrevious();
 
-            $statusCode = match ($exception::class) {
-                AccountsModuleValidationException::class => Response::HTTP_BAD_REQUEST,
-                AccountsModuleLogicException::class => Response::HTTP_CONFLICT,
-                AccountsModuleNotFoundException::class => Response::HTTP_NOT_FOUND,
-                default => throw $exception,
-            };
+				$statusCode = match ($exception::class) {
+					AccountsModuleValidationException::class => Response::HTTP_BAD_REQUEST,
+					AccountsModuleLogicException::class => Response::HTTP_CONFLICT,
+					AccountsModuleNotFoundException::class => Response::HTTP_NOT_FOUND,
+					default => throw $exception,
+				};
 
-            $event->setResponse(
-                new JsonResponse(
-                    $exception->getMessage(),
-                    $statusCode
-                )
-            );
-        }
+				$event->setResponse(
+					new JsonResponse(
+						['errors' => $exception->getMessage()],
+						$statusCode
+					)
+				);
+			}
 
-        // request validation exceptions handler
-        if ($exception instanceof LazyAssertionException) {
-            $event->setResponse(
-                new JsonResponse(
-                    ['errors' => ValidationErrorResponse::getResponse(...$exception->getErrorExceptions())],
-                    Response::HTTP_BAD_REQUEST
-                )
-            );
-        }
+			// request validation exceptions handler
+			if ($exception instanceof LazyAssertionException) {
+				$event->setResponse(
+					new JsonResponse(
+						['errors' => ValidationErrorResponse::getResponse(...$exception->getErrorExceptions())],
+						Response::HTTP_BAD_REQUEST
+					)
+				);
+			}
+		}
     }
 
     #[ArrayShape([KernelEvents::EXCEPTION => "string"])]

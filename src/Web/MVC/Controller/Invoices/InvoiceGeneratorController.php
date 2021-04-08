@@ -17,26 +17,6 @@ final class InvoiceGeneratorController extends AbstractController
 {
     public function __construct(private Client $client, private MessageBusInterface $bus){}
 
-    public function oldGenerateInvoice(Request $request): Response
-    {
-        $price = $request->get('price');
-
-        $this->client->post(
-            'https://api.apify.com/v2/actor-tasks/hc8Wo1kIaahP86ofu/runs?token=PNPFdbmnACY8dYWBmuPGhjaC6',
-            [
-                'json' => [
-                    'url' => "https://mardeus.dev/invoice?price={$price}&token=" . InvoiceController::API_TOKEN,
-                    'sleepMillis' => 2000,
-                    'pdfOptions' => [
-                        'format' => 'a4'
-                    ],
-                ],
-            ]
-        );
-
-        return $this->redirectToRoute('dashboard');
-    }
-
     public function showGenerateInvoicePage(): Response
     {
         /** @var CompaniesCollection $companies */

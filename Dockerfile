@@ -16,7 +16,9 @@ RUN apt-get update && apt-get install -y \
     procps \
     supervisor \
     unzip \
-    nano
+    nano \
+    nodejs \
+    npm
 
 # PHP PACKAGES
 RUN docker-php-ext-configure gd --with-jpeg \
