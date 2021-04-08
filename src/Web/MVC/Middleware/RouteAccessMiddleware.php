@@ -39,25 +39,25 @@ final class RouteAccessMiddleware implements EventSubscriberInterface
     {
         $controller = $event->getController();
 
-        if (is_array($controller) && $controller[0] instanceof AbstractController) {
-            if ($this->isWebhookAction($controller)) {
-                return;
-            }
-
-            if ($this->isProtectedByTokenAction($controller)) {
-                $this->processProtectedByTokenAction($event);
-
-                return;
-            }
-
-            if ($this->isGuestAction($controller)) {
-                $this->processGuestAction($event);
-
-                return;
-            }
-
-            $this->processProtectedByAuthenticationAction($event);
-        }
+//        if (is_array($controller) && $controller[0] instanceof AbstractController) {
+//            if ($this->isWebhookAction($controller)) {
+//                return;
+//            }
+//
+//            if ($this->isProtectedByTokenAction($controller)) {
+//                $this->processProtectedByTokenAction($event);
+//
+//                return;
+//            }
+//
+//            if ($this->isGuestAction($controller)) {
+//                $this->processGuestAction($event);
+//
+//                return;
+//            }
+//
+//            $this->processProtectedByAuthenticationAction($event);
+//        }
     }
 
     private function isWebhookAction(array $controller): bool

@@ -1,47 +1,54 @@
-dashboard:
-  path: /
-  controller: App\Web\MVC\Controller\Dashboard\DashboardController::showDashboard
-  methods: GET
-
-accounts.user.sign-in.page:
-  path: /sign-in
-  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::signIn
-  methods: GET
-
-accounts.user.register.page:
-  path: /register
-  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::register
-  methods: GET
-
-accounts.user.sign-out:
-  path: /sign-out
-  controller: App\Web\MVC\Controller\Accounts\UserController::signOut
-  methods: GET
-
-invoices.company.showAll:
-  path: /invoices/companies
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::list
-  methods: GET
-
-invoices.company.create.page:
-  path: /invoices/companies/create
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::create
-  methods: GET
-
-invoices.company.edit.page:
-  path: /invoices/companies/edit/{id}
-  controller: App\Web\MVC\Controller\Invoices\CompanyController::edit
-  methods: GET
-
-invoices.invoice.generate:
-  path: /invoices/invoice/generate
-  controller: App\Web\MVC\Controller\Invoices\InvoiceGeneratorController::generateInvoice
-  methods: POST
-
-invoices.invoice.generate.page:
-  path: /invoices/invoice
-  controller: App\Web\MVC\Controller\Invoices\InvoiceGeneratorController::showGenerateInvoicePage
-
+index:
+  path: /{spa}
+  controller: App\Web\MVC\Controller\SPAController::index
+  requirements:
+    spa: .+
+  defaults:
+    spa: null
+#dashboard:
+#  path: /
+#  controller: App\Web\MVC\Controller\Dashboard\DashboardController::showDashboard
+#  methods: GET
+#
+#accounts.user.sign-in.page:
+#  path: /sign-in
+#  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::signIn
+#  methods: GET
+#
+#accounts.user.register.page:
+#  path: /register
+#  controller: App\Web\MVC\Controller\Accounts\Auth\AuthController::register
+#  methods: GET
+#
+#accounts.user.sign-out:
+#  path: /sign-out
+#  controller: App\Web\MVC\Controller\Accounts\UserController::signOut
+#  methods: GET
+#
+#invoices.company.showAll:
+#  path: /invoices/companies
+#  controller: App\Web\MVC\Controller\Invoices\CompanyController::list
+#  methods: GET
+#
+#invoices.company.create.page:
+#  path: /invoices/companies/create
+#  controller: App\Web\MVC\Controller\Invoices\CompanyController::create
+#  methods: GET
+#
+#invoices.company.edit.page:
+#  path: /invoices/companies/edit/{id}
+#  controller: App\Web\MVC\Controller\Invoices\CompanyController::edit
+#  methods: GET
+#
+#invoices.invoice.generate:
+#  path: /invoices/invoice/generate
+#  controller: App\Web\MVC\Controller\Invoices\InvoiceGeneratorController::generateInvoice
+#  methods: POST
+#
+#invoices.invoice.generate.page:
+#  path: /invoices/invoice
+#  controller: App\Web\MVC\Controller\Invoices\InvoiceGeneratorController::showGenerateInvoicePage
+#
 multimedia.invoices.invoice:
   path: /multimedia/invoices/invoice
   controller: App\Web\MVC\Controller\Invoices\InvoiceController::renderInvoice

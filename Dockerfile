@@ -16,9 +16,7 @@ RUN apt-get update && apt-get install -y \
     procps \
     supervisor \
     unzip \
-    nano \
-    nodejs \
-    npm
+    nano
 
 # PHP PACKAGES
 RUN docker-php-ext-configure gd --with-jpeg \
@@ -55,6 +53,10 @@ USER www-data
 COPY --chown=www-data:www-data . .
 
 USER root
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+ENV NVM_DIR=/root/.nvm
+RUN . $HOME/.nvm/nvm.sh && nvm install node && nvm use default && npm install gulp babel -g
 
 # PHP-FPM
 COPY docker/php.ini $PHP_INI_DIR/php.ini
