@@ -11,9 +11,17 @@ export default function SignIn() {
     });
 
     const {email, password} = inputs;
-    const loggingIn = useSelector(state => state.authentication.loggingIn);
+    const domainErrors = useSelector(state => state.authentication.errors);
+    const validationErrors = useSelector(state => state.authentication.validationErrors);
     const dispatch = useDispatch();
     const location = useLocation();
+
+    const emailError = validationErrors
+        ? validationErrors.find((element) => { return element.propertyPath === 'email'})
+        : null;
+    const passwordError = validationErrors
+        ? validationErrors.find((element) => {return element.propertyPath === 'password'})
+        : null;
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -50,6 +58,11 @@ export default function SignIn() {
                                     Sign in to continue.
                                 </div>
                                 <div className="p-2">
+                                    {domainErrors &&
+                                        <div className="alert alert-danger" role="alert" style={{textAlign: 'center'}}>
+                                            {domainErrors.errors[0].message}
+                                        </div>
+                                    }
                                     <form className="form-horizontal" id="sign-in-form" onSubmit={handleSubmit}>
                                         <div className="mb-3">
                                             <div className="form-group">
@@ -60,6 +73,9 @@ export default function SignIn() {
                                                        value={email}
                                                        onChange={handleChange}
                                                        style={{fontSize: '.8125rem', padding: '.47rem .75rem', fontWeight: 400, lineHeight: 1.5, border: '1px solid #ced4da'}}/>
+                                                {emailError &&
+                                                    <div style={{fontSize: '10px', color: 'red'}}>{emailError.message}</div>
+                                                }
                                             </div>
                                         </div>
                                         <div className="mb-3">
@@ -71,6 +87,9 @@ export default function SignIn() {
                                                        value={password}
                                                        onChange={handleChange}
                                                        style={{fontSize: '.8125rem', padding: '.47rem .75rem', fontWeight: 400, lineHeight: 1.5, border: '1px solid #ced4da'}}/>
+                                                {passwordError &&
+                                                    <div style={{fontSize: '10px', color: 'red'}}>{passwordError.message}</div>
+                                                }
                                             </div>
                                         </div>
 
@@ -87,7 +106,7 @@ export default function SignIn() {
 
                         <div className="mt-5 text-center" style={{display: 'block'}}>
                             <p style={{display: 'block'}}>
-                                <span style={{fontWeight: 300}}>Don't have an account? </span>
+                                <span style={{fontWeight: 300}}>Don't have an account?</span>
                                 <Link
                                     to={'/register'}
                                     style={{color: '#556ee6', textDecoration: 'none', outline: 'none', fontWeight: 600}}

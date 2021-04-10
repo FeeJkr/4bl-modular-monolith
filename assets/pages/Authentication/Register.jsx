@@ -1,8 +1,45 @@
-import React from 'react';
+import React, {useState} from 'react';
 import background from "./background.jpeg";
 import {Link} from 'react-router-dom';
+import {authenticationActions} from "../../actions/authentication.actions";
+import {useDispatch, useSelector} from "react-redux";
 
 export default function Register() {
+    const dispatch = useDispatch();
+    const [inputs, setInputs] = useState({
+        email: '',
+        username: '',
+        password: '',
+    });
+
+    const {email, username, password} = inputs;
+
+    function handleChange(e) {
+        const {name, value} = e.target;
+        setInputs(inputs =>({ ...inputs, [name]: value}));
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        if (email && password && username) {
+            dispatch(authenticationActions.register(email, username, password));
+        }
+    }
+
+    const validationErrors = useSelector(state => state.authentication.validationErrors);
+    const emailError = validationErrors && validationErrors.errors
+        ? validationErrors.errors.find((element) => { return element.propertyPath === 'email' })
+        : null;
+    const usernameError = validationErrors && validationErrors.errors
+        ? validationErrors.errors.find(element => { return element.propertyPath === 'username' })
+        : null;
+    const passwordError = validationErrors && validationErrors.errors
+        ? validationErrors.errors.find(element => { return element.propertyPath === 'password' })
+        : null;
+
+    const domainErrors = useSelector(state => state.authentication.domainErrors);
+
     return (
         <div className="my-5 pt-sm-5">
             <div className="container">
@@ -23,14 +60,24 @@ export default function Register() {
                                     Get your free account.
                                 </div>
                                 <div className="p-2">
-                                    <form className="form-horizontal" id="sign-in-form">
+                                    {domainErrors &&
+                                        <div className="alert alert-danger" role="alert" style={{textAlign: 'center'}}>
+                                            {domainErrors.errors[0].message}
+                                        </div>
+                                    }
+                                    <form className="form-horizontal" onSubmit={handleSubmit}>
                                         <div className="mb-3">
                                             <div className="form-group">
                                                 <label htmlFor="email"
                                                        style={{fontWeight: 500, marginBottom: '.5rem'}}>Email</label>
                                                 <input name="email" placeholder="Enter email" id="email" type="text"
                                                        className="form-control" required
+                                                       value={email}
+                                                       onChange={handleChange}
                                                        style={{fontSize: '.8125rem', padding: '.47rem .75rem', fontWeight: 400, lineHeight: 1.5, border: '1px solid #ced4da'}}/>
+                                                {emailError &&
+                                                    <div style={{color: 'red', fontSize: '9px'}}>{emailError.message}</div>
+                                                }
                                             </div>
                                         </div>
                                         <div className="mb-3">
@@ -39,7 +86,12 @@ export default function Register() {
                                                        style={{fontWeight: 500, marginBottom: '.5rem'}}>Username</label>
                                                 <input name="username" placeholder="Enter username" id="username"
                                                        type="text" className="form-control" required
+                                                       value={username}
+                                                       onChange={handleChange}
                                                        style={{fontSize: '.8125rem', padding: '.47rem .75rem', fontWeight: 400, lineHeight: 1.5, border: '1px solid #ced4da'}}/>
+                                                {usernameError &&
+                                                    <div style={{color: 'red', fontSize: '9px'}}>{usernameError.message}</div>
+                                                }
                                             </div>
                                         </div>
                                         <div className="mb-3">
@@ -48,7 +100,12 @@ export default function Register() {
                                                        style={{fontWeight: 500, marginBottom: '.5rem'}}>Password</label>
                                                 <input name="password" placeholder="Enter password" id="password"
                                                        type="password" className="form-control" required
+                                                       value={password}
+                                                       onChange={handleChange}
                                                        style={{fontSize: '.8125rem', padding: '.47rem .75rem', fontWeight: 400, lineHeight: 1.5, border: '1px solid #ced4da'}}/>
+                                                {passwordError &&
+                                                    <div style={{color: 'red', fontSize: '9px'}}>{passwordError.message}</div>
+                                                }
                                             </div>
                                         </div>
 

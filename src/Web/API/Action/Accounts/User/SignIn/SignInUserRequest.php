@@ -20,8 +20,9 @@ final class SignInUserRequest extends Request
 
     public static function createFromServerRequest(ServerRequest $request): self
     {
-        $email = $request->get('email');
-        $password = $request->get('password');
+    	$requestData = $request->toArray();
+    	$email = $requestData['email'];
+    	$password = $requestData['password'];
 
         Assert::lazy()
             ->that($email, 'email')->notEmpty()->email()

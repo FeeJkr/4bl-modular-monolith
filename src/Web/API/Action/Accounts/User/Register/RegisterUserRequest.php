@@ -22,14 +22,16 @@ final class RegisterUserRequest extends Request
 
     public static function createFromServerRequest(ServerRequest $request): self
     {
-        $email = $request->get('email');
-        $username = $request->get('username');
-        $password = $request->get('password');
+    	$requestData = $request->toArray();
+
+        $email = $requestData['email'];
+        $username = $requestData['username'];
+        $password = $requestData['password'];
 
         Assert::lazy()
             ->that($email, 'email')->notEmpty()->email()
             ->that($username, 'username')->notEmpty()
-            ->that($password, 'password')->notEmpty()->minLength(6)
+            ->that($password, 'password')->notEmpty()->minLength(8)->maxLength(15)
             ->verifyNow();
 
         return new self(

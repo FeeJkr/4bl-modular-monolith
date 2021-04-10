@@ -21,6 +21,8 @@
         "@babel/preset-react": "^7.13.13",
         "add": "^2.0.6",
         "axios": "^0.21.1",
+        "dotenv": "^8.2.0",
+        "dotenv-webpack": "^7.0.2",
         "history": "^4.10.1",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",
@@ -30,6 +32,7 @@
         "redux": "^4.0.5",
         "redux-logger": "^3.0.6",
         "redux-thunk": "^2.3.0",
+        "webpack": "^5.31.0",
         "yarn": "^1.22.10"
     }
 }

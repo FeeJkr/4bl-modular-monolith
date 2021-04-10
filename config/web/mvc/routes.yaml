@@ -2,7 +2,7 @@ index:
   path: /{spa}
   controller: App\Web\MVC\Controller\SPAController::index
   requirements:
-    spa: .+
+    spa: ^(?!\/?api).+$
   defaults:
     spa: null
 #dashboard:

@@ -6,6 +6,7 @@ namespace App\Web\API\Middleware;
 use App\Modules\Accounts\Application\User\LogicException as AccountsModuleLogicException;
 use App\Modules\Accounts\Application\User\NotFoundException as AccountsModuleNotFoundException;
 use App\Modules\Accounts\Application\User\ValidationException as AccountsModuleValidationException;
+use App\Web\API\DomainErrorResponse;
 use App\Web\API\ValidationErrorResponse;
 use Assert\LazyAssertionException;
 use JetBrains\PhpStorm\ArrayShape;
@@ -19,6 +20,9 @@ use Throwable;
 
 final class ErrorHandlerMiddleware implements EventSubscriberInterface
 {
+	private const VALIDATION_ERROR_TYPE = 'ValidationError';
+	private const DOMAIN_ERROR_TYPE = 'DomainError';
+
     /**
      * @throws Throwable
      */
@@ -30,6 +34,10 @@ final class ErrorHandlerMiddleware implements EventSubscriberInterface
 			// Modules exceptions handler
 			if ($exception instanceof HandlerFailedException) {
 				$exception = $exception->getPrevious();
+				$response = [
+					'type' => self::DOMAIN_ERROR_TYPE,
+					'errors' => DomainErrorResponse::getResponse($exception),
+				];
 
 				$statusCode = match ($exception::class) {
 					AccountsModuleValidationException::class => Response::HTTP_BAD_REQUEST,
@@ -40,7 +48,7 @@ final class ErrorHandlerMiddleware implements EventSubscriberInterface
 
 				$event->setResponse(
 					new JsonResponse(
-						['errors' => $exception->getMessage()],
+						$response,
 						$statusCode
 					)
 				);
@@ -48,9 +56,14 @@ final class ErrorHandlerMiddleware implements EventSubscriberInterface
 
 			// request validation exceptions handler
 			if ($exception instanceof LazyAssertionException) {
+				$response = [
+					'type' => self::VALIDATION_ERROR_TYPE,
+					'errors' => ValidationErrorResponse::getResponse(...$exception->getErrorExceptions()),
+				];
+
 				$event->setResponse(
 					new JsonResponse(
-						['errors' => ValidationErrorResponse::getResponse(...$exception->getErrorExceptions())],
+						$response,
 						Response::HTTP_BAD_REQUEST
 					)
 				);
