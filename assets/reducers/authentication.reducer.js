@@ -25,23 +25,6 @@ export function authentication(state = initialState, action) {
         case authenticationConstants.LOGOUT:
             return {};
 
-        case authenticationConstants.REGISTER_REQUEST:
-            return {
-                registerProcessWasStarted: true,
-            };
-        case authenticationConstants.REGISTER_SUCCESS:
-            return {
-                registerProcessWasFinished: true,
-            };
-        case authenticationConstants.REGISTER_FAILURE:
-            return {
-                domainErrors: action.errors,
-            };
-        case authenticationConstants.REGISTER_VALIDATION_FAILURE:
-            return {
-                validationErrors: action.errors,
-            };
-
         default:
             return state
     }

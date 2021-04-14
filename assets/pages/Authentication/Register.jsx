@@ -27,7 +27,7 @@ export default function Register() {
         }
     }
 
-    const validationErrors = useSelector(state => state.authentication.validationErrors);
+    const validationErrors = useSelector(state => state.registration.validationErrors);
     const emailError = validationErrors && validationErrors.errors
         ? validationErrors.errors.find((element) => { return element.propertyPath === 'email' })
         : null;
@@ -38,7 +38,7 @@ export default function Register() {
         ? validationErrors.errors.find(element => { return element.propertyPath === 'password' })
         : null;
 
-    const domainErrors = useSelector(state => state.authentication.domainErrors);
+    const domainErrors = useSelector(state => state.registration.domainErrors);
 
     return (
         <div className="my-5 pt-sm-5">
