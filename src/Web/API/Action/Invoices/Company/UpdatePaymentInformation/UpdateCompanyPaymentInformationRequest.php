@@ -19,11 +19,12 @@ class UpdateCompanyPaymentInformationRequest extends Request
 
 	public static function createFromServerRequest(ServerRequest $request): self
 	{
+		$requestData = $request->toArray();
 		$id = (int) $request->get('id');
-		$paymentType = $request->get('paymentType');
-		$paymentLastDate = (int) $request->get('paymentLastDate');
-		$bank = $request->get('bank');
-		$accountNumber = $request->get('accountNumber');
+		$paymentType = $requestData['paymentType'] ?? null;
+		$paymentLastDate = isset($requestData['paymentLastDate']) ? (int) $requestData['paymentLastDate'] : null;
+		$bank = $requestData['bank'];
+		$accountNumber = $requestData['accountNumber'];
 
 		Assert::lazy()
 			->that($id, 'id')->notEmpty()->numeric()

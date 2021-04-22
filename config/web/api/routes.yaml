@@ -103,6 +103,11 @@ api.v1.invoices.companies.create:
   controller: App\Web\API\Action\Invoices\Company\Create\CreateCompanyAction
   methods: POST
 
+api.v1.invoices.companies.getOne:
+  path: /api/v1/invoices/companies/{id}
+  controller: App\Web\API\Action\Invoices\Company\GetOne\GetOneCompanyAction
+  methods: GET
+
 api.v1.invoices.companies.update:
   path: /api/v1/invoices/companies/{id}
   controller: App\Web\API\Action\Invoices\Company\Update\UpdateCompanyAction

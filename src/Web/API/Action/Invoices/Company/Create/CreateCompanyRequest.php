@@ -29,13 +29,14 @@ class CreateCompanyRequest extends Request
 
     public static function createFromServerRequest(ServerRequest $request): self
     {
-        $name = $request->get(self::NAME);
-        $identificationNumber = $request->get(self::IDENTIFICATION_NUMBER);
-        $email = $request->get(self::EMAIL);
-        $phoneNumber = $request->get(self::PHONE_NUMBER);
-        $street = $request->get(self::STREET);
-        $zipCode = $request->get(self::ZIP_CODE);
-        $city = $request->get(self::CITY);
+    	$requestData = $request->toArray();
+        $name = $requestData[self::NAME] ?? null;
+        $identificationNumber = $requestData[self::IDENTIFICATION_NUMBER] ?? null;
+        $email = $requestData[self::EMAIL] ?? null;
+        $phoneNumber = $requestData[self::PHONE_NUMBER] ?? null;
+        $street = $requestData[self::STREET] ?? null;
+        $zipCode = $requestData[self::ZIP_CODE] ?? null;
+        $city = $requestData[self::CITY] ?? null;
 
         Assert::lazy()
             ->that($name, self::NAME)->notEmpty()

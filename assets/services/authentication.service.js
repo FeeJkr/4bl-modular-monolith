@@ -43,7 +43,6 @@ function handleNoContentResponse(response) {
 }
 
 function handleError(error) {
-    console.log(error);
     const response = error.response;
 
     if (response.status === 401) {

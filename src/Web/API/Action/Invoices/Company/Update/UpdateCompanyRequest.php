@@ -22,14 +22,15 @@ class UpdateCompanyRequest extends Request
 
 	public static function createFromServerRequest(ServerRequest $request): self
 	{
+		$requestData = $request->toArray();
 		$id = (int) $request->get('id');
-		$name = $request->get('name');
-		$identificationNumber = $request->get('identificationNumber');
-		$email = $request->get('email');
-		$phoneNumber = $request->get('phoneNumber');
-		$street = $request->get('street');
-		$zipCode = $request->get('zipCode');
-		$city = $request->get('city');
+		$name = $requestData['name'] ?? null;
+		$identificationNumber = $requestData['identificationNumber'] ?? null;
+		$email = $requestData['email'] ?? null;
+		$phoneNumber = $requestData['phoneNumber'] ?? null;
+		$street = $requestData['street'] ?? null;
+		$zipCode = $requestData['zipCode'] ?? null;
+		$city = $requestData['city'] ?? null;
 
 		Assert::lazy()
 			->that($id, 'id')->notEmpty()->numeric()
