@@ -8,7 +8,12 @@ use JetBrains\PhpStorm\Pure;
 
 class InvoiceProduct
 {
-    public function __construct(private string $name, private float $netPrice){}
+    public function __construct(private int $position, private string $name, private float $netPrice){}
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
 
     public function getName(): string
     {
@@ -31,6 +36,7 @@ class InvoiceProduct
         return $this->netPrice + $this->getTaxPrice();
     }
 
+    #[Pure]
     #[ArrayShape(['name' => "string", 'netPrice' => "float", 'taxPrice' => "float", 'grossPrice' => "float"])]
     public function toArray(): array
     {

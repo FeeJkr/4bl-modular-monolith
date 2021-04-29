@@ -117,3 +117,8 @@ api.v1.invoices.companies.updatePaymentInformation:
   path: /api/v1/invoices/companies/{id}/payment-information
   controller: App\Web\API\Action\Invoices\Company\UpdatePaymentInformation\UpdateCompanyPaymentInformationAction
   methods: POST
+
+api.v1.invoices.invoices.generate:
+  path: /api/v1/invoices/invoices
+  controller: App\Web\API\Action\Invoices\Invoices\Generate\GenerateInvoiceAction
+  methods: POST

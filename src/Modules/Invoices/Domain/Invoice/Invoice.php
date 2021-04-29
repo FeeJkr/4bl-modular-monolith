@@ -3,23 +3,29 @@ declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Invoice;
 
+use App\Modules\Invoices\Domain\User\UserId;
 use JetBrains\PhpStorm\Pure;
 
 class Invoice
 {
     public function __construct(
         private InvoiceId $id,
-        private string $html,
-        private string $token,
+        private UserId $userId,
+        private InvoiceParameters $parameters,
+        private InvoiceProductsCollection $products,
     ){}
 
     #[Pure]
-    public static function create(string $html, string $token): self
-    {
+    public static function create(
+        UserId $userId,
+        InvoiceParameters $parameters,
+        InvoiceProductsCollection $products,
+    ): self {
         return new self(
             InvoiceId::nullInstance(),
-            $html,
-            $token
+            $userId,
+            $parameters,
+            $products,
         );
     }
 
@@ -28,18 +34,18 @@ class Invoice
         return $this->id;
     }
 
-    public function setId(InvoiceId $id): void
+    public function getUserId(): UserId
     {
-        $this->id = $id;
+        return $this->userId;
     }
 
-    public function getHtml(): string
+    public function getParameters(): InvoiceParameters
     {
-        return $this->html;
+        return $this->parameters;
     }
 
-    public function getToken(): string
+    public function getProducts(): InvoiceProductsCollection
     {
-        return $this->token;
+        return $this->products;
     }
 }

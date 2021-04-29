@@ -1,16 +1,8 @@
 index:
   path: /{spa}
-  controller: App\Web\MVC\Controller\SPAController::index
+  controller: App\Web\MVC\SPAController::index
   requirements:
     spa: ^(?!\/?api).+$
   defaults:
     spa: null
 
-multimedia.invoices.invoice:
-  path: /multimedia/invoices/invoice
-  controller: App\Web\MVC\Controller\Invoices\InvoiceController::renderInvoice
-
-webhook.invoices.was_generated_from_html:
-  path: /webhook/invoice/was_generated_from_html
-  controller: App\Web\MVC\Controller\WebhookController::invoiceWasGeneratedFromHtml
-  methods: POST

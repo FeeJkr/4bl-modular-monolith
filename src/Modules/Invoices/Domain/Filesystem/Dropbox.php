@@ -5,5 +5,5 @@ namespace App\Modules\Invoices\Domain\Filesystem;
 
 interface Dropbox
 {
-    public function upload(string $filepath, ?string $customTargetPath = null): void;
+    public function upload(string $sourceFilepath, string $targetFilepath): void;
 }

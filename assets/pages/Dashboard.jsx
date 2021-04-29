@@ -2,15 +2,24 @@ import React, {useState} from 'react';
 import './Dashboard.css';
 import {Link} from "react-router-dom";
 import {Collapse} from "react-bootstrap";
-import { Router, Switch } from 'react-router-dom';
+import { Router, Switch} from 'react-router-dom';
 import {history} from "../helpers/history";
 import PrivateRoute from "../helpers/PrivateRoute";
+// companies
 import {List as CompaniesList} from '../pages/Invoices/Companies/List';
 import {Create as CompaniesCreate} from '../pages/Invoices/Companies/Create';
 import {Edit as CompaniesEdit} from '../pages/Invoices/Companies/Edit';
+// invoices
+import {List as InvoicesList} from '../pages/Invoices/Invoices/List';
 
 export default function Dashboard() {
-    const [openInvoices, setOpenInvoices] = useState(false);
+    const isCompaniesRoute = history.location.pathname.startsWith('/companies');
+    const isInvoicesRoute = history.location.pathname.startsWith('/invoices');
+    let [openInvoices, setOpenInvoices] = useState(isCompaniesRoute || isInvoicesRoute);
+
+    function collapseAll() {
+        setOpenInvoices(false);
+    }
 
     return (
         <div style={{boxSizing: 'border-box', display: 'block'}}>
@@ -47,7 +56,9 @@ export default function Dashboard() {
 
                         <li style={{display: 'block', width: '100%'}}>
                             <Link to="/"
-                               style={{padding: '0.625rem 1.5rem', position: 'relative', fontSize: '13px', transition: 'all .4s', color: '#79829c', cursor: 'pointer', width: '100%', display: 'block', textDecoration: 'none'}}>
+                                style={{padding: '0.625rem 1.5rem', position: 'relative', fontSize: '13px', transition: 'all .4s', color: '#79829c', cursor: 'pointer', width: '100%', display: 'block', textDecoration: 'none'}}
+                                onClick={collapseAll}
+                            >
                                 <i className="bi bi-house-door"
                                    style={{
                                        minWidth: '2rem',
@@ -57,7 +68,8 @@ export default function Dashboard() {
                                        lineHeight: '1.40625rem',
                                        verticalAlign: 'middle',
                                        transition: 'all .4s'
-                                   }}/>
+                                   }}
+                                />
                                 Dashboard
                             </Link>
                         </li>
@@ -67,6 +79,7 @@ export default function Dashboard() {
                                onClick={() => setOpenInvoices(!openInvoices)}
                                aria-controls="invoices"
                                aria-expanded={openInvoices}
+                               className={isCompaniesRoute || isInvoicesRoute ? 'mm-active' : ''}
                             >
 
                                 <i className="bi bi-receipt"
@@ -81,19 +94,26 @@ export default function Dashboard() {
                                    }}/>
                                 Invoices
 
-                                <i className="bi bi-arrow-down-short" style={{float: 'right', fontSize: '1.2rem'}}/>
+                                {openInvoices
+                                    ? <i className="bi bi-arrow-up-short" style={{float: 'right', fontSize: '1.2rem'}}/>
+                                    : <i className="bi bi-arrow-down-short" style={{float: 'right', fontSize: '1.2rem'}}/>
+                                }
                             </a>
                             <Collapse in={openInvoices}>
                                 <ul style={{padding: 0}}>
                                     <li style={{display: 'block', width: '100%', cursor: 'pointer'}}>
-                                        <a href="#"
-                                           style={{padding: '.4rem 1.5rem .4rem 3.5rem', fontSize: '13px', color: '#79829c', display: 'block', position: 'relative', textDecoration: 'none'}}>
-                                            Invoice List
-                                        </a>
+                                        <Link to={'/invoices'}
+                                            style={{padding: '.4rem 1.5rem .4rem 3.5rem', fontSize: '13px', color: '#79829c', display: 'block', position: 'relative', textDecoration: 'none'}}
+                                            className={isInvoicesRoute ? 'mm-active' : ''}
+                                        >
+                                            Invoices
+                                        </Link>
                                     </li>
                                     <li style={{display: 'block', width: '100%', cursor: 'pointer'}}>
                                         <Link to={'/companies'}
-                                           style={{padding: '.4rem 1.5rem .4rem 3.5rem', fontSize: '13px', color: '#79829c', display: 'block', position: 'relative', textDecoration: 'none'}}>
+                                            style={{padding: '.4rem 1.5rem .4rem 3.5rem', fontSize: '13px', color: '#79829c', display: 'block', position: 'relative', textDecoration: 'none'}}
+                                            className={isCompaniesRoute ? 'mm-active' : ''}
+                                        >
                                             Companies
                                         </Link>
                                     </li>
@@ -111,6 +131,8 @@ export default function Dashboard() {
                             <PrivateRoute exact path={'/companies'} component={CompaniesList}/>
                             <PrivateRoute exact path={'/companies/create'} component={CompaniesCreate}/>
                             <PrivateRoute exact path={'/companies/edit/:id'} component={CompaniesEdit}/>
+
+                            <PrivateRoute exact path={'/invoices'} component={InvoicesList}/>
                         </Switch>
                     </Router>
                 </div>

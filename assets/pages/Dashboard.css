@@ -8,3 +8,7 @@
     height: 60px;
     background-color: #f2f2f5;
 }
+
+.mm-active {
+    color: #fff !important;
+}

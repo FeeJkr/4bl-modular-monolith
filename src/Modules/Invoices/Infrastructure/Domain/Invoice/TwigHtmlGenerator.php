@@ -6,7 +6,8 @@ namespace App\Modules\Invoices\Infrastructure\Domain\Invoice;
 use App\Modules\Invoices\Application\Company\GetOneById\CompanyDTO;
 use App\Modules\Invoices\Application\Company\GetOneById\GetOneCompanyByIdQuery;
 use App\Modules\Invoices\Domain\Invoice\HtmlGenerator;
-use App\Modules\Invoices\Domain\Invoice\InvoiceParameters;
+use App\Modules\Invoices\Domain\Invoice\Invoice;
+use App\Modules\Invoices\Domain\Invoice\PriceTransformer;
 use DateInterval;
 use Exception;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -16,21 +17,26 @@ use Twig\Environment;
 
 class TwigHtmlGenerator implements HtmlGenerator
 {
-    public function __construct(private Environment $twig, private MessageBusInterface $bus){}
+    public function __construct(
+        private Environment $twig,
+        private MessageBusInterface $bus,
+        private PriceTransformer $priceTransformer
+    ){}
 
-    public function generate(InvoiceParameters $invoiceParameters): string
+    public function generate(Invoice $invoice): string
     {
         try {
-            $seller = $this->getCompanyInformationById($invoiceParameters->getSellerId());
-            $buyer = $this->getCompanyInformationById($invoiceParameters->getBuyerId());
-            $paymentLastDate = clone $invoiceParameters->getSellDate();
+            $seller = $this->getCompanyInformationById($invoice->getParameters()->getSellerId());
+            $buyer = $this->getCompanyInformationById($invoice->getParameters()->getBuyerId());
+            $paymentLastDate = clone $invoice->getParameters()->getSellDate();
             $paymentLastDate->add(new DateInterval(sprintf('P%dD', $seller->getPaymentLastDate())));
+            $toPayPrice = $this->calculateToPayPrice($invoice);
 
-            return $this->twig->render('finances/invoice/invoice.html.twig', [
-                'invoiceNumber' => $invoiceParameters->getInvoiceNumber(),
-                'generateDate' => $invoiceParameters->getGenerateDate()->format('d-m-Y'),
-                'sellDate' => $invoiceParameters->getSellDate()->format('d-m-Y'),
-                'generatePlace' => $invoiceParameters->getGeneratePlace(),
+            return $this->twig->render('invoices/template.html.twig', [
+                'invoiceNumber' => $invoice->getParameters()->getInvoiceNumber(),
+                'generateDate' => $invoice->getParameters()->getGenerateDate()->format('d-m-Y'),
+                'sellDate' => $invoice->getParameters()->getSellDate()->format('d-m-Y'),
+                'generatePlace' => $invoice->getParameters()->getGeneratePlace(),
                 'seller' => [
                     'name' => $seller->getName(),
                     'street' => $seller->getStreet(),
@@ -49,18 +55,18 @@ class TwigHtmlGenerator implements HtmlGenerator
                     'email' => $buyer->getEmail(),
                     'phoneNumber' => $buyer->getPhoneNumber(),
                 ],
-                'products' => $invoiceParameters->getProducts()->toArray(),
-                'totalNetPrice' => $invoiceParameters->getProducts()->getTotalNetPrice(),
-                'totalTaxPrice' => $invoiceParameters->getProducts()->getTotalTaxPrice(),
-                'totalGrossPrice' => $invoiceParameters->getProducts()->getTotalGrossPrice(),
+                'products' => $invoice->getProducts()->toArray(),
+                'totalNetPrice' => $invoice->getProducts()->getTotalNetPrice(),
+                'totalTaxPrice' => $invoice->getProducts()->getTotalTaxPrice(),
+                'totalGrossPrice' => $invoice->getProducts()->getTotalGrossPrice(),
                 'paymentType' => $seller->getPaymentType(),
                 'paymentLastDate' => $paymentLastDate->format('d-m-Y'),
                 'paymentBankName' => $seller->getBank(),
                 'paymentAccountNumber' => $seller->getAccountNumber(),
-                'alreadyTakenPrice' => $invoiceParameters->getAlreadyTakenPrice(),
-                'toPayPrice' => $invoiceParameters->getToPayPrice(),
-                'currencyCode' => $invoiceParameters->getCurrencyCode(),
-                'translatePrice' => $invoiceParameters->getTranslatePrice(),
+                'alreadyTakenPrice' => $invoice->getParameters()->getAlreadyTakenPrice(),
+                'toPayPrice' => $toPayPrice,
+                'currencyCode' => $invoice->getParameters()->getCurrencyCode(),
+                'translatePrice' => $this->priceTransformer->transformToText($toPayPrice),
             ]);
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage());
@@ -73,5 +79,10 @@ class TwigHtmlGenerator implements HtmlGenerator
             ->dispatch(new GetOneCompanyByIdQuery($companyId))
             ->last(HandledStamp::class)
             ->getResult();
+    }
+
+    private function calculateToPayPrice(Invoice $invoice): float
+    {
+        return $invoice->getProducts()->getTotalGrossPrice() - $invoice->getParameters()->getAlreadyTakenPrice();
     }
 }

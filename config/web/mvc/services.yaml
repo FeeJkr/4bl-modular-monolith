@@ -6,17 +6,5 @@ services:
     App\Web\MVC\:
         resource: '../../../src/Web/MVC/'
 
-    App\Web\MVC\Controller\:
-        resource: '../../../src/Web/MVC/Controller/'
+    App\Web\MVC\SPAController:
         tags: ['controller.service_arguments']
-
-    App\Web\MVC\Middleware\RouteAccessMiddleware:
-        arguments:
-            $invoiceToken: '%invoice.token%'
-        tags: [ 'kernel.event_subscriber' ]
-
-    App\Web\MVC\WebHttpRequestContext:
-        public: true
-
-    GuzzleHttp\Client:
-        class: GuzzleHttp\Client

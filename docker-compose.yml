@@ -6,10 +6,11 @@ services:
       - "8080:8080"
     volumes:
       - ./:/app
-  redis:
-    image: "redis:alpine"
+  h2p-microservice:
+    image: feejkr/html-2-pdf
+    hostname: html2pdf
     ports:
-      - 6379:6379
+      - "8091:3000"
   db:
     image: "postgres:latest"
     expose:

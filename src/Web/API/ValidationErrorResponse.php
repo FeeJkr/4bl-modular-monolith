@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Web\API;
 
 use Assert\InvalidArgumentException;
-use JetBrains\PhpStorm\Pure;
 use function array_map;
 
 final class ValidationErrorResponse

@@ -9,10 +9,8 @@ services:
     App\Common\:
         resource: '../src/Common/'
 
-    App\Web\HttpRequestContextFactory: ~
-
     App\Common\Infrastructure\Request\HttpRequestContext:
-        factory: [ '@App\Web\HttpRequestContextFactory', 'build' ]
+        class: App\Web\API\ApiHttpRequestContext
 
 imports:
     - {resource: 'modules/finances/services.yaml'}

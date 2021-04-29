@@ -7,36 +7,64 @@ use App\Modules\Invoices\Domain\Invoice\Invoice;
 use App\Modules\Invoices\Domain\Invoice\InvoiceId;
 use App\Modules\Invoices\Domain\Invoice\InvoiceRepository as InvoiceRepositoryInterface;
 use Doctrine\DBAL\Connection;
+use Throwable;
 
 class InvoiceRepository implements InvoiceRepositoryInterface
 {
-    public function __construct(private Connection $connection) {}
+    public function __construct(
+        private Connection $connection,
+        private InvoiceProductRepository $invoiceProductRepository
+    ) {}
 
+    /**
+     * @throws Throwable
+     */
     public function store(Invoice $invoice): void
     {
-        $id = $this->connection->executeQuery("
-            INSERT INTO invoices(html, token) VALUES (:html, :token) RETURNING id; 
-        ", [
-            'html' => $invoice->getHtml(),
-            'token' => $invoice->getToken(),
-        ])->fetchAssociative()['id'];
+        try {
+            $this->connection->beginTransaction();
 
-        $invoice->setId(InvoiceId::fromInt((int) $id));
+            $queryBuilder = $this->connection->createQueryBuilder();
+
+            $queryBuilder
+                ->insert('invoices')
+                ->values([
+                    'user_id' => ':userId',
+                    'seller_company_id' => ':sellerCompanyId',
+                    'buyer_company_id' => ':buyerCompanyId',
+                    'invoice_number' => ':invoiceNumber',
+                    'already_taken_price' => ':alreadyTakenPrice',
+                    'currency_code' => ':currencyCode',
+                    'generated_at' => ':generatedAt',
+                    'sold_at' => ':soldAt',
+                ])
+                ->setParameters([
+                    'userId' => $invoice->getUserId()->toInt(),
+                    'sellerCompanyId' => $invoice->getParameters()->getSellerId(),
+                    'buyerCompanyId' => $invoice->getParameters()->getBuyerId(),
+                    'invoiceNumber' => $invoice->getParameters()->getInvoiceNumber(),
+                    'alreadyTakenPrice' => $invoice->getParameters()->getAlreadyTakenPrice(),
+                    'currencyCode' => $invoice->getParameters()->getCurrencyCode(),
+                    'generatedAt' => $invoice->getParameters()->getGenerateDate()->format('Y-m-d 00:00:00'),
+                    'soldAt' => $invoice->getParameters()->getSellDate()->format('Y-m-d 00:00:00'),
+                ])
+                ->execute();
+
+                $this->invoiceProductRepository->store(
+                    (int) $this->connection->lastInsertId(),
+                    $invoice->getProducts()
+                );
+
+                $this->connection->commit();
+        } catch (Throwable $exception) {
+            $this->connection->rollBack();
+
+            throw $exception;
+        }
     }
 
     public function fetchOneById(InvoiceId $invoiceId, string $token): Invoice
     {
-        $data = $this->connection->executeQuery("
-            SELECT id, html, token FROM invoices WHERE id = :id AND token = :token
-        ", [
-            'id' => $invoiceId->toInt(),
-            'token' => $token,
-        ])->fetchAssociative();
-
-        return new Invoice(
-            InvoiceId::fromInt((int) $data['id']),
-            $data['html'],
-            $data['token'],
-        );
+        // implement this method.
     }
 }

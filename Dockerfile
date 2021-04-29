@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.0.3-fpm
 
 # SYSTEM PACKAGES
 RUN apt-get update && apt-get install -y \
@@ -42,9 +42,15 @@ RUN apt purge -y $PHPSIZE_DEPS \
     && apt clean all
 
 # COMPOSER
-RUN curl -sS https://getcomposer.org/installer | php -- \
-    --install-dir=/usr/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && ln -s $(composer config --global home) /root/composer
+ENV PATH=$PATH:/root/composer/vendor/bin COMPOSER_ALLOW_SUPERUSER=1
 
+# NODE JS
+RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash -
+RUN apt-get update \
+ && apt-get install -y \
+ nodejs
 
 # PHP RUNTIME
 WORKDIR /app
@@ -53,10 +59,6 @@ USER www-data
 COPY --chown=www-data:www-data . .
 
 USER root
-
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-ENV NVM_DIR=/root/.nvm
-RUN . $HOME/.nvm/nvm.sh && nvm install node && nvm use default && npm install gulp babel -g
 
 # PHP-FPM
 COPY docker/php.ini $PHP_INI_DIR/php.ini

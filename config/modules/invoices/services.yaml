@@ -1,6 +1,5 @@
 parameters:
-  invoice.token: '%env(resolve:INVOICE_TOKEN)%'
-  app.host: '%env(resolve:APP_HOST)%'
+  microservices.html2pdf.host: '%env(resolve:MICROSERVICE_HTML2PDF_HOST)%'
   integrations.dropbox.auth_token: '%env(resolve:DROPBOX_AUTH_TOKEN)%'
 
 services:
@@ -11,10 +10,10 @@ services:
   App\Modules\Invoices\:
     resource: '../../../src/Modules/Invoices/'
 
-  App\Modules\Invoices\Application\Invoice\Prepare\PrepareInvoiceHandler:
+  App\Modules\Invoices\Application\Invoice\Generate\GenerateInvoiceHandler:
     tags:
       - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Invoice\Prepare\PrepareInvoiceCommand
+        handles: App\Modules\Invoices\Application\Invoice\Generate\GenerateInvoiceCommand
 
   App\Modules\Invoices\Application\Company\GetOneById\GetOneCompanyByIdHandler:
     tags:
@@ -25,16 +24,6 @@ services:
     tags:
       - name: messenger.message_handler
         handles: App\Modules\Invoices\Application\Company\GetAll\GetAllCompaniesQuery
-
-  App\Modules\Invoices\Application\Invoice\GetOneById\GetInvoiceByIdHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Invoice\GetOneById\GetInvoiceByIdQuery
-
-  App\Modules\Invoices\Application\Filesystem\MoveFileFromApifyToDropbox\MoveFileFromApifyToDropboxHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Filesystem\MoveFileFromApifyToDropbox\MoveFileFromApifyToDropboxCommand
 
   App\Modules\Invoices\Application\Company\Create\CreateCompanyHandler:
     tags:
@@ -56,11 +45,15 @@ services:
       - name: messenger.message_handler
         handles: App\Modules\Invoices\Application\Company\UpdatePaymentInformation\UpdateCompanyPaymentInformationCommand
 
+  App\Modules\Invoices\Application\Filesystem\MoveFileToDropbox\MoveFileToDropboxHandler:
+    tags:
+      - name: messenger.message_handler
+        handles: App\Modules\Invoices\Application\Filesystem\MoveFileToDropbox\MoveFileToDropboxCommand
+
   App\Modules\Invoices\Domain\Invoice\PdfFromHtmlGenerator:
-    class: App\Modules\Invoices\Infrastructure\Domain\Invoice\ApifyPdfFromHtmlGenerator
+    class: App\Modules\Invoices\Infrastructure\Domain\Invoice\PdfFromHtmlGenerator
     arguments:
-      $host: '%app.host%'
-      $token: '%invoice.token%'
+      $host: '%microservices.html2pdf.host%'
 
   App\Modules\Invoices\Domain\Filesystem\Dropbox:
     class: App\Modules\Invoices\Infrastructure\Domain\Filesystem\DropboxApiIntegration

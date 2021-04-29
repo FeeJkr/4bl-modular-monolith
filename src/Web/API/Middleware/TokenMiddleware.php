@@ -9,6 +9,7 @@ use App\Modules\Accounts\Domain\User\Token;
 use App\Web\API\Action\AbstractAction;
 use App\Web\API\Action\Accounts\User\Register\RegisterUserAction;
 use App\Web\API\Action\Accounts\User\SignIn\SignInUserAction;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +53,7 @@ final class TokenMiddleware implements EventSubscriberInterface
         }
     }
 
+    #[ArrayShape([KernelEvents::CONTROLLER => "string"])]
     public static function getSubscribedEvents(): array
     {
         return [

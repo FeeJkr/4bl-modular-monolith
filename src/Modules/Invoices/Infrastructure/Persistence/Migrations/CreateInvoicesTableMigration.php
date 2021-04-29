@@ -17,11 +17,17 @@ final class CreateInvoicesTableMigration
         $sql = '
             create table invoices
             (
-	            id serial not null constraint invoices_pk primary key,
-	            html text not null,
-	            token varchar(255),
-	            created_at timestamp default now() not null,
-	            updated_at timestamp
+                id serial not null constraint invoices_pk primary key,
+                user_id int not null constraint companies_users_id_fk references users on delete cascade,
+                seller_company_id int not null constraint invoices_seller_companies__fk references companies on delete cascade,
+                buyer_company_id int not null constraint invoices_buyer_companies__fk references companies on delete cascade,
+                invoice_number varchar(255) not null,
+                already_taken_price float default 0 not null,
+                currency_code varchar(255),
+                generated_at timestamp not null,
+                sold_at timestamp not null,
+                created_at timestamp default now() not null,
+                updated_at timestamp
             );
         ';
     }

@@ -19,3 +19,6 @@ services:
 
   App\Web\API\ApiHttpRequestContext:
     public: true
+
+  GuzzleHttp\Client:
+    class: GuzzleHttp\Client

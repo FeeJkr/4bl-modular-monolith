@@ -7,6 +7,11 @@ class InvoiceProductsCollection
 {
     public function __construct(private array $products) {}
 
+    public function getProducts(): array
+    {
+        return $this->products;
+    }
+
     public function toArray(): array
     {
         return array_map(
