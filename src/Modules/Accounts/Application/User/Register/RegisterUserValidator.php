@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Application\User\Register;
@@ -39,7 +40,9 @@ final class RegisterUserValidator
      */
     private function validateEmail(string $email): void
     {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $length = mb_strlen($email);
+
+        if ($length > 250 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw ValidationException::invalidEmail();
         }
     }
@@ -51,7 +54,7 @@ final class RegisterUserValidator
     {
         $length = mb_strlen($password);
 
-        if ($length < 8 || $length > 15) {
+        if ($length < 8 || $length > 250) {
             throw ValidationException::invalidPassword();
         }
     }

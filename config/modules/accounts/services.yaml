@@ -1,35 +1,11 @@
 services:
   _defaults:
     autowire: true
+    autoconfigure: true
     public: false
 
   App\Modules\Accounts\:
     resource: '../../../src/Modules/Accounts/'
-
-  App\Modules\Accounts\Application\User\GetToken\GetTokenHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Accounts\Application\User\GetToken\GetTokenQuery
-
-  App\Modules\Accounts\Application\User\Register\RegisterUserHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Accounts\Application\User\Register\RegisterUserCommand
-
-  App\Modules\Accounts\Application\User\SignIn\SignInUserHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Accounts\Application\User\SignIn\SignInUserCommand
-
-  App\Modules\Accounts\Application\User\SignOut\SignOutUserHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Accounts\Application\User\SignOut\SignOutUserCommand
-
-  App\Modules\Accounts\Application\User\GetUserByToken\GetUserByTokenHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Accounts\Application\User\GetUserByToken\GetUserByTokenQuery
 
   App\Modules\Accounts\Infrastructure\Domain\User\JWTTokenManager:
     arguments:

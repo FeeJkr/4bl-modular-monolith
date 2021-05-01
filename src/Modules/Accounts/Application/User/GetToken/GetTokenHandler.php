@@ -1,14 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Application\User\GetToken;
 
+use App\Common\Application\Query\QueryHandler;
 use App\Modules\Accounts\Application\User\LogicException;
 use App\Modules\Accounts\Application\User\NotFoundException;
 use App\Modules\Accounts\Domain\User\UserException;
 use App\Modules\Accounts\Domain\User\UserRepository;
 
-final class GetTokenHandler
+final class GetTokenHandler implements QueryHandler
 {
     public function __construct(private UserRepository $repository) {}
 

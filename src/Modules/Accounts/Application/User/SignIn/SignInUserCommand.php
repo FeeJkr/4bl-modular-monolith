@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Application\User\SignIn;
 
-final class SignInUserCommand
+use App\Common\Application\Command\Command;
+
+final class SignInUserCommand implements Command
 {
     public function __construct(private string $email, private string $password) {}
 

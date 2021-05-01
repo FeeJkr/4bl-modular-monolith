@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Company;
@@ -19,7 +20,6 @@ final class Company
         private ?CompanyPaymentInformation $paymentInformation
     ){}
 
-    #[Pure]
     public static function create(
         UserId $userId,
         string $street,
@@ -31,7 +31,7 @@ final class Company
         ?string $phoneNumber,
     ): self {
         return new self(
-            CompanyId::nullInstance(),
+            CompanyId::generate(),
             $userId,
             CompanyAddress::create($street, $zipCode, $city),
             $name,
@@ -39,6 +39,20 @@ final class Company
             $email,
             $phoneNumber,
             null
+        );
+    }
+
+    public static function fromRow(array $row): self
+    {
+        return new self(
+            CompanyId::fromString($row['company_id']),
+            UserId::fromString($row['user_id']),
+            CompanyAddress::fromRow($row),
+            $row['name'],
+            $row['identification_number'],
+            $row['email'],
+            $row['phone_number'],
+            CompanyPaymentInformation::createFromRow($row),
         );
     }
 

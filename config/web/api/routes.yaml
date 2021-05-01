@@ -122,3 +122,23 @@ api.v1.invoices.invoices.generate:
   path: /api/v1/invoices/invoices
   controller: App\Web\API\Action\Invoices\Invoices\Generate\GenerateInvoiceAction
   methods: POST
+
+api.v1.invoices.invoices.getAll:
+  path: /api/v1/invoices/invoices
+  controller: App\Web\API\Action\Invoices\Invoices\GetAll\GetAllInvoicesAction
+  methods: GET
+
+api.v1.invoices.invoices.getOne:
+  path: /api/v1/invoices/invoices/{id}
+  controller: App\Web\API\Action\Invoices\Invoices\GetOne\GetOneInvoiceAction
+  methods: GET
+
+api.v1.invoices.invoices.update:
+  path: /api/v1/invoices/invoices/{id}
+  controller: App\Web\API\Action\Invoices\Invoices\Update\UpdateInvoiceAction
+  methods: POST
+
+api.v1.invoices.invoices.delete:
+  path: /api/v1/invoices/invoices/{id}
+  controller: App\Web\API\Action\Invoices\Invoices\Delete\DeleteInvoiceAction
+  methods: DELETE

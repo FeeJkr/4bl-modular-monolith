@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Filesystem\MoveFileToDropbox;
 
-class MoveFileToDropboxCommand
+use App\Common\Application\Command\Command;
+
+class MoveFileToDropboxCommand implements Command
 {
     public function __construct(
         private string $sourceFilepath,

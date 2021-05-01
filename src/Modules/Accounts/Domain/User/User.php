@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Domain\User;
@@ -16,10 +17,21 @@ final class User
     ) {}
 
     #[Pure]
+    public static function fromRow(array $row): self
+    {
+        return new self(
+            UserId::fromString($row['id']),
+            $row['email'],
+            $row['username'],
+            $row['password'],
+            new Token($row['token'])
+        );
+    }
+
     public static function register(string $email, string $username, string $password): self
     {
         return new self(
-            UserId::nullInstance(),
+            UserId::generate(),
             $email,
             $username,
             $password,

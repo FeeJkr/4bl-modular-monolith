@@ -1,12 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Application\User\GetUserByToken;
 
+use App\Common\Application\Query\QueryHandler;
 use App\Modules\Accounts\Domain\User\Token;
 use App\Modules\Accounts\Domain\User\UserRepository;
 
-final class GetUserByTokenHandler
+final class GetUserByTokenHandler implements QueryHandler
 {
     public function __construct(private UserRepository $repository) {}
 
@@ -16,7 +18,7 @@ final class GetUserByTokenHandler
         $user = $this->repository->fetchByToken($token);
 
         return new UserDTO(
-            $user->getId()->toInt(),
+            $user->getId()->toString(),
             $user->getEmail(),
             $user->getUsername(),
             $user->getPassword(),

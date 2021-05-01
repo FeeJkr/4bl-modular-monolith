@@ -1,38 +1,35 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Common;
 
 use JetBrains\PhpStorm\Pure;
+use Ramsey\Uuid\Uuid;
 
 abstract class Id
 {
-    private ?int $id;
-
-    private function __construct(?int $id)
-    {
-        $this->id = $id;
-    }
+    private function __construct(private string $id){}
 
     #[Pure]
-    public static function fromInt(int $id): static
+    public static function fromString(string $id): static
     {
         return new static($id);
     }
 
-    #[Pure]
-    public static function nullInstance(): static
+    public static function generate(): static
     {
-        return new static(null);
+        return new static(Uuid::uuid4()->toString());
     }
 
-    public function toInt(): int
+    public function toString(): string
     {
         return $this->id;
     }
 
-    public function isNull(): bool
+    #[Pure]
+    public function __toString(): string
     {
-        return $this->id === null;
+        return $this->toString();
     }
 }

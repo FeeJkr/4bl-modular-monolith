@@ -1,19 +1,22 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Company\UpdatePaymentInformation;
 
-class UpdateCompanyPaymentInformationCommand
+use App\Common\Application\Command\Command;
+
+class UpdateCompanyPaymentInformationCommand implements Command
 {
     public function __construct(
-        private int $companyId,
+        private string $companyId,
         private string $paymentType,
         private int $paymentLastDate,
         private string $bank,
         private string $accountNumber,
     ){}
 
-    public function getCompanyId(): int
+    public function getCompanyId(): string
     {
         return $this->companyId;
     }

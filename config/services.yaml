@@ -6,6 +6,15 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        App\Common\Application\Command\CommandHandler:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+
+        App\Common\Application\Query\QueryHandler:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
+
     App\Common\:
         resource: '../src/Common/'
 

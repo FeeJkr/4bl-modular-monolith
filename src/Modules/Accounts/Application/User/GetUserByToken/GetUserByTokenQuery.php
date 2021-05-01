@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Application\User\GetUserByToken;
 
-final class GetUserByTokenQuery
+use App\Common\Application\Query\Query;
+
+final class GetUserByTokenQuery implements Query
 {
     public function __construct(private string $token) {}
 

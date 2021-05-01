@@ -1,13 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Company\Delete;
 
-class DeleteCompanyCommand
-{
-    public function __construct(private int $companyId){}
+use App\Common\Application\Command\Command;
 
-    public function getCompanyId(): int
+class DeleteCompanyCommand implements Command
+{
+    public function __construct(private string $companyId){}
+
+    public function getCompanyId(): string
     {
         return $this->companyId;
     }

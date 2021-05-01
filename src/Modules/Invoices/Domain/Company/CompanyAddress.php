@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Company;
@@ -14,14 +15,24 @@ final class CompanyAddress
         private string $city,
     ){}
 
-    #[Pure]
     public static function create(string $street, string $zipCode, string $city): self
     {
         return new self(
-            CompanyAddressId::nullInstance(),
+            CompanyAddressId::generate(),
             $street,
             $zipCode,
             $city,
+        );
+    }
+
+    #[Pure]
+    public static function fromRow(array $row): self
+    {
+        return new self(
+            CompanyAddressId::fromString($row['company_address_id']),
+            $row['street'],
+            $row['zip_code'],
+            $row['city']
         );
     }
 

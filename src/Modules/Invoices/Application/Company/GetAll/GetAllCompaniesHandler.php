@@ -1,13 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Company\GetAll;
 
+use App\Common\Application\Query\QueryHandler;
 use App\Modules\Invoices\Domain\Company\Company;
 use App\Modules\Invoices\Domain\Company\CompanyRepository;
 use App\Modules\Invoices\Domain\User\UserContext;
 
-final class GetAllCompaniesHandler
+final class GetAllCompaniesHandler implements QueryHandler
 {
     public function __construct(private CompanyRepository $repository, private UserContext $userContext) {}
 
@@ -16,7 +18,7 @@ final class GetAllCompaniesHandler
         $companies = array_map(
             static function (Company $company): CompanyDTO {
                 return new CompanyDTO(
-                    $company->getId()->toInt(),
+                    $company->getId()->toString(),
                     $company->getName(),
                     $company->getStreet(),
                     $company->getZipCode(),

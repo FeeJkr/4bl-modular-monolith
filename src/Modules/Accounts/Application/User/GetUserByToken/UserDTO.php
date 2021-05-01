@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Application\User\GetUserByToken;
@@ -6,14 +7,14 @@ namespace App\Modules\Accounts\Application\User\GetUserByToken;
 final class UserDTO
 {
     public function __construct(
-        private int $id,
+        private string $id,
         private string $email,
         private string $username,
         private string $password,
         private string $token
     ) {}
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }

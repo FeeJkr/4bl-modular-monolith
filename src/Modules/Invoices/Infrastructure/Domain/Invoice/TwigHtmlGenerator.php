@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Infrastructure\Domain\Invoice;
 
+use App\Common\Application\Query\QueryBus;
 use App\Modules\Invoices\Application\Company\GetOneById\CompanyDTO;
 use App\Modules\Invoices\Application\Company\GetOneById\GetOneCompanyByIdQuery;
 use App\Modules\Invoices\Domain\Invoice\HtmlGenerator;
@@ -10,8 +12,6 @@ use App\Modules\Invoices\Domain\Invoice\Invoice;
 use App\Modules\Invoices\Domain\Invoice\PriceTransformer;
 use DateInterval;
 use Exception;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Throwable;
 use Twig\Environment;
 
@@ -19,7 +19,7 @@ class TwigHtmlGenerator implements HtmlGenerator
 {
     public function __construct(
         private Environment $twig,
-        private MessageBusInterface $bus,
+        private QueryBus $bus,
         private PriceTransformer $priceTransformer
     ){}
 
@@ -73,12 +73,9 @@ class TwigHtmlGenerator implements HtmlGenerator
         }
     }
 
-    private function getCompanyInformationById(int $companyId): CompanyDTO
+    private function getCompanyInformationById(string $companyId): CompanyDTO
     {
-        return $this->bus
-            ->dispatch(new GetOneCompanyByIdQuery($companyId))
-            ->last(HandledStamp::class)
-            ->getResult();
+        return $this->bus->handle(new GetOneCompanyByIdQuery($companyId));
     }
 
     private function calculateToPayPrice(Invoice $invoice): float

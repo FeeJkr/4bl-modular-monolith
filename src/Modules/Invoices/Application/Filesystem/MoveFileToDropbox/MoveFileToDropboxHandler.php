@@ -1,13 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Filesystem\MoveFileToDropbox;
 
-use App\Modules\Invoices\Domain\Filesystem\Apify;
+use App\Common\Application\Command\CommandHandler;
 use App\Modules\Invoices\Domain\Filesystem\Dropbox;
-use Ramsey\Uuid\Uuid;
 
-class MoveFileToDropboxHandler
+class MoveFileToDropboxHandler implements CommandHandler
 {
     public function __construct(private Dropbox $dropbox,){}
 

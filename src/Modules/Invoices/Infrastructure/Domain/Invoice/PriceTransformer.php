@@ -13,8 +13,6 @@ final class PriceTransformer implements PriceTransformerInterface
     private const API_URL = 'https://slownie.pl/%s';
     private const API_DATA_SELECTOR = '#dataWord';
 
-    public function __construct(private Client $httpClient){}
-
     public function transformToText(float $price): string
     {
         try {

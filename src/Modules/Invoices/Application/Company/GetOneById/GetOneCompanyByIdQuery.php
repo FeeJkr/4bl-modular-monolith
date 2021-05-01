@@ -1,13 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Company\GetOneById;
 
-final class GetOneCompanyByIdQuery
-{
-    public function __construct(private int $companyId){}
+use App\Common\Application\Query\Query;
 
-    public function getCompanyId(): int
+final class GetOneCompanyByIdQuery implements Query
+{
+    public function __construct(private string $companyId){}
+
+    public function getCompanyId(): string
     {
         return $this->companyId;
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Company\GetOneById;
@@ -6,7 +7,7 @@ namespace App\Modules\Invoices\Application\Company\GetOneById;
 final class CompanyDTO
 {
     public function __construct(
-        private int $id,
+        private string $id,
         private string $name,
         private string $street,
         private string $zipCode,
@@ -20,7 +21,7 @@ final class CompanyDTO
         private ?string $accountNumber,
     ){}
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }

@@ -1,12 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Company\Update;
 
-class UpdateCompanyCommand
+use App\Common\Application\Command\Command;
+
+class UpdateCompanyCommand implements Command
 {
     public function __construct(
-        private int $companyId,
+        private string $companyId,
         private string $street,
         private string $zipCode,
         private string $city,
@@ -16,7 +19,7 @@ class UpdateCompanyCommand
         private ?string $phoneNumber,
     ){}
 
-    public function getCompanyId(): int
+    public function getCompanyId(): string
     {
         return $this->companyId;
     }

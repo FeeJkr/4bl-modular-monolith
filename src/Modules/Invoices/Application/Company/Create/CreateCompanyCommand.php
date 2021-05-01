@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Company\Create;
 
-class CreateCompanyCommand
+use App\Common\Application\Command\Command;
+
+class CreateCompanyCommand implements Command
 {
     public function __construct(
         private string $street,

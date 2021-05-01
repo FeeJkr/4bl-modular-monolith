@@ -10,6 +10,16 @@ class InvoiceProduct
 {
     public function __construct(private int $position, private string $name, private float $netPrice){}
 
+    #[Pure]
+    public static function fromRow(array $row): self
+    {
+        return new self(
+            $row['product_position'],
+            $row['product_name'],
+            (float) $row['product_price']
+        );
+    }
+
     public function getPosition(): int
     {
         return $this->position;

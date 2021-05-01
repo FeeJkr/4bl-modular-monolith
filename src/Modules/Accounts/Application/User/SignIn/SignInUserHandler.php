@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Application\User\SignIn;
 
+use App\Common\Application\Command\CommandHandler;
 use App\Modules\Accounts\Application\User\LogicException;
 use App\Modules\Accounts\Application\User\NotFoundException;
 use App\Modules\Accounts\Application\User\PasswordManager;
@@ -10,7 +12,7 @@ use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\UserException;
 use App\Modules\Accounts\Domain\User\UserRepository;
 
-final class SignInUserHandler
+final class SignInUserHandler implements CommandHandler
 {
     public function __construct(
         private UserRepository $repository,

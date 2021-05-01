@@ -5,50 +5,11 @@ parameters:
 services:
   _defaults:
     autowire: true
+    autoconfigure: true
     public: false
 
   App\Modules\Invoices\:
     resource: '../../../src/Modules/Invoices/'
-
-  App\Modules\Invoices\Application\Invoice\Generate\GenerateInvoiceHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Invoice\Generate\GenerateInvoiceCommand
-
-  App\Modules\Invoices\Application\Company\GetOneById\GetOneCompanyByIdHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Company\GetOneById\GetOneCompanyByIdQuery
-
-  App\Modules\Invoices\Application\Company\GetAll\GetAllCompaniesHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Company\GetAll\GetAllCompaniesQuery
-
-  App\Modules\Invoices\Application\Company\Create\CreateCompanyHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Company\Create\CreateCompanyCommand
-
-  App\Modules\Invoices\Application\Company\Delete\DeleteCompanyHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Company\Delete\DeleteCompanyCommand
-
-  App\Modules\Invoices\Application\Company\Update\UpdateCompanyHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Company\Update\UpdateCompanyCommand
-
-  App\Modules\Invoices\Application\Company\UpdatePaymentInformation\UpdateCompanyPaymentInformationHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Company\UpdatePaymentInformation\UpdateCompanyPaymentInformationCommand
-
-  App\Modules\Invoices\Application\Filesystem\MoveFileToDropbox\MoveFileToDropboxHandler:
-    tags:
-      - name: messenger.message_handler
-        handles: App\Modules\Invoices\Application\Filesystem\MoveFileToDropbox\MoveFileToDropboxCommand
 
   App\Modules\Invoices\Domain\Invoice\PdfFromHtmlGenerator:
     class: App\Modules\Invoices\Infrastructure\Domain\Invoice\PdfFromHtmlGenerator

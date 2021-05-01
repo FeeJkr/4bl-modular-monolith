@@ -1,17 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Invoice\Generate;
 
-final class GenerateInvoiceCommand
+use App\Common\Application\Command\Command;
+
+final class GenerateInvoiceCommand implements Command
 {
     public function __construct(
         private string $invoiceNumber,
         private string $generateDate,
         private string $sellDate,
         private string $generatePlace,
-        private int $sellerId,
-        private int $buyerId,
+        private string $sellerId,
+        private string $buyerId,
         private array $products,
         private float $alreadyTakenPrice,
         private string $currency
@@ -37,12 +40,12 @@ final class GenerateInvoiceCommand
         return $this->generatePlace;
     }
 
-    public function getSellerId(): int
+    public function getSellerId(): string
     {
         return $this->sellerId;
     }
 
-    public function getBuyerId(): int
+    public function getBuyerId(): string
     {
         return $this->buyerId;
     }

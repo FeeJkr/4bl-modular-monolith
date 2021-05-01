@@ -1,8 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Invoice\Generate;
 
+use App\Common\Application\Command\CommandHandler;
+use App\Common\Infrastructure\Messenger\MessageHandlerInterface;
 use App\Modules\Invoices\Domain\Invoice\HtmlGenerator;
 use App\Modules\Invoices\Domain\Invoice\Invoice;
 use App\Modules\Invoices\Domain\Invoice\PdfFromHtmlGenerator;
@@ -14,7 +17,7 @@ use App\Modules\Invoices\Domain\User\UserContext;
 use DateTime;
 use JetBrains\PhpStorm\Pure;
 
-class GenerateInvoiceHandler
+class GenerateInvoiceHandler implements CommandHandler
 {
     public function __construct(
         private InvoiceRepository $repository,

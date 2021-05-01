@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Accounts\Infrastructure\Domain\User\Doctrine;
@@ -6,93 +7,143 @@ namespace App\Modules\Accounts\Infrastructure\Domain\User\Doctrine;
 use App\Modules\Accounts\Domain\User\Token;
 use App\Modules\Accounts\Domain\User\User;
 use App\Modules\Accounts\Domain\User\UserException;
-use App\Modules\Accounts\Domain\User\UserId;
 use App\Modules\Accounts\Domain\User\UserRepository as UserRepositoryInterface;
 use DateTime;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 
 final class UserRepository implements UserRepositoryInterface
 {
-    public function __construct(private Connection $db) {}
+    public function __construct(private Connection $connection) {}
 
+    /**
+     * @throws Exception
+     */
     public function store(User $user): void
     {
-        $this->db->executeQuery(
-            "INSERT INTO users (email, username, password, token, created_at) VALUES (:email, :username, :password, :token, :created_at)",
-            [
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->insert('users')
+            ->values([
+                'id' => ':id',
+                'email' => ':email',
+                'username' => ':username',
+                'password' => ':password',
+                'token' => ':token',
+            ])
+            ->setParameters([
+                'id' => $user->getId(),
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
                 'password' => $user->getPassword(),
                 'token' => $user->getToken()->toString(),
-                'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
-            ]
-        );
+            ])
+            ->execute();
     }
 
+    /**
+     * @throws Exception
+     */
     public function save(User $user): void
     {
-        $this->db->executeQuery("
-            UPDATE users SET email = :email, username = :username, password = :password, token = :token WHERE id = :id;
-        ", [
-            'email' => $user->getEmail(),
-            'username' => $user->getUsername(),
-            'password' => $user->getPassword(),
-            'token' => $user->getToken()->toString(),
-            'id' => $user->getId()->toInt(),
-        ]);
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->update('users')
+            ->set('email', ':email')
+            ->set('username', ':username')
+            ->set('password', ':password')
+            ->set('token', ':token')
+            ->set('updated_at', ':updatedAt')
+            ->where('id = :id')
+            ->setParameters([
+                'id' => $user->getId()->toString(),
+                'email' => $user->getEmail(),
+                'username' => $user->getUsername(),
+                'password' => $user->getPassword(),
+                'token' => $user->getToken()->toString(),
+                'updatedAt' => (new DateTime)->format('Y-m-d H:i:s'),
+            ])
+            ->execute();
     }
 
+    /**
+     * @throws Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
     public function fetchByEmail(string $email): ?User
     {
-        $data = $this->db->executeQuery("
-            SELECT * FROM users WHERE email = :email
-        ", [
-            'email' => $email,
-        ])->fetchAssociative();
+        $queryBuilder = $this->connection->createQueryBuilder();
 
-        if ($data === false) {
+        $row = $queryBuilder->select([
+            'id',
+            'email',
+            'username',
+            'password',
+            'token'
+        ])
+            ->from('users')
+            ->where('email = :email')
+            ->setParameter('email', $email)
+            ->execute()
+            ->fetchAssociative();
+
+        if ($row === false) {
             return null;
         }
 
-        return new User(
-            UserId::fromInt($data['id']),
-            $data['email'],
-            $data['username'],
-            $data['password'],
-            new Token($data['token'])
-        );
+        return User::fromRow($row);
     }
 
+    /**
+     * @throws UserException
+     * @throws Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
     public function fetchByToken(Token $token): User
     {
-        $data = $this->db->executeQuery("
-            SELECT * FROM users WHERE token = :token
-        ", [
-            'token' => $token->toString(),
-        ])->fetchAssociative();
+        $queryBuilder = $this->connection->createQueryBuilder();
 
-        if ($data === false) {
+        $row = $queryBuilder->select([
+            'id',
+            'email',
+            'username',
+            'password',
+            'token'
+        ])
+            ->from('users')
+            ->where('token = :token')
+            ->setParameter('token', $token->toString())
+            ->execute()
+            ->fetchAssociative();
+
+        if ($row === false) {
             throw UserException::notFoundByToken($token);
         }
 
-        return new User(
-            UserId::fromInt($data['id']),
-            $data['email'],
-            $data['username'],
-            $data['password'],
-            new Token($data['token'])
-        );
+        return User::fromRow($row);
     }
 
+    /**
+     * @throws Exception
+     */
     public function existsByEmailOrUsername(string $email, string $username): bool
     {
-        $data = $this->db->executeQuery("
-            SELECT id FROM users WHERE email = :email or username = :username
-        ", [
-            'email' => $email,
-            'username' => $username,
-        ])->rowCount();
+        $queryBuilder = $this->connection->createQueryBuilder();
 
-        return $data > 0;
+        $count = $queryBuilder
+            ->select(['id'])
+            ->from('users')
+            ->where('email = :email')
+            ->orWhere('username = :username')
+            ->setParameters([
+                'email' => $email,
+                'username' => $username,
+            ])
+            ->execute()
+            ->rowCount();
+
+        return $count > 0;
     }
 }

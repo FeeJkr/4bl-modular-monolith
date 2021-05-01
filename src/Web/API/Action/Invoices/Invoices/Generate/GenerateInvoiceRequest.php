@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Web\API\Action\Invoices\Invoices\Generate;
@@ -23,8 +24,8 @@ class GenerateInvoiceRequest extends Request
 
 	public function __construct(
 	    private string $invoiceNumber,
-        private int $sellerId,
-        private int $buyerId,
+        private string $sellerId,
+        private string $buyerId,
         private string $generatePlace,
         private float $alreadyTakenPrice,
         private string $generateDate,
@@ -48,8 +49,8 @@ class GenerateInvoiceRequest extends Request
 
         Assert::lazy()
             ->that($invoiceNumber, self::INVOICE_NUMBER)->notEmpty()
-            ->that($sellerId, self::SELLER_ID)->notEmpty()->integer()
-            ->that($buyerId, self::BUYER_ID)->notEmpty()->integer()
+            ->that($sellerId, self::SELLER_ID)->notEmpty()->uuid()
+            ->that($buyerId, self::BUYER_ID)->notEmpty()->uuid()
             ->that($generatePlace, self::GENERATE_PLACE)->notEmpty()
             ->that($alreadyTakenPrice, self::ALREADY_TAKEN_PRICE)->float()
             ->that($generateDate, self::GENERATE_DATE)->notEmpty()->date('d-m-Y')
@@ -86,12 +87,12 @@ class GenerateInvoiceRequest extends Request
         return $this->invoiceNumber;
     }
 
-    public function getSellerId(): int
+    public function getSellerId(): string
     {
         return $this->sellerId;
     }
 
-    public function getBuyerId(): int
+    public function getBuyerId(): string
     {
         return $this->buyerId;
     }

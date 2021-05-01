@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Invoice;
@@ -9,8 +10,8 @@ class InvoiceParameters
 {
     public function __construct(
         private string $invoiceNumber,
-        private int $sellerId,
-        private int $buyerId,
+        private string $sellerId,
+        private string $buyerId,
         private string $generatePlace,
         private float $alreadyTakenPrice,
         private string $currencyCode,
@@ -23,12 +24,12 @@ class InvoiceParameters
         return $this->invoiceNumber;
     }
 
-    public function getSellerId(): int
+    public function getSellerId(): string
     {
         return $this->sellerId;
     }
 
-    public function getBuyerId(): int
+    public function getBuyerId(): string
     {
         return $this->buyerId;
     }

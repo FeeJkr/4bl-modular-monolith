@@ -20,7 +20,10 @@ class DropboxApiIntegration implements Dropbox
                 'headers' => [
                     'Authorization' => sprintf('Bearer %s', $this->dropboxAuthorizationToken),
                     'Content-Type' => 'application/octet-stream',
-                    'Dropbox-API-Arg' => json_encode(['path' => $targetFilepath], JSON_THROW_ON_ERROR),
+                    'Dropbox-API-Arg' => json_encode([
+                        'path' => $targetFilepath,
+                        'mode' => 'overwrite'
+                    ]),
                 ],
                 'body' => fopen($sourceFilepath, 'rb'),
             ]);

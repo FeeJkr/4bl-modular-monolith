@@ -1,20 +1,22 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Application\Company\Create;
 
+use App\Common\Application\Command\CommandHandler;
 use App\Modules\Invoices\Domain\Company\Company;
 use App\Modules\Invoices\Domain\Company\CompanyRepository;
 use App\Modules\Invoices\Domain\User\UserContext;
 
-class CreateCompanyHandler
+class CreateCompanyHandler implements CommandHandler
 {
     public function __construct(
         private CompanyRepository $repository,
         private UserContext $userContext
     ){}
 
-    public function __invoke(CreateCompanyCommand $command): int
+    public function __invoke(CreateCompanyCommand $command): string
     {
         $company = Company::create(
             $this->userContext->getUserId(),
@@ -29,6 +31,6 @@ class CreateCompanyHandler
 
         $this->repository->store($company);
 
-        return $company->getId()->toInt();
+        return $company->getId()->toString();
     }
 }

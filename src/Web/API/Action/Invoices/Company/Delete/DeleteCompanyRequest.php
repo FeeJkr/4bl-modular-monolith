@@ -9,14 +9,14 @@ use Symfony\Component\HttpFoundation\Request as ServerRequest;
 
 class DeleteCompanyRequest extends Request
 {
-    public function __construct(private int $companyId){}
+    public function __construct(private string $companyId){}
 
     public static function createFromServerRequest(ServerRequest $request): self
     {
-        $companyId = (int) $request->get('id');
+        $companyId = $request->get('id');
 
         Assert::lazy()
-            ->that($companyId, 'companyId')->notEmpty()->numeric()
+            ->that($companyId, 'companyId')->notEmpty()->uuid()
             ->verifyNow();
 
         return new self(
@@ -24,7 +24,7 @@ class DeleteCompanyRequest extends Request
         );
     }
 
-    public function getCompanyId(): int
+    public function getCompanyId(): string
     {
         return $this->companyId;
     }

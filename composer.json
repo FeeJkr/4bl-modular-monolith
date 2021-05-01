@@ -1,4 +1,6 @@
 {
+    "name": "feejkr/4bl",
+    "description": "",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -8,8 +10,8 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "beberlei/assert": "^3.2",
-        "doctrine/dbal": "^3.0",
         "doctrine/doctrine-bundle": "^1.12|^2.0",
+        "doctrine/doctrine-migrations-bundle": "^3.1",
         "firebase/php-jwt": "^5.2",
         "guzzlehttp/guzzle": "^7.1",
         "myclabs/php-enum": "^1.7",

@@ -49,10 +49,10 @@ function List() {
                                     </tr>
                                     </thead>
                                     <tbody id="table-companies-body">
-                                    {companies && companies.map(function (company) {
+                                    {companies && companies.map(function (company, key) {
                                         return (
                                             <tr key={company.id}>
-                                                <th scope="row">{company.id}</th>
+                                                <th scope="row">{++key}</th>
                                                 <td>{company.name}</td>
                                                 <td>{company.identificationNumber}</td>
                                                 <td>{company.street}, {company.zipCode} {company.city}</td>

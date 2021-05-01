@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Invoice;
@@ -17,6 +18,16 @@ class InvoiceProductsCollection
         return array_map(
             static fn (InvoiceProduct $product): array => $product->toArray(),
             $this->products
+        );
+    }
+
+    public static function fromRows(array $rows): self
+    {
+        return new self(
+            array_map(
+                static fn(array $row) => InvoiceProduct::fromRow($row),
+                $rows
+            )
         );
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Web\API\Action\Invoices\Company\Update;
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request as ServerRequest;
 class UpdateCompanyRequest extends Request
 {
 	public function __construct(
-		private int $companyId,
+		private string $companyId,
 		private string $name,
 		private string $identificationNumber,
 		private ?string $email,
@@ -23,7 +24,7 @@ class UpdateCompanyRequest extends Request
 	public static function createFromServerRequest(ServerRequest $request): self
 	{
 		$requestData = $request->toArray();
-		$id = (int) $request->get('id');
+		$id = $request->get('id');
 		$name = $requestData['name'] ?? null;
 		$identificationNumber = $requestData['identificationNumber'] ?? null;
 		$email = $requestData['email'] ?? null;
@@ -33,7 +34,7 @@ class UpdateCompanyRequest extends Request
 		$city = $requestData['city'] ?? null;
 
 		Assert::lazy()
-			->that($id, 'id')->notEmpty()->numeric()
+			->that($id, 'id')->notEmpty()->uuid()
 			->that($name, 'name')->notEmpty()
 			->that($identificationNumber, 'identificationNumber')->notEmpty()
 			->that($email, 'email')->nullOr()->email()
@@ -55,7 +56,7 @@ class UpdateCompanyRequest extends Request
 		);
 	}
 
-	public function getCompanyId(): int
+	public function getCompanyId(): string
 	{
 		return $this->companyId;
 	}
