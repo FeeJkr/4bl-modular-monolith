@@ -4,27 +4,33 @@ declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Invoice;
 
+use App\Modules\Invoices\Domain\Company\CompanyId;
 use App\Modules\Invoices\Domain\User\UserId;
 use DateTime;
-use JetBrains\PhpStorm\Pure;
 
 class Invoice
 {
     public function __construct(
         private InvoiceId $id,
         private UserId $userId,
+        private CompanyId $sellerId,
+        private CompanyId $buyerId,
         private InvoiceParameters $parameters,
         private InvoiceProductsCollection $products,
     ){}
 
     public static function create(
         UserId $userId,
+        CompanyId $sellerId,
+        CompanyId $buyerId,
         InvoiceParameters $parameters,
         InvoiceProductsCollection $products,
     ): self {
         return new self(
             InvoiceId::generate(),
             $userId,
+            $sellerId,
+            $buyerId,
             $parameters,
             $products,
         );
@@ -37,10 +43,10 @@ class Invoice
         return new self(
             InvoiceId::fromString($row['id']),
             UserId::fromString($row['user_id']),
+            CompanyId::fromString($row['seller_id']),
+            CompanyId::fromString($row['buyer_id']),
             new InvoiceParameters(
                 $row['invoice_number'],
-                $row['seller_id'],
-                $row['buyer_id'],
                 $row['generate_place'],
                 (float) $row['already_taken_price'],
                 $row['currency_code'],
@@ -52,9 +58,13 @@ class Invoice
     }
 
     public function update(
+        CompanyId $sellerId,
+        CompanyId $buyerId,
         InvoiceParameters $parameters,
-        InvoiceProductsCollection $products
+        InvoiceProductsCollection $products,
     ): void {
+        $this->sellerId = $sellerId;
+        $this->buyerId = $buyerId;
         $this->parameters = $parameters;
         $this->products = $products;
     }
@@ -67,6 +77,16 @@ class Invoice
     public function getUserId(): UserId
     {
         return $this->userId;
+    }
+
+    public function getSellerId(): CompanyId
+    {
+        return $this->sellerId;
+    }
+
+    public function getBuyerId(): CompanyId
+    {
+        return $this->buyerId;
     }
 
     public function getParameters(): InvoiceParameters

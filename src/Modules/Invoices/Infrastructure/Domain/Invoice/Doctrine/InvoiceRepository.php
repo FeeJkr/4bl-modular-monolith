@@ -44,8 +44,8 @@ class InvoiceRepository implements InvoiceRepositoryInterface
             ->setParameters([
                 'id' => $invoice->getId()->toString(),
                 'userId' => $invoice->getUserId()->toString(),
-                'sellerCompanyId' => $invoice->getParameters()->getSellerId(),
-                'buyerCompanyId' => $invoice->getParameters()->getBuyerId(),
+                'sellerCompanyId' => $invoice->getSellerId()->toString(),
+                'buyerCompanyId' => $invoice->getBuyerId()->toString(),
                 'invoiceNumber' => $invoice->getParameters()->getInvoiceNumber(),
                 'generatePlace' => $invoice->getParameters()->getGeneratePlace(),
                 'alreadyTakenPrice' => $invoice->getParameters()->getAlreadyTakenPrice(),
@@ -147,7 +147,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
      */
     public function save(Invoice $invoice): void
     {
-        $this->connection
+        $result = $this->connection
             ->createQueryBuilder()
             ->update('invoices')
             ->set('seller_company_id', ':sellerId')
@@ -163,9 +163,9 @@ class InvoiceRepository implements InvoiceRepositoryInterface
             ->andWhere('user_id = :userId')
             ->setParameters([
                 'id' => $invoice->getId()->toString(),
-                'userId' => $invoice->getId()->toString(),
-                'sellerId' => $invoice->getParameters()->getSellerId(),
-                'buyerId' => $invoice->getParameters()->getBuyerId(),
+                'userId' => $invoice->getUserId()->toString(),
+                'sellerId' => $invoice->getSellerId()->toString(),
+                'buyerId' => $invoice->getBuyerId()->toString(),
                 'invoiceNumber' => $invoice->getParameters()->getInvoiceNumber(),
                 'generatePlace' => $invoice->getParameters()->getGeneratePlace(),
                 'alreadyTakenPrice' => $invoice->getParameters()->getAlreadyTakenPrice(),

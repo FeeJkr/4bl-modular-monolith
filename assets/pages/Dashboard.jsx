@@ -11,8 +11,11 @@ import {Create as CompaniesCreate} from '../pages/Invoices/Companies/Create';
 import {Edit as CompaniesEdit} from '../pages/Invoices/Companies/Edit';
 // invoices
 import {List as InvoicesList} from '../pages/Invoices/Invoices/List';
+import {Generate as InvoicesGenerate} from '../pages/Invoices/Invoices/Generate';
+import {Edit as InvoicesEdit} from "./Invoices/Invoices/Edit";
 
 export default function Dashboard() {
+    const isDashboardRoute = history.location.pathname === '/' || history.location.pathname === '';
     const isCompaniesRoute = history.location.pathname.startsWith('/companies');
     const isInvoicesRoute = history.location.pathname.startsWith('/invoices');
     let [openInvoices, setOpenInvoices] = useState(isCompaniesRoute || isInvoicesRoute);
@@ -58,6 +61,7 @@ export default function Dashboard() {
                             <Link to="/"
                                 style={{padding: '0.625rem 1.5rem', position: 'relative', fontSize: '13px', transition: 'all .4s', color: '#79829c', cursor: 'pointer', width: '100%', display: 'block', textDecoration: 'none'}}
                                 onClick={collapseAll}
+                                className={isDashboardRoute ? 'mm-active' : ''}
                             >
                                 <i className="bi bi-house-door"
                                    style={{
@@ -133,6 +137,8 @@ export default function Dashboard() {
                             <PrivateRoute exact path={'/companies/edit/:id'} component={CompaniesEdit}/>
 
                             <PrivateRoute exact path={'/invoices'} component={InvoicesList}/>
+                            <PrivateRoute exact path={'/invoices/generate'} component={InvoicesGenerate}/>
+                            <PrivateRoute exact path={'/invoices/edit/:id'} component={InvoicesEdit}/>
                         </Switch>
                     </Router>
                 </div>

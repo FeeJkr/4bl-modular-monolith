@@ -45,6 +45,7 @@ function List() {
                                         <th>Name</th>
                                         <th>Identification Number</th>
                                         <th>Address</th>
+                                        <th width="100px">Payment Information</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -56,18 +57,24 @@ function List() {
                                                 <td>{company.name}</td>
                                                 <td>{company.identificationNumber}</td>
                                                 <td>{company.street}, {company.zipCode} {company.city}</td>
+                                                <td align="center">
+                                                    {company.paymentType
+                                                        ? (<i className="bi bi-check-circle" style={{color: '#34c38f', fontSize: '18px'}}/>)
+                                                        : (<i className="bi bi-x-circle" style={{color: '#f46a6a', fontSize: '18px'}}/>)
+                                                    }
+                                                </td>
                                                 <td>
                                                     <div className="gap-3"
                                                          style={{display: 'flex', gridGap: '1 rem'}}>
                                                         <Link to={'companies/edit/' + company.id}>
                                                             <i className="bi bi-pencil edit-company-button"
-                                                                style={{color: '#34c38f', fontSize: '18 px'}}
+                                                                style={{color: '#34c38f'}}
                                                             />
                                                         </Link>
                                                         <a onClick={() => handleDelete(company.id)}
                                                               style={{color: '#f46a6a', fontSize: '18 px', cursor: 'pointer'}}>
                                                             <i className="bi bi-trash delete-company-button"
-                                                                style={{color: '#f46a6a', fontSize: '18 px'}}
+                                                                style={{color: '#f46a6a'}}
                                                             />
                                                         </a>
                                                     </div>

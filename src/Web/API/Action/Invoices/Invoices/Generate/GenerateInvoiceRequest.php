@@ -41,7 +41,9 @@ class GenerateInvoiceRequest extends Request
         $sellerId = $requestData[self::SELLER_ID] ?? null;
         $buyerId = $requestData[self::BUYER_ID] ?? null;
         $generatePlace = $requestData[self::GENERATE_PLACE] ?? null;
-        $alreadyTakenPrice = $requestData[self::ALREADY_TAKEN_PRICE] ?? null;
+        $alreadyTakenPrice = isset($requestData[self::ALREADY_TAKEN_PRICE])
+            ? (float) $requestData[self::ALREADY_TAKEN_PRICE]
+            : null;
         $generateDate = $requestData[self::GENERATE_DATE] ?? null;
         $sellDate = $requestData[self::SELL_DATE] ?? null;
         $currencyCode = $requestData[self::CURRENCY_CODE] ?? null;

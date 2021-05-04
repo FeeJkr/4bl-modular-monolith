@@ -26,8 +26,8 @@ class TwigHtmlGenerator implements HtmlGenerator
     public function generate(Invoice $invoice): string
     {
         try {
-            $seller = $this->getCompanyInformationById($invoice->getParameters()->getSellerId());
-            $buyer = $this->getCompanyInformationById($invoice->getParameters()->getBuyerId());
+            $seller = $this->getCompanyInformationById($invoice->getSellerId()->toString());
+            $buyer = $this->getCompanyInformationById($invoice->getBuyerId()->toString());
             $paymentLastDate = clone $invoice->getParameters()->getSellDate();
             $paymentLastDate->add(new DateInterval(sprintf('P%dD', $seller->getPaymentLastDate())));
             $toPayPrice = $this->calculateToPayPrice($invoice);

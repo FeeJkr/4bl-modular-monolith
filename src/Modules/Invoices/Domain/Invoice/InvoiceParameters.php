@@ -10,8 +10,6 @@ class InvoiceParameters
 {
     public function __construct(
         private string $invoiceNumber,
-        private string $sellerId,
-        private string $buyerId,
         private string $generatePlace,
         private float $alreadyTakenPrice,
         private string $currencyCode,
@@ -22,16 +20,6 @@ class InvoiceParameters
     public function getInvoiceNumber(): string
     {
         return $this->invoiceNumber;
-    }
-
-    public function getSellerId(): string
-    {
-        return $this->sellerId;
-    }
-
-    public function getBuyerId(): string
-    {
-        return $this->buyerId;
     }
 
     public function getGeneratePlace(): string

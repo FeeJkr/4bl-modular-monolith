@@ -6,6 +6,7 @@ namespace App\Modules\Invoices\Application\Invoice\Generate;
 
 use App\Common\Application\Command\CommandHandler;
 use App\Common\Infrastructure\Messenger\MessageHandlerInterface;
+use App\Modules\Invoices\Domain\Company\CompanyId;
 use App\Modules\Invoices\Domain\Invoice\HtmlGenerator;
 use App\Modules\Invoices\Domain\Invoice\Invoice;
 use App\Modules\Invoices\Domain\Invoice\PdfFromHtmlGenerator;
@@ -30,8 +31,6 @@ class GenerateInvoiceHandler implements CommandHandler
         $products = $this->getInvoiceProductsCollection($command->getProducts());
         $invoiceParameters = new InvoiceParameters(
                 $command->getInvoiceNumber(),
-                $command->getSellerId(),
-                $command->getBuyerId(),
                 $command->getGeneratePlace(),
                 $command->getAlreadyTakenPrice(),
                 $command->getCurrency(),
@@ -41,6 +40,8 @@ class GenerateInvoiceHandler implements CommandHandler
 
         $invoice = Invoice::create(
             $this->userContext->getUserId(),
+            CompanyId::fromString($command->getSellerId()),
+            CompanyId::fromString($command->getBuyerId()),
             $invoiceParameters,
             $products,
         );

@@ -142,3 +142,8 @@ api.v1.invoices.invoices.delete:
   path: /api/v1/invoices/invoices/{id}
   controller: App\Web\API\Action\Invoices\Invoices\Delete\DeleteInvoiceAction
   methods: DELETE
+
+api.v1.invoices.filesystem.getByName:
+  path: /api/v1/invoices/filesystem/{filename}
+  controller: App\Web\API\Action\Invoices\Filesystem\GetFileByName\GetFileByNameAction
+  methods: GET

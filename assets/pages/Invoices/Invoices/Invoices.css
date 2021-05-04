@@ -1,0 +1,71 @@
+.btn-danger {
+    background-color: #f46a6a;
+    border-color: #f46a6a;
+    color: #fff;
+    outline: none!important;
+}
+
+.btn-danger:hover {
+    background-color: #cf5a5a;
+    border-color: #cf5a5a;
+    color: #fff;
+}
+
+.btn-danger:focus {
+    box-shadow: 0 0 0 0.15rem rgba(246, 128, 128, 0.5);
+    background-color: #cf5a5a;
+    border-color: #cf5a5a;
+    color: #fff;
+}
+
+.btn-success {
+    background-color: #34c38f;
+    border-color: #34c38f;
+    color: #fff;
+    outline: none!important;
+}
+
+.btn-success:hover {
+    background-color: #2ca67a;
+    border-color: #2ca67a;
+    color: #fff;
+}
+
+.btn-success:focus {
+    background-color: #2ca67a;
+    border-color: #2ca67a;
+    color: #fff;
+    box-shadow: 0 0 0 0.15rem rgba(82, 204, 160, 0.5);
+}
+
+@-webkit-keyframes spin
+{
+    0%
+    {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100%
+    {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+@keyframes spin
+{
+    0%
+    {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100%
+    {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+.icon-spin {
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
