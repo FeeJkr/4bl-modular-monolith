@@ -1,0 +1,24 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ../
+    ports:
+      - "${APP_PORT}8080"
+    volumes:
+      - ../:/app
+
+  h2p-microservice:
+    image: feejkr/html-2-pdf
+    ports:
+      - "${HTML2PDF_MICROSERVICE_PORT}3000"
+    hostname: html2pdf
+
+  db:
+    image: "postgres:latest"
+    ports:
+      - "${SQL_DATABASE_PORT}5432"
+    environment:
+      - POSTGRES_USER=${SQL_DATABASE_USER}
+      - POSTGRES_PASSWORD=${SQL_DATABASE_PASSWORD}
+      - PGPASSWORD=${SQL_DATABASE_ROOT_PASSWORD}

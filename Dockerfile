@@ -61,13 +61,13 @@ COPY --chown=www-data:www-data . .
 USER root
 
 # PHP-FPM
-COPY docker/php.ini $PHP_INI_DIR/php.ini
+COPY docker/config/php.ini $PHP_INI_DIR/php.ini
 RUN rm /usr/local/etc/php-fpm.d/* && chown -R www-data:www-data /usr/local/etc/php/conf.d
-COPY docker/fpm.conf /usr/local/etc/php-fpm.d/www.conf
+COPY docker/config/fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
 # NGINX
 RUN rm /etc/nginx/nginx.conf && chown -R www-data:www-data /var/www/html /run /var/lib/nginx /var/log/nginx
-COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/config/nginx.conf /etc/nginx/nginx.conf
 
 USER www-data
 
