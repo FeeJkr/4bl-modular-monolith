@@ -106,7 +106,7 @@ export default function SignIn() {
 
                         <div className="mt-5 text-center" style={{display: 'block'}}>
                             <p style={{display: 'block'}}>
-                                <span style={{fontWeight: 300}}>Don't have an account?</span>
+                                <span style={{fontWeight: 300}}>Don't have an account? </span>
                                 <Link
                                     to={'/register'}
                                     style={{color: '#556ee6', textDecoration: 'none', outline: 'none', fontWeight: 600}}

@@ -117,7 +117,6 @@ class InvoiceRepository implements InvoiceRepositoryInterface
             'i.currency_code',
             'i.generated_at',
             'i.sold_at',
-            'ip.id as product_id',
             'ip.position as product_position',
             'ip.name as product_name',
             'ip.price as product_price',

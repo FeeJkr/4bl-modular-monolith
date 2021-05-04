@@ -24,5 +24,3 @@ phpunit.xml
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-
-/public/generated-files
