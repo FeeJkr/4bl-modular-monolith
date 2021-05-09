@@ -21,6 +21,7 @@ export default function Dashboard() {
     const isDashboardRoute = history.location.pathname === '/' || history.location.pathname === '';
     const isCompaniesRoute = history.location.pathname.startsWith('/companies');
     const isInvoicesRoute = history.location.pathname.startsWith('/invoices');
+    const isFinancesRoute = history.location.pathname.startsWith('/finances');
     let [openInvoices, setOpenInvoices] = useState(isCompaniesRoute || isInvoicesRoute);
 
     function collapseAll() {
@@ -153,6 +154,26 @@ export default function Dashboard() {
                                     </li>
                                 </ul>
                             </Collapse>
+                        </li>
+
+                        <li style={{display: 'block', width: '100%'}}>
+                            <Link to="/finances"
+                                  style={{padding: '0.625rem 1.5rem', position: 'relative', fontSize: '13px', transition: 'all .4s', color: '#79829c', cursor: 'pointer', width: '100%', display: 'block', textDecoration: 'none'}}
+                                  className={isFinancesRoute ? 'mm-active' : ''}
+                            >
+                                <i className="bi bi-cash-stack"
+                                   style={{
+                                       minWidth: '2rem',
+                                       display: 'inline-block',
+                                       paddingBottom: '.125em',
+                                       fontSize: '1.25rem',
+                                       lineHeight: '1.40625rem',
+                                       verticalAlign: 'middle',
+                                       transition: 'all .4s'
+                                   }}
+                                />
+                                Finances
+                            </Link>
                         </li>
                     </ul>
                 </div>
