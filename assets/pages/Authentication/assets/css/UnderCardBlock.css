@@ -1,0 +1,11 @@
+.font-weight-300 {
+    font-weight: 300;
+}
+
+.link {
+    color: #556ee6;
+    text-decoration: none;
+    outline: none;
+    font-weight: 600;
+}
+

@@ -19,7 +19,7 @@ services:
         resource: '../src/Common/'
 
     App\Common\Infrastructure\Request\HttpRequestContext:
-        class: App\Web\API\ApiHttpRequestContext
+        class: App\Web\API\SessionRequestContext
 
 imports:
     - {resource: 'modules/finances/services.yaml'}

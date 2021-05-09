@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Web\API\Action\Accounts\User\SignIn;
@@ -25,8 +26,8 @@ final class SignInUserRequest extends Request
     	$password = $requestData['password'];
 
         Assert::lazy()
-            ->that($email, 'email')->notEmpty()->email()
-            ->that($password, 'password')->notEmpty()
+            ->that($email, 'email')->notEmpty()->email('"%s" is not a valid email address')
+            ->that($password, 'password')->notEmpty('"password" field is required.')
             ->verifyNow();
 
         return new self(

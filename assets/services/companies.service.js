@@ -1,6 +1,5 @@
 import axios from "axios";
 import {companiesDictionary} from "../helpers/routes/companies.dictionary";
-import {authHeader} from "../helpers/authHeader";
 
 export const companiesService = {
     getAll,
@@ -12,15 +11,12 @@ export const companiesService = {
 };
 
 function getAll() {
-    return axios.get(companiesDictionary.GET_ALL_URL, {
-        headers: {...authHeader()}
-    }).then((response) => response.data);
+    return axios.get(companiesDictionary.GET_ALL_URL)
+        .then((response) => response.data);
 }
 
 function deleteCompany(id) {
-    return axios.delete(companiesDictionary.DELETE_URL.replace('{id}', id), {
-        headers: {...authHeader()}
-    });
+    return axios.delete(companiesDictionary.DELETE_URL.replace('{id}', id));
 }
 
 function createCompany(formData) {
@@ -32,15 +28,11 @@ function createCompany(formData) {
         street: formData.street,
         zipCode: formData.zipCode,
         city: formData.city,
-    }, {
-        headers: {...authHeader()},
     }).catch(error => Promise.reject(error.response.data));
 }
 
 function getOne(id) {
-    return axios.get(companiesDictionary.GET_ONE_URL.replace('{id}', id), {
-        headers: {...authHeader()}
-    }).then((response) => response.data);
+    return axios.get(companiesDictionary.GET_ONE_URL.replace('{id}', id)).then((response) => response.data);
 }
 
 function updateBasicInformation(id, formData) {
@@ -52,8 +44,6 @@ function updateBasicInformation(id, formData) {
         street: formData.street,
         zipCode: formData.zipCode,
         city: formData.city,
-    }, {
-        headers: {...authHeader()},
     }).catch(error => Promise.reject(error.response.data));
 }
 
@@ -63,7 +53,5 @@ function updatePaymentInformation(id, formData) {
         paymentLastDate: formData.paymentLastDate,
         bank: formData.bank,
         accountNumber: formData.accountNumber,
-    }, {
-        headers: {...authHeader()},
     }).catch(error => Promise.reject(error.response.data));
 }

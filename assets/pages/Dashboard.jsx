@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './Dashboard.css';
 import {Link} from "react-router-dom";
-import {Collapse} from "react-bootstrap";
+import {Collapse, Dropdown} from "react-bootstrap";
 import { Router, Switch} from 'react-router-dom';
 import {history} from "../helpers/history";
 import PrivateRoute from "../helpers/PrivateRoute";
@@ -13,8 +13,11 @@ import {Edit as CompaniesEdit} from '../pages/Invoices/Companies/Edit';
 import {List as InvoicesList} from '../pages/Invoices/Invoices/List';
 import {Generate as InvoicesGenerate} from '../pages/Invoices/Invoices/Generate';
 import {Edit as InvoicesEdit} from "./Invoices/Invoices/Edit";
+import {useDispatch} from "react-redux";
+import {authenticationActions} from "../actions/authentication.actions";
 
 export default function Dashboard() {
+    const dispatch = useDispatch();
     const isDashboardRoute = history.location.pathname === '/' || history.location.pathname === '';
     const isCompaniesRoute = history.location.pathname.startsWith('/companies');
     const isInvoicesRoute = history.location.pathname.startsWith('/invoices');
@@ -24,9 +27,14 @@ export default function Dashboard() {
         setOpenInvoices(false);
     }
 
+    const handleLogoutClick = () => {
+        dispatch(authenticationActions.logout());
+    };
+
     return (
         <div style={{boxSizing: 'border-box', display: 'block'}}>
             <header
+                id="header-id"
                 style={{height: '70px', position: 'fixed', top: 0, right: 0, left: 0, zIndex: 1002, boxShadow: '0 0.75rem 1.5rem rgba(18, 38, 63, 0.03)', backgroundColor: '#fff'}}>
                 <div
                     style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 auto', height: '70px', padding: '0 12px 0 0'}}>
@@ -37,13 +45,35 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <div style={{display: 'flex !important'}}>
+                    <div style={{display: 'flex !important', paddingRight: '50px'}}>
                         <div>
-                            <button
-                                style={{height: '70px', boxShadow: 'none !important', border:0, borderRadius:0, lineHeight:1.5, backgroundColor: 'transparent', padding: '.47rem .75rem', fontSize: '.8125rem', transition: 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out', textAlign: 'center', verticalAlign: 'middle'}}>
-                                <span>Admin</span>
-                                <i className="bi bi-arrow-down-short"/>
-                            </button>
+                            <Dropdown>
+                                <Dropdown.Toggle
+                                    bsPrefix="dropdown-user-header"
+                                    style={{color: "black", height: '70px', boxShadow: 'none !important', border:0, borderRadius:0, lineHeight:1.5, backgroundColor: 'transparent', padding: '.47rem .75rem', fontSize: '.8125rem', transition: 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out', textAlign: 'center', verticalAlign: 'middle'}}
+                                >
+                                    <span>Admin</span>
+                                    <i className="bi bi-arrow-down-short"/>
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu flip={false} popperConfig={{placement: "bottom", modifiers: [{name: 'offset', options: {offset: [-50, 0]}}, {name: 'preventOverflow', options: {mainAxis: false}}]}}>
+                                    <Dropdown.Item>
+                                        <i className="bi bi-person me-3" style={{fontSize: '16px'}}/>
+                                        Profile
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <i className="bi bi-gear me-3" style={{fontSize: '16px'}}/>
+                                        Settings
+                                    </Dropdown.Item>
+
+                                    <Dropdown.Divider/>
+
+                                    <Dropdown.Item onClick={handleLogoutClick}>
+                                        <i className="bi bi-power text-danger me-3" style={{fontSize: '16px'}}/>
+                                        Logout
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
                         </div>
                     </div>
                 </div>

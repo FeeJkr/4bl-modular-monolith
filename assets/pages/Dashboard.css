@@ -12,3 +12,40 @@
 .mm-active {
     color: #fff !important;
 }
+
+.dropdown-user-header {
+    box-shadow: none;
+}
+
+.dropdown-user-header:focus {
+    border: 0;
+    box-shadow: none;
+}
+
+.dropdown-user-header:active {
+    border: 0;
+    box-shadow: none;
+}
+
+.dropdown-user-header:active:focus {
+    border: 0;
+    box-shadow: none;
+}
+
+.dropdown-menu {
+    font-size: .8125rem;
+    will-change: transform;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.35rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}

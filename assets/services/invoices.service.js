@@ -1,6 +1,5 @@
 import axios from "axios";
 import {invoicesDictionary} from "../helpers/routes/invoices.dictionary";
-import {authHeader} from "../helpers/authHeader";
 
 export const invoicesService = {
     getAll,
@@ -11,9 +10,7 @@ export const invoicesService = {
 };
 
 function getAll() {
-    return axios.get(invoicesDictionary.GET_ALL_URL, {
-        headers: {...authHeader()}
-    }).then((response) => response.data);
+    return axios.get(invoicesDictionary.GET_ALL_URL).then((response) => response.data);
 }
 
 function generateInvoice(formData) {
@@ -31,8 +28,6 @@ function generateInvoice(formData) {
         sellDate: _parseDate(formData.soldAt),
         currencyCode: formData.currencyCode,
         products: products.filter((element) => element.name !== ''),
-    }, {
-        headers: {...authHeader()},
     }).catch(error => Promise.reject(error.response.data));
 }
 
@@ -41,15 +36,11 @@ function _parseDate(date) {
 }
 
 function deleteInvoice(id) {
-    return axios.delete(invoicesDictionary.DELETE_URL.replace('{id}', id), {
-        headers: {...authHeader()},
-    });
+    return axios.delete(invoicesDictionary.DELETE_URL.replace('{id}', id));
 }
 
 function getOne(id) {
-    return axios.get(invoicesDictionary.GET_ONE_URL.replace('{id}', id), {
-        headers: {...authHeader()}
-    }).then((response) => response.data);
+    return axios.get(invoicesDictionary.GET_ONE_URL.replace('{id}', id)).then((response) => response.data);
 }
 
 function updateInvoice(invoice) {
@@ -69,7 +60,5 @@ function updateInvoice(invoice) {
         sellDate: invoice.soldAt,
         currencyCode: invoice.currencyCode,
         products: products.filter((element) => element.name !== ''),
-    }, {
-        headers: {...authHeader()},
     }).catch(error => Promise.reject(error.response.data));
 }

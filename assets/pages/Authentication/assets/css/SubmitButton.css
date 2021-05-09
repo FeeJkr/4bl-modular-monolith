@@ -1,0 +1,12 @@
+.btn-default {
+    font-size: .8125rem;
+    padding: .47rem .75rem;
+    border-radius: .25rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.btn-icon {
+    margin-right: 10px;
+    display: inline-block;
+}
