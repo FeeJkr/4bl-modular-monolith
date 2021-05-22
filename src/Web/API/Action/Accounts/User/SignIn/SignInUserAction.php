@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Web\API\Action\Accounts\User\SignIn;
@@ -11,13 +12,13 @@ use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
 use App\Web\API\Action\AbstractAction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class SignInUserAction extends AbstractAction
 {
     public function __construct(
         private CommandBus $commandBus,
         private QueryBus $queryBus,
-        private SignInUserResponder $responder
     ){}
 
     public function __invoke(Request $request): Response
@@ -31,8 +32,8 @@ final class SignInUserAction extends AbstractAction
         /** @var TokenDTO $token */
         $token = $this->queryBus->handle(new GetTokenQuery($signInUserRequest->getEmail()));
 
-        $request->getSession()->set('user.token', $token);
+        $request->getSession()->set('user.token', $token->getToken());
 
-        return $this->responder->respond($request, $token);
+        return $this->noContentResponse();
     }
 }

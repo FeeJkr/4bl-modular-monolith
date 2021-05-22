@@ -1,0 +1,9 @@
+.card-header-background {
+    max-width: 100%;
+    height: auto;
+    filter: 'contrast(90%) brightness(90%)';
+}
+
+.card-header-background-color {
+    background-color: rgba(85,110,230,.25);
+}

@@ -8,6 +8,16 @@ api.v1.accounts.sign-in:
   controller: App\Web\API\Action\Accounts\User\SignIn\SignInUserAction
   methods: POST
 
+api.v1.accounts.logout:
+  path: /api/v1/accounts/logout
+  controller: App\Web\API\Action\Accounts\User\Logout\LogoutUserAction
+  methods: POST
+
+api.v1.accounts.me:
+  path: /api/v1/accounts/me
+  controller: App\Web\API\Action\Accounts\User\GetMyUserData\GetMyUserDataAction
+  methods: GET
+
 api.v1.finances.categories.all:
   path: /api/v1/finances/categories
   controller: App\Web\API\Action\Finances\Category\GetAllCategories\GetAllCategoriesAction

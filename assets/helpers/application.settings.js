@@ -1,0 +1,1 @@
+export default JSON.parse(document.getElementById('__APPLICATION_DATA__').textContent);

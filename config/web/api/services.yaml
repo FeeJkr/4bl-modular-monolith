@@ -17,8 +17,5 @@ services:
   App\Web\API\Middleware\ErrorHandlerMiddleware:
     tags: ['kernel.event_subscriber']
 
-  App\Web\API\ApiHttpRequestContext:
-    public: true
-
   GuzzleHttp\Client:
     class: GuzzleHttp\Client

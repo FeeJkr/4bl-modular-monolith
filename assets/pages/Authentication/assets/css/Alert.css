@@ -1,0 +1,28 @@
+.alert-root {
+    text-align: center;
+    border: 0;
+    padding: 0.5rem 0.5rem;
+}
+
+.alert-danger {
+    background-color: rgb(253, 236, 234);
+}
+
+.alert-success {
+    background-color: rgb(237, 247, 237);
+    color: rgb(30, 70, 32);
+}
+
+.alert-icon {
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    padding-bottom: 2px;
+}
+
+.alert-icon-danger {
+    color: #f44336;
+}
+
+.alert-icon-success {
+    color: #4caf50;
+}

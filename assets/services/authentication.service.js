@@ -1,9 +1,11 @@
 import axios from "axios";
+import settings from "../helpers/application.settings";
 
 export const authenticationService = {
     login,
-    isUserLoggedIn,
     register,
+    isUserLoggedIn,
+    logout,
 };
 
 function login(email, password) {
@@ -11,12 +13,7 @@ function login(email, password) {
         email: email,
         password: password,
     })
-        .then(handleResponse)
-        .then(user => {
-            localStorage.setItem('token', user.token);
-
-            return user;
-        })
+        .then(handleNoContentResponse)
         .catch(handleError);
 }
 
@@ -30,12 +27,12 @@ function register(email, username, password) {
         .catch(handleError);
 }
 
-function isUserLoggedIn() {
-    return localStorage.getItem('token') !== null;
+function logout() {
+    return axios.post('/api/v1/accounts/logout');
 }
 
-function handleResponse(response) {
-    return response.data;
+function isUserLoggedIn() {
+    return settings.isAuthenticated || false;
 }
 
 function handleNoContentResponse(response) {
@@ -45,12 +42,8 @@ function handleNoContentResponse(response) {
 function handleError(error) {
     const response = error.response;
 
-    if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        // logout();
-        // location.reload(true);
-
-        // TODO: implement auto logout
+    if (response.status === 403) {
+        logout();
     }
 
     return Promise.reject(response.data);

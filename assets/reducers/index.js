@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
-import { authentication } from './authentication.reducer';
-import {registration} from "./registration.reducer";
 import {companies} from "./companies.reducer";
 import {invoices} from "./invoices";
+import {authentication} from "./authentication";
 
 const rootReducer = combineReducers({
     authentication,
-    registration,
     companies,
     invoices,
 });
