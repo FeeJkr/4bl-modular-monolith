@@ -25,7 +25,6 @@ services:
         class: App\Web\API\SessionRequestContext
 
 imports:
-    - {resource: 'modules/finances/services.yaml'}
     - {resource: 'modules/accounts/services.yaml'}
     - {resource: 'modules/invoices/services.yaml'}
     - {resource: 'web/mvc/services.yaml'}

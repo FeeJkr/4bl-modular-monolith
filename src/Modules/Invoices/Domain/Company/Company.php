@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Invoices\Domain\Company;
 
 use App\Modules\Invoices\Domain\User\UserId;
+use DateTimeImmutable;
 use JetBrains\PhpStorm\Pure;
 
 final class Company
@@ -17,7 +18,9 @@ final class Company
         private string $identificationNumber,
         private ?string $email,
         private ?string $phoneNumber,
-        private ?CompanyPaymentInformation $paymentInformation
+        private CompanyPaymentInformation $paymentInformation,
+        private DateTimeImmutable $createdAt,
+        private ?DateTimeImmutable $updatedAt
     ){}
 
     public static function create(
@@ -38,21 +41,9 @@ final class Company
             $identificationNumber,
             $email,
             $phoneNumber,
+            new CompanyPaymentInformation(null, null, null, null),
+            new DateTimeImmutable(),
             null
-        );
-    }
-
-    public static function fromRow(array $row): self
-    {
-        return new self(
-            CompanyId::fromString($row['company_id']),
-            UserId::fromString($row['user_id']),
-            CompanyAddress::fromRow($row),
-            $row['name'],
-            $row['identification_number'],
-            $row['email'],
-            $row['phone_number'],
-            CompanyPaymentInformation::createFromRow($row),
         );
     }
 
@@ -108,7 +99,6 @@ final class Company
         return $this->userId;
     }
 
-    #[Pure]
     public function getCompanyAddressId(): CompanyAddressId
     {
         return $this->companyAddress->getId();
@@ -119,19 +109,16 @@ final class Company
         return $this->name;
     }
 
-    #[Pure]
     public function getStreet(): string
     {
         return $this->companyAddress->getStreet();
     }
 
-    #[Pure]
     public function getZipCode(): string
     {
         return $this->companyAddress->getZipCode();
     }
 
-    #[Pure]
     public function getCity(): string
     {
         return $this->companyAddress->getCity();
@@ -155,24 +142,34 @@ final class Company
     #[Pure]
     public function getPaymentType(): ?string
     {
-        return $this->paymentInformation?->getPaymentType();
+        return $this->paymentInformation->getPaymentType();
     }
 
     #[Pure]
     public function getPaymentLastDate(): ?int
     {
-        return $this->paymentInformation?->getPaymentLastDate();
+        return $this->paymentInformation->getPaymentLastDate();
     }
 
     #[Pure]
     public function getBank(): ?string
     {
-        return $this->paymentInformation?->getBank();
+        return $this->paymentInformation->getBank();
     }
 
     #[Pure]
     public function getAccountNumber(): ?string
     {
-        return $this->paymentInformation?->getAccountNumber();
+        return $this->paymentInformation->getAccountNumber();
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }

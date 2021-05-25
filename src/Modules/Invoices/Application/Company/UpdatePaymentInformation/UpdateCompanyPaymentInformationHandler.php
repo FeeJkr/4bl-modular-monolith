@@ -30,6 +30,6 @@ class UpdateCompanyPaymentInformationHandler implements CommandHandler
             $command->getAccountNumber(),
         );
 
-        $this->repository->save($company);
+        $this->repository->store($company);
     }
 }

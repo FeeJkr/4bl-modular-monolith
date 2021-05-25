@@ -8,9 +8,11 @@ use App\Modules\Invoices\Domain\User\UserId;
 
 interface CompanyRepository
 {
+    /**
+     * @throws CompanyNotFoundException
+     */
     public function fetchById(CompanyId $id, UserId $userId): Company;
     public function fetchAll(UserId $userId): array;
     public function store(Company $company): void;
-    public function save(Company $company): void;
-    public function delete(CompanyId $id, UserId $userId): void;
+    public function delete(CompanyId $companyId, UserId $userId): void;
 }

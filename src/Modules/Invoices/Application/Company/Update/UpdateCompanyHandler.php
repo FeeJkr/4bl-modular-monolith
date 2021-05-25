@@ -33,6 +33,6 @@ class UpdateCompanyHandler implements CommandHandler
             $command->getPhoneNumber(),
         );
 
-        $this->repository->save($company);
+        $this->repository->store($company);
     }
 }

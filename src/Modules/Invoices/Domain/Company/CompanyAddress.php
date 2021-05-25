@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Company;
 
-use JetBrains\PhpStorm\Pure;
+use DateTimeImmutable;
 
-final class CompanyAddress
+class CompanyAddress
 {
     public function __construct(
         private CompanyAddressId $id,
         private string $street,
         private string $zipCode,
         private string $city,
+        private DateTimeImmutable $createdAt,
+        private ?DateTimeImmutable $updatedAt
     ){}
 
     public static function create(string $street, string $zipCode, string $city): self
@@ -22,17 +24,8 @@ final class CompanyAddress
             $street,
             $zipCode,
             $city,
-        );
-    }
-
-    #[Pure]
-    public static function fromRow(array $row): self
-    {
-        return new self(
-            CompanyAddressId::fromString($row['company_address_id']),
-            $row['street'],
-            $row['zip_code'],
-            $row['city']
+            new DateTimeImmutable(),
+            null
         );
     }
 
@@ -61,5 +54,15 @@ final class CompanyAddress
     public function getCity(): string
     {
         return $this->city;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }
