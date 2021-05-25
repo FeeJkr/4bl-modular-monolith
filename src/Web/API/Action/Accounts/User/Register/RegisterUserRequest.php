@@ -20,7 +20,7 @@ final class RegisterUserRequest extends Request
         $this->password = $password;
     }
 
-    public static function createFromServerRequest(ServerRequest $request): self
+    public static function fromRequest(ServerRequest $request): self
     {
     	$requestData = $request->toArray();
 

@@ -7,5 +7,5 @@ use Symfony\Component\HttpFoundation\Request as ServerRequest;
 
 abstract class Request
 {
-    abstract public static function createFromServerRequest(ServerRequest $request): self;
+    abstract public static function fromRequest(ServerRequest $request): self;
 }

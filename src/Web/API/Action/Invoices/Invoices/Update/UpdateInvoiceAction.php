@@ -14,9 +14,8 @@ class UpdateInvoiceAction extends AbstractAction
 {
     public function __construct(private CommandBus $bus){}
 
-    public function __invoke(Request $serverRequest): Response
+    public function __invoke(UpdateInvoiceRequest $request): Response
     {
-		$request = UpdateInvoiceRequest::createFromServerRequest($serverRequest);
 		$command = new UpdateInvoiceCommand(
 		    $request->getId(),
 		    $request->getInvoiceNumber(),

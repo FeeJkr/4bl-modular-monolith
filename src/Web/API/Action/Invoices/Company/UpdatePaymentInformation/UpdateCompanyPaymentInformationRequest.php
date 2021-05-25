@@ -18,7 +18,7 @@ class UpdateCompanyPaymentInformationRequest extends Request
 		private string $accountNumber
 	){}
 
-	public static function createFromServerRequest(ServerRequest $request): self
+	public static function fromRequest(ServerRequest $request): self
 	{
 		$requestData = $request->toArray();
 		$id = $request->get('id');

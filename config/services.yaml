@@ -15,6 +15,9 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
 
+    Framework\:
+        resource: '../framework'
+
     App\Common\:
         resource: '../src/Common/'
 

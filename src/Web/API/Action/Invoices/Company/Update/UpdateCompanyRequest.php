@@ -21,7 +21,7 @@ class UpdateCompanyRequest extends Request
 		private string $city,
 	){}
 
-	public static function createFromServerRequest(ServerRequest $request): self
+	public static function fromRequest(ServerRequest $request): self
 	{
 		$requestData = $request->toArray();
 		$id = $request->get('id');

@@ -19,4 +19,4 @@ framework:
 
             command.bus:
                 middleware:
-                    - 'App\Common\Infrastructure\Messenger\DatabaseTransactionMiddleware'
+                    - doctrine_transaction

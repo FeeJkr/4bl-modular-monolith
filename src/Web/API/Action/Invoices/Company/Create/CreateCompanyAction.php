@@ -14,9 +14,8 @@ class CreateCompanyAction extends AbstractAction
 {
     public function __construct(private CommandBus $bus){}
 
-    public function __invoke(Request $serverRequest): Response
+    public function __invoke(CreateCompanyRequest $request): Response
     {
-		$request = CreateCompanyRequest::createFromServerRequest($serverRequest);
 		$command = new CreateCompanyCommand(
 			$request->getStreet(),
 			$request->getZipCode(),

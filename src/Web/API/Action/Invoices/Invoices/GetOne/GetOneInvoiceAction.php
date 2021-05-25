@@ -18,7 +18,6 @@ class GetOneInvoiceAction extends AbstractAction
 
     public function __invoke(Request $request): Response
     {
-        /** @var InvoiceDTO $invoice */
         $invoice = $this->bus->handle(new GetInvoiceByIdQuery($request->get('id')));
 
         return $this->json($invoice->toArray());

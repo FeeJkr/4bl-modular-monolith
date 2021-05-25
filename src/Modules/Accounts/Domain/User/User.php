@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Accounts\Domain\User;
 
-use JetBrains\PhpStorm\Pure;
+use DateTimeImmutable;
 
 final class User
 {
@@ -13,20 +13,10 @@ final class User
         private string $email,
         private string $username,
         private string $password,
-        private Token $token
+        private Token $token,
+        private DateTimeImmutable $createdAt,
+        private ?DateTimeImmutable $updatedAt
     ) {}
-
-    #[Pure]
-    public static function fromRow(array $row): self
-    {
-        return new self(
-            UserId::fromString($row['id']),
-            $row['email'],
-            $row['username'],
-            $row['password'],
-            new Token($row['token'])
-        );
-    }
 
     public static function register(string $email, string $username, string $password): self
     {
@@ -35,7 +25,9 @@ final class User
             $email,
             $username,
             $password,
-            Token::nullInstance()
+            Token::nullInstance(),
+            new DateTimeImmutable(),
+            null
         );
     }
 
@@ -73,4 +65,14 @@ final class User
     {
         return $this->token;
     }
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
 }

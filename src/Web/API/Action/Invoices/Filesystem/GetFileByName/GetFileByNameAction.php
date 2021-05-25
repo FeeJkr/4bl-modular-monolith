@@ -14,10 +14,8 @@ class GetFileByNameAction extends AbstractAction
 {
     public function __construct(private QueryBus $bus){}
 
-    public function __invoke(Request $serverRequest): Response
+    public function __invoke(GetFileByNameRequest $request): Response
     {
-        $request = GetFileByNameRequest::createFromServerRequest($serverRequest);
-
         $file = $this->bus->handle(new GetFileByNameQuery($request->getFilename()));
 
         return new Response($file, headers: [

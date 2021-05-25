@@ -14,15 +14,13 @@ final class RegisterUserAction extends AbstractAction
 {
     public function __construct(private CommandBus $bus){}
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(RegisterUserRequest $request): JsonResponse
     {
-        $registerUserRequest = RegisterUserRequest::createFromServerRequest($request);
-
         $this->bus->dispatch(
             new RegisterUserCommand(
-                $registerUserRequest->getEmail(),
-                $registerUserRequest->getUsername(),
-                $registerUserRequest->getPassword()
+                $request->getEmail(),
+                $request->getUsername(),
+                $request->getPassword()
             )
         );
 

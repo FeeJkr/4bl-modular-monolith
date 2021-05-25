@@ -15,8 +15,11 @@ final class SignOutUserHandler implements CommandHandler
     public function __invoke(SignOutUserCommand $command): void
     {
         $user = $this->repository->fetchByToken(new Token($command->getToken()));
-        $user->signOut();
 
-        $this->repository->save($user);
+        if ($user !== null) {
+            $user->signOut();
+
+            $this->repository->store($user);
+        }
     }
 }

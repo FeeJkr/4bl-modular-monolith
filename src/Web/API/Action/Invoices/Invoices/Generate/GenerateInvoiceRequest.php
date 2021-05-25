@@ -34,7 +34,7 @@ class GenerateInvoiceRequest extends Request
         private array $products
     ){}
 
-    public static function createFromServerRequest(ServerRequest $request): self
+    public static function fromRequest(ServerRequest $request): self
     {
     	$requestData = $request->toArray();
         $invoiceNumber = $requestData[self::INVOICE_NUMBER] ?? null;

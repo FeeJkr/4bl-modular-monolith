@@ -11,7 +11,7 @@ class GetFileByNameRequest extends Request
 {
     public function __construct(private string $filename){}
 
-    public static function createFromServerRequest(ServerRequest $request): self
+    public static function fromRequest(ServerRequest $request): self
     {
         return new self(
             $request->get('filename')

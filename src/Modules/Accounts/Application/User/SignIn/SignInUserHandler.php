@@ -34,6 +34,6 @@ final class SignInUserHandler implements CommandHandler
 
         $user->signIn($this->tokenManager->generate());
 
-        $this->repository->save($user);
+        $this->repository->store($user);
     }
 }

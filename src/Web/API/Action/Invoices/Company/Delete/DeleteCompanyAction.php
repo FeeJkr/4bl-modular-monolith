@@ -14,11 +14,9 @@ class DeleteCompanyAction extends AbstractAction
 {
     public function __construct(private CommandBus $bus){}
 
-    public function __invoke(Request $request): Response
+    public function __invoke(DeleteCompanyRequest $request): Response
     {
-        $deleteCompanyRequest = DeleteCompanyRequest::createFromServerRequest($request);
-
-        $this->bus->dispatch(new DeleteCompanyCommand($deleteCompanyRequest->getCompanyId()));
+        $this->bus->dispatch(new DeleteCompanyCommand($request->getCompanyId()));
 
         return $this->noContentResponse();
     }

@@ -14,7 +14,7 @@ class GetAllInvoicesAction extends AbstractAction
 {
     public function __construct(private QueryBus $bus){}
 
-    public function __invoke(Request $serverRequest): Response
+    public function __invoke(): Response
     {
         $invoices = $this->bus->handle(new GetAllInvoicesQuery);
 

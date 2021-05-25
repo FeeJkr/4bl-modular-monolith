@@ -10,7 +10,6 @@ use App\Modules\Accounts\Application\User\GetToken\GetTokenQuery;
 use App\Modules\Accounts\Application\User\GetToken\TokenDTO;
 use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
 use App\Web\API\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -19,20 +18,19 @@ final class SignInUserAction extends AbstractAction
     public function __construct(
         private CommandBus $commandBus,
         private QueryBus $queryBus,
+        private SessionInterface $session
     ){}
 
-    public function __invoke(Request $request): Response
+    public function __invoke(SignInUserRequest $request): Response
     {
-        $signInUserRequest = SignInUserRequest::createFromServerRequest($request);
-
         $this->commandBus->dispatch(
-            new SignInUserCommand($signInUserRequest->getEmail(), $signInUserRequest->getPassword())
+            new SignInUserCommand($request->getEmail(), $request->getPassword())
         );
 
         /** @var TokenDTO $token */
-        $token = $this->queryBus->handle(new GetTokenQuery($signInUserRequest->getEmail()));
+        $token = $this->queryBus->handle(new GetTokenQuery($request->getEmail()));
 
-        $request->getSession()->set('user.token', $token->getToken());
+        $this->session->set('user.token', $token->getToken());
 
         return $this->noContentResponse();
     }

@@ -36,7 +36,7 @@ class UpdateInvoiceRequest extends Request
         private array $products
     ){}
 
-    public static function createFromServerRequest(ServerRequest $request): self
+    public static function fromRequest(ServerRequest $request): self
     {
     	$requestData = $request->toArray();
     	$id = $request->get(self::ID);

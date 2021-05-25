@@ -14,9 +14,8 @@ class GenerateInvoiceAction extends AbstractAction
 {
     public function __construct(private CommandBus $bus){}
 
-    public function __invoke(Request $serverRequest): Response
+    public function __invoke(GenerateInvoiceRequest $request): Response
     {
-		$request = GenerateInvoiceRequest::createFromServerRequest($serverRequest);
 		$command = new GenerateInvoiceCommand(
 		    $request->getInvoiceNumber(),
             $request->getGenerateDate(),

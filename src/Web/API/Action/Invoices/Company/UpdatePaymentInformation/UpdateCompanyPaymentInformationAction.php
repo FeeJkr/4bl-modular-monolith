@@ -14,10 +14,8 @@ class UpdateCompanyPaymentInformationAction extends AbstractAction
 {
 	public function __construct(private CommandBus $bus){}
 
-	public function __invoke(Request $serverRequest): Response
+	public function __invoke(UpdateCompanyPaymentInformationRequest $request): Response
 	{
-		$request = UpdateCompanyPaymentInformationRequest::createFromServerRequest($serverRequest);
-
 		$this->bus->dispatch(new UpdateCompanyPaymentInformationCommand(
 			$request->getId(),
 			$request->getPaymentType(),

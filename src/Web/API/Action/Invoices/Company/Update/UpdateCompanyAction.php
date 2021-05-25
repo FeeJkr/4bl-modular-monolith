@@ -14,10 +14,8 @@ class UpdateCompanyAction extends AbstractAction
 {
 	public function __construct(private CommandBus $bus){}
 
-	public function __invoke(Request $serverRequest): Response
+	public function __invoke(UpdateCompanyRequest $request): Response
 	{
-		$request = UpdateCompanyRequest::createFromServerRequest($serverRequest);
-
 		$this->bus->dispatch(new UpdateCompanyCommand(
 			$request->getCompanyId(),
 			$request->getStreet(),
