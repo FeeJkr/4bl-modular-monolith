@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Invoice;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 
 class InvoiceParameters
 {
@@ -13,8 +13,8 @@ class InvoiceParameters
         private string $generatePlace,
         private float $alreadyTakenPrice,
         private string $currencyCode,
-        private DateTimeInterface $generateDate,
-        private DateTimeInterface $sellDate,
+        private DateTimeImmutable $generateDate,
+        private DateTimeImmutable $sellDate,
     ){}
 
     public function getInvoiceNumber(): string
@@ -37,12 +37,12 @@ class InvoiceParameters
         return $this->currencyCode;
     }
 
-    public function getGenerateDate(): DateTimeInterface
+    public function getGenerateDate(): DateTimeImmutable
     {
         return $this->generateDate;
     }
 
-    public function getSellDate(): DateTimeInterface
+    public function getSellDate(): DateTimeImmutable
     {
         return $this->sellDate;
     }

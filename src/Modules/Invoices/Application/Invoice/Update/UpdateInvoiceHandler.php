@@ -6,6 +6,7 @@ namespace App\Modules\Invoices\Application\Invoice\Update;
 
 use App\Common\Application\Command\CommandHandler;
 use App\Modules\Invoices\Domain\Company\CompanyId;
+use App\Modules\Invoices\Domain\Company\CompanyRepository;
 use App\Modules\Invoices\Domain\Invoice\InvoiceId;
 use App\Modules\Invoices\Domain\Invoice\InvoiceParameters;
 use App\Modules\Invoices\Domain\Invoice\InvoiceProduct;
@@ -14,6 +15,7 @@ use App\Modules\Invoices\Domain\Invoice\InvoiceRepository;
 use App\Modules\Invoices\Domain\Invoice\PdfFromHtmlGenerator;
 use App\Modules\Invoices\Domain\User\UserContext;
 use DateTime;
+use DateTimeImmutable;
 use JetBrains\PhpStorm\Pure;
 
 class UpdateInvoiceHandler implements CommandHandler
@@ -22,6 +24,7 @@ class UpdateInvoiceHandler implements CommandHandler
         private InvoiceRepository $repository,
         private UserContext $userContext,
         private PdfFromHtmlGenerator $pdfFromHtmlGenerator,
+        private CompanyRepository $companyRepository,
     ){}
 
     public function __invoke(UpdateInvoiceCommand $command): void
@@ -31,41 +34,24 @@ class UpdateInvoiceHandler implements CommandHandler
             $this->userContext->getUserId()
         );
 
-        $products = $this->getInvoiceProductsCollection($command->getProducts());
         $invoiceParameters = new InvoiceParameters(
             $command->getInvoiceNumber(),
             $command->getGeneratePlace(),
             $command->getAlreadyTakenPrice(),
             $command->getCurrency(),
-            DateTime::createFromFormat('d-m-Y', $command->getGenerateDate()),
-            DateTime::createFromFormat('d-m-Y', $command->getSellDate()),
+            DateTimeImmutable::createFromFormat('d-m-Y', $command->getGenerateDate()),
+            DateTimeImmutable::createFromFormat('d-m-Y', $command->getSellDate()),
         );
 
         $invoice->update(
-            CompanyId::fromString($command->getSellerId()),
-            CompanyId::fromString($command->getBuyerId()),
+            $this->companyRepository->fetchById(CompanyId::fromString($command->getSellerId()), $invoice->getUserId()),
+            $this->companyRepository->fetchById(CompanyId::fromString($command->getBuyerId()), $invoice->getUserId()),
             $invoiceParameters,
-            $products
+            $command->getProducts()
         );
 
         $this->pdfFromHtmlGenerator->generate($invoice);
 
-        $this->repository->save($invoice);
-    }
-
-    #[Pure]
-    private function getInvoiceProductsCollection(array $products): InvoiceProductsCollection
-    {
-        $invoiceProducts = [];
-
-        foreach ($products as $product) {
-            $invoiceProducts[] = new InvoiceProduct(
-                (int) $product['position'],
-                $product['name'],
-                (float) $product['price'],
-            );
-        }
-
-        return new InvoiceProductsCollection($invoiceProducts);
+        $this->repository->store($invoice);
     }
 }

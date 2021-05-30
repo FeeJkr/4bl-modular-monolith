@@ -9,6 +9,7 @@ use App\Modules\Invoices\Application\Company\GetOneById\CompanyDTO;
 use App\Modules\Invoices\Application\Company\GetOneById\GetOneCompanyByIdQuery;
 use App\Modules\Invoices\Domain\Invoice\HtmlGenerator;
 use App\Modules\Invoices\Domain\Invoice\Invoice;
+use App\Modules\Invoices\Domain\Invoice\InvoiceProduct;
 use App\Modules\Invoices\Domain\Invoice\PriceTransformer;
 use DateInterval;
 use Exception;
@@ -19,15 +20,14 @@ class TwigHtmlGenerator implements HtmlGenerator
 {
     public function __construct(
         private Environment $twig,
-        private QueryBus $bus,
         private PriceTransformer $priceTransformer
     ){}
 
     public function generate(Invoice $invoice): string
     {
         try {
-            $seller = $this->getCompanyInformationById($invoice->getSellerId()->toString());
-            $buyer = $this->getCompanyInformationById($invoice->getBuyerId()->toString());
+            $seller = $invoice->getSeller();
+            $buyer = $invoice->getBuyer();
             $paymentLastDate = clone $invoice->getParameters()->getSellDate();
             $paymentLastDate->add(new DateInterval(sprintf('P%dD', $seller->getPaymentLastDate())));
             $toPayPrice = $this->calculateToPayPrice($invoice);
@@ -56,9 +56,24 @@ class TwigHtmlGenerator implements HtmlGenerator
                     'phoneNumber' => $buyer->getPhoneNumber(),
                 ],
                 'products' => $invoice->getProducts()->toArray(),
-                'totalNetPrice' => $invoice->getProducts()->getTotalNetPrice(),
-                'totalTaxPrice' => $invoice->getProducts()->getTotalTaxPrice(),
-                'totalGrossPrice' => $invoice->getProducts()->getTotalGrossPrice(),
+                'totalNetPrice' => array_sum(
+                    array_map(
+                        static fn (InvoiceProduct $product): float => $product->getNetPrice(),
+                        $invoice->getProducts()->toArray()
+                    )
+                ),
+                'totalTaxPrice' => array_sum(
+                    array_map(
+                        static fn (InvoiceProduct $product): float => $product->getTaxPrice(),
+                        $invoice->getProducts()->toArray()
+                    )
+                ),
+                'totalGrossPrice' => array_sum(
+                    array_map(
+                        static fn (InvoiceProduct $product): float => $product->getGrossPrice(),
+                        $invoice->getProducts()->toArray()
+                    )
+                ),
                 'paymentType' => $seller->getPaymentType(),
                 'paymentLastDate' => $paymentLastDate->format('d-m-Y'),
                 'paymentBankName' => $seller->getBank(),
@@ -73,13 +88,13 @@ class TwigHtmlGenerator implements HtmlGenerator
         }
     }
 
-    private function getCompanyInformationById(string $companyId): CompanyDTO
-    {
-        return $this->bus->handle(new GetOneCompanyByIdQuery($companyId));
-    }
-
     private function calculateToPayPrice(Invoice $invoice): float
     {
-        return $invoice->getProducts()->getTotalGrossPrice() - $invoice->getParameters()->getAlreadyTakenPrice();
+        return array_sum(
+            array_map(
+                static fn (InvoiceProduct $product): float => $product->getGrossPrice(),
+                $invoice->getProducts()->toArray()
+            )
+        ) - $invoice->getParameters()->getAlreadyTakenPrice();
     }
 }

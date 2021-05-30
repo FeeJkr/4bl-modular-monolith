@@ -26,11 +26,4 @@
             <join-column name="company_address_id" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>
         </one-to-one>
     </entity>
-
-    <embeddable name="App\Modules\Invoices\Domain\Company\CompanyPaymentInformation">
-        <field name="paymentType" column="payment_type" />
-        <field name="paymentLastDate" column="payment_last_date" />
-        <field name="bank" column="bank" />
-        <field name="accountNumber" column="account_number" />
-    </embeddable>
 </doctrine-mapping>

@@ -7,12 +7,17 @@ namespace App\Modules\Invoices\Infrastructure\Domain\Invoice\Doctrine;
 use App\Modules\Invoices\Domain\Invoice\InvoiceId;
 use App\Modules\Invoices\Domain\Invoice\InvoiceProduct;
 use App\Modules\Invoices\Domain\Invoice\InvoiceProductsCollection;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
+use Doctrine\Persistence\ManagerRegistry;
 use Throwable;
 
-class InvoiceProductRepository
+class InvoiceProductRepository extends ServiceEntityRepository
 {
-    public function __construct(private Connection $connection){}
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, InvoiceProduct::class);
+    }
 
     /**
      * @throws Throwable

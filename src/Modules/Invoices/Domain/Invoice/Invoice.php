@@ -4,69 +4,75 @@ declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Invoice;
 
+use App\Modules\Invoices\Domain\Company\Company;
 use App\Modules\Invoices\Domain\Company\CompanyId;
 use App\Modules\Invoices\Domain\User\UserId;
-use DateTime;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class Invoice
 {
     public function __construct(
         private InvoiceId $id,
         private UserId $userId,
-        private CompanyId $sellerId,
-        private CompanyId $buyerId,
+        private Company $seller,
+        private Company $buyer,
         private InvoiceParameters $parameters,
-        private InvoiceProductsCollection $products,
+        private Collection $products,
+        private DateTimeImmutable $createdAt,
+        private ?DateTimeImmutable $updatedAt
     ){}
 
     public static function create(
         UserId $userId,
-        CompanyId $sellerId,
-        CompanyId $buyerId,
+        Company $seller,
+        Company $buyer,
         InvoiceParameters $parameters,
-        InvoiceProductsCollection $products,
     ): self {
         return new self(
             InvoiceId::generate(),
             $userId,
-            $sellerId,
-            $buyerId,
+            $seller,
+            $buyer,
             $parameters,
-            $products,
+            new ArrayCollection(),
+            new DateTimeImmutable(),
+            null
         );
     }
 
-    public static function fromRow(array $rows): self
+    public function setProducts(array $products): void
     {
-        $row = $rows[0];
+        $productsCollection = new ArrayCollection();
 
-        return new self(
-            InvoiceId::fromString($row['id']),
-            UserId::fromString($row['user_id']),
-            CompanyId::fromString($row['seller_id']),
-            CompanyId::fromString($row['buyer_id']),
-            new InvoiceParameters(
-                $row['invoice_number'],
-                $row['generate_place'],
-                (float) $row['already_taken_price'],
-                $row['currency_code'],
-                DateTime::createFromFormat('Y-m-d H:i:s', $row['generated_at']),
-                DateTime::createFromFormat('Y-m-d H:i:s', $row['sold_at']),
-            ),
-            InvoiceProductsCollection::fromRows($rows)
-        );
+        foreach ($products as $product) {
+            $productsCollection->add(
+                new InvoiceProduct(
+                    InvoiceProductId::generate(),
+                    $this,
+                    (int) $product['position'],
+                    $product['name'],
+                    (float) $product['price'],
+                    new DateTimeImmutable(),
+                    null,
+                )
+            );
+        }
+
+        $this->products = $productsCollection;
     }
 
     public function update(
-        CompanyId $sellerId,
-        CompanyId $buyerId,
+        Company $seller,
+        Company $buyer,
         InvoiceParameters $parameters,
-        InvoiceProductsCollection $products,
+        array $products,
     ): void {
-        $this->sellerId = $sellerId;
-        $this->buyerId = $buyerId;
+        $this->seller = $seller;
+        $this->buyer = $buyer;
         $this->parameters = $parameters;
-        $this->products = $products;
+        $this->setProducts($products);
     }
 
     public function getId(): InvoiceId
@@ -79,14 +85,14 @@ class Invoice
         return $this->userId;
     }
 
-    public function getSellerId(): CompanyId
+    public function getSeller(): Company
     {
-        return $this->sellerId;
+        return $this->seller;
     }
 
-    public function getBuyerId(): CompanyId
+    public function getBuyer(): Company
     {
-        return $this->buyerId;
+        return $this->buyer;
     }
 
     public function getParameters(): InvoiceParameters
@@ -94,8 +100,18 @@ class Invoice
         return $this->parameters;
     }
 
-    public function getProducts(): InvoiceProductsCollection
+    public function getProducts(): Collection
     {
         return $this->products;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }

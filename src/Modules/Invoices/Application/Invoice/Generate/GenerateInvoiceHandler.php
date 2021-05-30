@@ -5,18 +5,21 @@ declare(strict_types=1);
 namespace App\Modules\Invoices\Application\Invoice\Generate;
 
 use App\Common\Application\Command\CommandHandler;
-use App\Common\Infrastructure\Messenger\MessageHandlerInterface;
+use App\Common\Application\Query\QueryBus;
+use App\Modules\Invoices\Application\Company\GetOneById\GetOneCompanyByIdQuery;
 use App\Modules\Invoices\Domain\Company\CompanyId;
-use App\Modules\Invoices\Domain\Invoice\HtmlGenerator;
+use App\Modules\Invoices\Domain\Company\CompanyRepository;
 use App\Modules\Invoices\Domain\Invoice\Invoice;
+use App\Modules\Invoices\Domain\Invoice\InvoiceProductId;
 use App\Modules\Invoices\Domain\Invoice\PdfFromHtmlGenerator;
 use App\Modules\Invoices\Domain\Invoice\InvoiceParameters;
 use App\Modules\Invoices\Domain\Invoice\InvoiceProduct;
 use App\Modules\Invoices\Domain\Invoice\InvoiceProductsCollection;
 use App\Modules\Invoices\Domain\Invoice\InvoiceRepository;
 use App\Modules\Invoices\Domain\User\UserContext;
-use DateTime;
-use JetBrains\PhpStorm\Pure;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class GenerateInvoiceHandler implements CommandHandler
 {
@@ -24,46 +27,33 @@ class GenerateInvoiceHandler implements CommandHandler
         private InvoiceRepository $repository,
         private PdfFromHtmlGenerator $pdfFromHtmlGenerator,
         private UserContext $userContext,
+        private CompanyRepository $companyRepository,
     ){}
 
     public function __invoke(GenerateInvoiceCommand $command): void
     {
-        $products = $this->getInvoiceProductsCollection($command->getProducts());
         $invoiceParameters = new InvoiceParameters(
                 $command->getInvoiceNumber(),
                 $command->getGeneratePlace(),
                 $command->getAlreadyTakenPrice(),
                 $command->getCurrency(),
-                DateTime::createFromFormat('d-m-Y', $command->getGenerateDate()),
-                DateTime::createFromFormat('d-m-Y', $command->getSellDate()),
+                DateTimeImmutable::createFromFormat('d-m-Y', $command->getGenerateDate()),
+                DateTimeImmutable::createFromFormat('d-m-Y', $command->getSellDate()),
         );
 
+        $userId = $this->userContext->getUserId();
+
         $invoice = Invoice::create(
-            $this->userContext->getUserId(),
-            CompanyId::fromString($command->getSellerId()),
-            CompanyId::fromString($command->getBuyerId()),
+            $userId,
+            $this->companyRepository->fetchById(CompanyId::fromString($command->getSellerId()), $userId),
+            $this->companyRepository->fetchById(CompanyId::fromString($command->getBuyerId()), $userId),
             $invoiceParameters,
-            $products,
         );
+
+        $invoice->setProducts($command->getProducts());
 
         $this->pdfFromHtmlGenerator->generate($invoice);
 
         $this->repository->store($invoice);
-    }
-
-    #[Pure]
-    private function getInvoiceProductsCollection(array $products): InvoiceProductsCollection
-    {
-        $invoiceProducts = [];
-
-        foreach ($products as $product) {
-            $invoiceProducts[] = new InvoiceProduct(
-                (int) $product['position'],
-                $product['name'],
-                (float) $product['price'],
-            );
-        }
-
-        return new InvoiceProductsCollection($invoiceProducts);
     }
 }

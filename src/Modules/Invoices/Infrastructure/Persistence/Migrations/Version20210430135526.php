@@ -68,13 +68,13 @@ final class Version20210430135526 extends AbstractMigration
         $this->addSql('
             create table invoice_products
             (
+                id uuid default gen_random_uuid() not null unique constraint invoice_products_pk primary key,
                 invoice_id uuid not null constraint invoice_products_invoices_id_fk references invoices on delete cascade,
                 position int not null,
                 name text not null,
                 price float not null,
                 created_at timestamp default now() not null,
-                updated_at timestamp,
-                primary key (invoice_id, position)
+                updated_at timestamp
             );
         ');
     }

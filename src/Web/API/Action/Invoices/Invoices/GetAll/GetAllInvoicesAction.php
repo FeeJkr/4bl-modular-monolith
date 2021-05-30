@@ -5,6 +5,7 @@ namespace App\Web\API\Action\Invoices\Invoices\GetAll;
 
 use App\Common\Application\Query\QueryBus;
 use App\Modules\Invoices\Application\Invoice\GetAll\GetAllInvoicesQuery;
+use App\Modules\Invoices\Domain\Invoice\Invoice;
 use App\Web\API\Action\AbstractAction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,10 @@ class GetAllInvoicesAction extends AbstractAction
 {
     public function __construct(private QueryBus $bus){}
 
-    public function __invoke(): Response
+    public function __invoke(): GetAllInvoicesResponse
     {
-        $invoices = $this->bus->handle(new GetAllInvoicesQuery);
-
-        return $this->json($invoices->toArray());
+        return GetAllInvoicesResponse::respond(
+            $this->bus->handle(new GetAllInvoicesQuery)
+        );
     }
 }

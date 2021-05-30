@@ -3,21 +3,45 @@ declare(strict_types=1);
 
 namespace App\Modules\Invoices\Domain\Invoice;
 
+use DateTimeImmutable;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 
 class InvoiceProduct
 {
-    public function __construct(private int $position, private string $name, private float $netPrice){}
+    public function __construct(
+        private InvoiceProductId $id,
+        private ?Invoice $invoice,
+        private int $position,
+        private string $name,
+        private float $netPrice,
+        private DateTimeImmutable $createdAt,
+        private ?DateTimeImmutable $updatedAt
+    ){}
 
-    #[Pure]
-    public static function fromRow(array $row): self
+    public function getId(): InvoiceProductId
     {
-        return new self(
-            $row['product_position'],
-            $row['product_name'],
-            (float) $row['product_price']
-        );
+        return $this->id;
+    }
+
+    public function getInvoice(): Invoice
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(?Invoice $invoice): void
+    {
+        $this->invoice = $invoice;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 
     public function getPosition(): int
