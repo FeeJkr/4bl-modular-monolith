@@ -19,6 +19,10 @@ class RequestParamConverter implements ParamConverterInterface
     #[Pure]
     public function supports(ParamConverter $configuration): bool
     {
-        return method_exists($configuration->getClass(), 'fromRequest');
+        if ($configuration->getClass() !== null) {
+            return method_exists($configuration->getClass(), 'fromRequest');
+        }
+
+        return false;
     }
 }
