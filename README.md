@@ -1,25 +1,22 @@
 # 4BL Project
 
-This is a example application for control your family or company budget in easy way.
-Just now has a lot of bugs and non optimal database queries :)
+This is a example application for control your family or company in easy way. 
+It will be contained a lot of different modules for automate everyday tasks, such as
+budget control, invoice generation for company, invoice control, creating and controling
+to-do lists and more.
 
 #### Run application locally
 
 ##### Docker
-`git clone https://github.com/FeeJkr/4bl-finances.git`
+* `cd docker`
+* `cp .env.example .env` After this you can change default settings in .env file
+* `docker-compose up -d`
+* `docker-compose exec -u root app bash`
+* After in container bush run follow commands:
+    * `composer install` for install php dependencies
+    * `npm install` for install react dependencies
+    * `npm run build` for build react application
+    * `php bin/console doctrine:database:create`
+    * `php bin/console doctrine:migrations:migrate`
 
-`cd 4bl-finances`
-
-`docker-compose up -d`
-
-`docker-compose exec web composer install` 
-
-`Change .env file if you want (this part can be skipped)`
-
-`docker-compose exec web php bin/console doctrine:database:create`
-
-`docker-compose exec web php bin/console doctrine:migrations:migrate`
-
-`Type yes to console`
-
-`After database migrations your application must be available on http://localhost:8080`
+Application will be available on localhost:{$PORT}. 
