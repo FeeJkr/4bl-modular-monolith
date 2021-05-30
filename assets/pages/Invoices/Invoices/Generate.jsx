@@ -13,6 +13,7 @@ import Select from "react-select";
 function Generate() {
     const dispatch = useDispatch();
     const validationErrors = useSelector(state => state.invoices.create.validationErrors);
+    const isLoading = useSelector(state => state.invoices.create.isLoading);
     let errors = [];
     const [inputs, setInputs] = useState({
         invoiceNumber: '',
@@ -393,8 +394,15 @@ function Generate() {
 
                                 <div className="justify-content-end row mt-5">
                                     <div className="col-lg-12">
-                                        <input type="submit" className="btn btn-primary" style={{fontSize: '13px'}}
-                                                id="create-company-button" value="Save Changes"/>
+                                        {isLoading
+                                            ? (
+                                                <button type="submit" className="btn btn-primary" style={{fontSize: '13px'}}>
+                                                    <i className="bi bi-arrow-clockwise icon-spin" style={{marginRight: '10px', display: 'inline-block'}}/>
+                                                    Loading...
+                                                </button>
+                                            )
+                                            : <input type="submit" className="btn btn-primary" style={{fontSize: '13px'}} value="Save Changes"/>
+                                        }
                                     </div>
                                 </div>
                             </form>

@@ -4,7 +4,8 @@ export function create(state = {items: []}, action) {
     switch (action.type) {
         case invoicesConstants.CREATE_REQUEST:
             return {
-                request: action.request
+                request: action.request,
+                isLoading: true,
             };
         case invoicesConstants.CREATE_SUCCESS:
             return {};

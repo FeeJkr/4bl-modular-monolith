@@ -17,7 +17,7 @@ function Edit() {
     const invoice = useSelector(state => state.invoices.one.invoice);
     const isLoading = useSelector(state => state.invoices.update.isLoading);
     const isUpdated = useSelector(state => state.invoices.update.isUpdated);
-    const validationErrors = useSelector(state => state.invoices.one.validationErrors);
+    const validationErrors = useSelector(state => state.invoices.update.validationErrors);
     let errors = [];
 
     useEffect(() => {
