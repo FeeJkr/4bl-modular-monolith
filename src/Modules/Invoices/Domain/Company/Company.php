@@ -89,11 +89,6 @@ class Company
         return $this->id;
     }
 
-    public function setId(CompanyId $id): void
-	{
-		$this->id = $id;
-	}
-
     public function getUserId(): UserId
     {
         return $this->userId;
