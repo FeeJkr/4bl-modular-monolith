@@ -7,14 +7,13 @@ namespace App\Web\API\Action\Invoices\Company\Create;
 use App\Common\Application\Command\CommandBus;
 use App\Modules\Invoices\Application\Company\Create\CreateCompanyCommand;
 use App\Web\API\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Web\API\Action\NoContentResponse;
 
 class CreateCompanyAction extends AbstractAction
 {
     public function __construct(private CommandBus $bus){}
 
-    public function __invoke(CreateCompanyRequest $request): Response
+    public function __invoke(CreateCompanyRequest $request): NoContentResponse
     {
 		$command = new CreateCompanyCommand(
 			$request->getStreet(),
@@ -28,6 +27,6 @@ class CreateCompanyAction extends AbstractAction
 
 		$this->bus->dispatch($command);
 
-		return $this->noContentResponse();
+		return NoContentResponse::respond();
     }
 }

@@ -8,19 +8,16 @@ use App\Common\Application\Query\QueryBus;
 use App\Modules\Invoices\Application\Company\GetOneById\CompanyDTO;
 use App\Modules\Invoices\Application\Company\GetOneById\GetOneCompanyByIdQuery;
 use App\Web\API\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class GetOneCompanyAction extends AbstractAction
 {
 	public function __construct(private QueryBus $bus){}
 
-	public function __invoke(Request $request): Response
+	public function __invoke(GetOneCompanyRequest $request): GetOneCompanyResponse
 	{
 		/** @var CompanyDTO $companyDTO */
-		$companyDTO = $this->bus->handle(new GetOneCompanyByIdQuery($request->get('id')));
+		$companyDTO = $this->bus->handle(new GetOneCompanyByIdQuery($request->getCompanyId()));
 
-		return $this->json(GetOneCompanyPresenter::present($companyDTO));
+		return GetOneCompanyResponse::respond($companyDTO);
 	}
 }

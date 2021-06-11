@@ -7,14 +7,13 @@ namespace App\Web\API\Action\Invoices\Company\Update;
 use App\Common\Application\Command\CommandBus;
 use App\Modules\Invoices\Application\Company\Update\UpdateCompanyCommand;
 use App\Web\API\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Web\API\Action\NoContentResponse;
 
 class UpdateCompanyAction extends AbstractAction
 {
 	public function __construct(private CommandBus $bus){}
 
-	public function __invoke(UpdateCompanyRequest $request): Response
+	public function __invoke(UpdateCompanyRequest $request): NoContentResponse
 	{
 		$this->bus->dispatch(new UpdateCompanyCommand(
 			$request->getCompanyId(),
@@ -27,6 +26,6 @@ class UpdateCompanyAction extends AbstractAction
 			$request->getPhoneNumber(),
 		));
 
-		return $this->noContentResponse();
+		return NoContentResponse::respond();
 	}
 }

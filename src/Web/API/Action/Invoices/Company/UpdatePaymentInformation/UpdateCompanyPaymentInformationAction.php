@@ -7,14 +7,13 @@ namespace App\Web\API\Action\Invoices\Company\UpdatePaymentInformation;
 use App\Common\Application\Command\CommandBus;
 use App\Modules\Invoices\Application\Company\UpdatePaymentInformation\UpdateCompanyPaymentInformationCommand;
 use App\Web\API\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Web\API\Action\NoContentResponse;
 
 class UpdateCompanyPaymentInformationAction extends AbstractAction
 {
 	public function __construct(private CommandBus $bus){}
 
-	public function __invoke(UpdateCompanyPaymentInformationRequest $request): Response
+	public function __invoke(UpdateCompanyPaymentInformationRequest $request): NoContentResponse
 	{
 		$this->bus->dispatch(new UpdateCompanyPaymentInformationCommand(
 			$request->getId(),
@@ -24,6 +23,6 @@ class UpdateCompanyPaymentInformationAction extends AbstractAction
 			$request->getAccountNumber()
 		));
 
-	    return $this->noContentResponse();
+	    return NoContentResponse::respond();
 	}
 }

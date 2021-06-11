@@ -7,17 +7,16 @@ namespace App\Web\API\Action\Invoices\Invoices\Delete;
 use App\Common\Application\Command\CommandBus;
 use App\Modules\Invoices\Application\Invoice\Delete\DeleteInvoiceCommand;
 use App\Web\API\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Web\API\Action\NoContentResponse;
 
 class DeleteInvoiceAction extends AbstractAction
 {
     public function __construct(private CommandBus $bus){}
 
-    public function __invoke(Request $request): Response
+    public function __invoke(DeleteInvoiceRequest $request): NoContentResponse
     {
-        $this->bus->dispatch(new DeleteInvoiceCommand($request->get('id')));
+        $this->bus->dispatch(new DeleteInvoiceCommand($request->getInvoiceId()));
 
-        return $this->noContentResponse();
+        return NoContentResponse::respond();
     }
 }

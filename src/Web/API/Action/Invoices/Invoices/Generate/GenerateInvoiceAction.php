@@ -7,14 +7,13 @@ namespace App\Web\API\Action\Invoices\Invoices\Generate;
 use App\Common\Application\Command\CommandBus;
 use App\Modules\Invoices\Application\Invoice\Generate\GenerateInvoiceCommand;
 use App\Web\API\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Web\API\Action\NoContentResponse;
 
 class GenerateInvoiceAction extends AbstractAction
 {
     public function __construct(private CommandBus $bus){}
 
-    public function __invoke(GenerateInvoiceRequest $request): Response
+    public function __invoke(GenerateInvoiceRequest $request): NoContentResponse
     {
 		$command = new GenerateInvoiceCommand(
 		    $request->getInvoiceNumber(),
@@ -30,6 +29,6 @@ class GenerateInvoiceAction extends AbstractAction
 
 		$this->bus->dispatch($command);
 
-		return $this->noContentResponse();
+		return NoContentResponse::respond();
     }
 }

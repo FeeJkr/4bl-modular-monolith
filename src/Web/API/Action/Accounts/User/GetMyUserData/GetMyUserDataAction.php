@@ -9,23 +9,18 @@ use App\Common\Infrastructure\Request\HttpRequestContext;
 use App\Modules\Accounts\Application\User\GetUserByToken\GetUserByTokenQuery;
 use App\Modules\Accounts\Application\User\GetUserByToken\UserDTO;
 use App\Web\API\Action\AbstractAction;
-use Symfony\Component\HttpFoundation\Response;
 
 class GetMyUserDataAction extends AbstractAction
 {
     public function __construct(private QueryBus $bus, private HttpRequestContext $requestContext){}
 
-    public function __invoke(): Response
+    public function __invoke(): GetMyUserDataResponse
     {
         /** @var UserDTO $user */
         $user = $this->bus->handle(
             new GetUserByTokenQuery($this->requestContext->getUserToken())
         );
 
-        return $this->json([
-            'id' => $user->getId(),
-            'email' => $user->getEmail(),
-            'username' => $user->getUsername(),
-        ]);
+        return GetMyUserDataResponse::respond($user);
     }
 }
