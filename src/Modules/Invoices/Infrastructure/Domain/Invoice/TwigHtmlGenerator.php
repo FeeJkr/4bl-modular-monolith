@@ -12,6 +12,7 @@ use App\Modules\Invoices\Domain\Invoice\Invoice;
 use App\Modules\Invoices\Domain\Invoice\InvoiceProduct;
 use App\Modules\Invoices\Domain\Invoice\PriceTransformer;
 use DateInterval;
+use Doctrine\Common\Collections\Collection;
 use Exception;
 use Throwable;
 use Twig\Environment;
@@ -19,11 +20,10 @@ use Twig\Environment;
 class TwigHtmlGenerator implements HtmlGenerator
 {
     public function __construct(
-        private Environment $twig,
         private PriceTransformer $priceTransformer
     ){}
 
-    public function generate(Invoice $invoice): string
+    public function prepareParameters(Invoice $invoice): array
     {
         try {
             $seller = $invoice->getSeller();
@@ -32,7 +32,7 @@ class TwigHtmlGenerator implements HtmlGenerator
             $paymentLastDate->add(new DateInterval(sprintf('P%dD', $seller->getPaymentLastDate())));
             $toPayPrice = $this->calculateToPayPrice($invoice);
 
-            return $this->twig->render('invoices/template.html.twig', [
+            return [
                 'invoiceNumber' => $invoice->getParameters()->getInvoiceNumber(),
                 'generateDate' => $invoice->getParameters()->getGenerateDate()->format('d-m-Y'),
                 'sellDate' => $invoice->getParameters()->getSellDate()->format('d-m-Y'),
@@ -55,7 +55,7 @@ class TwigHtmlGenerator implements HtmlGenerator
                     'email' => $buyer->getEmail(),
                     'phoneNumber' => $buyer->getPhoneNumber(),
                 ],
-                'products' => $invoice->getProducts()->toArray(),
+                'products' => $this->prepareProducts($invoice->getProducts()),
                 'totalNetPrice' => array_sum(
                     array_map(
                         static fn (InvoiceProduct $product): float => $product->getNetPrice(),
@@ -82,7 +82,7 @@ class TwigHtmlGenerator implements HtmlGenerator
                 'toPayPrice' => $toPayPrice,
                 'currencyCode' => $invoice->getParameters()->getCurrencyCode(),
                 'translatePrice' => $this->priceTransformer->transformToText($toPayPrice),
-            ]);
+            ];
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage());
         }
@@ -96,5 +96,15 @@ class TwigHtmlGenerator implements HtmlGenerator
                 $invoice->getProducts()->toArray()
             )
         ) - $invoice->getParameters()->getAlreadyTakenPrice();
+    }
+
+    private function prepareProducts(Collection $collection): array
+    {
+        return $collection->map(fn(InvoiceProduct $product): array => [
+            'name' => $product->getName(),
+            'netPrice' => $product->getNetPrice(),
+            'taxPrice' => $product->getTaxPrice(),
+            'grossPrice' => $product->getGrossPrice(),
+        ])->toArray();
     }
 }

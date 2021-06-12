@@ -8,11 +8,11 @@ services:
     volumes:
       - ../:/app
 
-  h2p-microservice:
-    image: feejkr/html-2-pdf
+  invoice-generator-microservice:
+    image: feejkr/invoice-generator
     ports:
       - "${HTML2PDF_MICROSERVICE_PORT}3000"
-    hostname: html2pdf
+    hostname: invoice-generator-ms
 
   db:
     image: "postgres:latest"
