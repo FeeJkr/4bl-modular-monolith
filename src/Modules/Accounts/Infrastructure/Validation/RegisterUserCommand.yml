@@ -1,0 +1,18 @@
+App\Modules\Accounts\Application\User\Register\RegisterUserCommand:
+  properties:
+    email:
+      - NotBlank: ~
+      - Email: ~
+      - Length:
+          min: 10
+          max: 255
+    username:
+      - NotBlank: ~
+      - Length:
+          min: 5
+          max: 255
+    password:
+      - NotBlank: ~
+      - Length:
+          min: 8
+          max: 255

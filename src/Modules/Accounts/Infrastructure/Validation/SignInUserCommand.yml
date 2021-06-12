@@ -1,0 +1,13 @@
+App\Modules\Accounts\Application\User\SignIn\SignInUserCommand:
+  properties:
+    email:
+      - NotBlank: ~
+      - Email: ~
+      - Length:
+          min: 10
+          max: 255
+    password:
+      - NotBlank: ~
+      - Length:
+          min: 8
+          max: 255

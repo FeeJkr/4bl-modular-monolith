@@ -6,8 +6,8 @@ namespace App\Web\API\Action\Accounts\User\SignIn;
 
 use App\Common\Application\Command\CommandBus;
 use App\Common\Application\Query\QueryBus;
-use App\Modules\Accounts\Application\User\GetToken\GetTokenQuery;
-use App\Modules\Accounts\Application\User\GetToken\TokenDTO;
+use App\Modules\Accounts\Application\User\GetTokenByEmail\GetTokenQuery;
+use App\Modules\Accounts\Application\User\GetTokenByEmail\TokenDTO;
 use App\Modules\Accounts\Application\User\SignIn\SignInUserCommand;
 use App\Web\API\Action\AbstractAction;
 use App\Web\API\Action\NoContentResponse;

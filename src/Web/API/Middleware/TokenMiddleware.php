@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Web\API\Middleware;
 
 use App\Common\Infrastructure\Request\HttpRequestContext;
-use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\Token;
+use App\Modules\Accounts\Domain\User\TokenManager;
 use App\Web\API\Action\AbstractAction;
 use App\Web\API\Action\Accounts\User\Register\RegisterUserAction;
 use App\Web\API\Action\Accounts\User\SignIn\SignInUserAction;
@@ -21,19 +21,12 @@ use function in_array;
 
 final class TokenMiddleware implements EventSubscriberInterface
 {
-    private TokenManager $tokenManager;
-    private HttpRequestContext $httpRequestContext;
-
     protected array $allowedActions = [
         SignInUserAction::class,
         RegisterUserAction::class,
     ];
 
-    public function __construct(TokenManager $tokenManager, HttpRequestContext $httpRequestContext)
-    {
-        $this->tokenManager = $tokenManager;
-        $this->httpRequestContext = $httpRequestContext;
-    }
+    public function __construct(private TokenManager $tokenManager, private HttpRequestContext $httpRequestContext){}
 
     public function onKernelController(ControllerEvent $event): void
     {

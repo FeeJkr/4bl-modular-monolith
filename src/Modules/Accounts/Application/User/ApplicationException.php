@@ -7,11 +7,17 @@ use App\Modules\Accounts\Domain\DomainException;
 use Exception;
 use JetBrains\PhpStorm\Pure;
 
-abstract class ApplicationException extends Exception
+final class ApplicationException extends Exception
 {
     #[Pure]
-    public static function fromDomainException(DomainException $exception): static
+    public static function fromDomainException(DomainException $exception): self
     {
-        return new static($exception->getMessage(), $exception->getCode(), $exception);
+        return new self($exception->getMessage(), $exception->getCode(), $exception);
+    }
+
+    #[Pure]
+    public static function internalError(): self
+    {
+        return new self('Internal server error.');
     }
 }

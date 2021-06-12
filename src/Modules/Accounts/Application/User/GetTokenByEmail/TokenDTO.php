@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Accounts\Application\User\GetToken;
+namespace App\Modules\Accounts\Application\User\GetTokenByEmail;
 
 final class TokenDTO
 {

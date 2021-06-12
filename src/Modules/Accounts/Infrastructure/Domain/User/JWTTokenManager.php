@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Accounts\Infrastructure\Domain\User;
 
-use App\Modules\Accounts\Application\User\TokenManager;
 use App\Modules\Accounts\Domain\User\Token;
+use App\Modules\Accounts\Domain\User\TokenManager;
 use DateTime;
 use Firebase\JWT\JWT;
 use Throwable;

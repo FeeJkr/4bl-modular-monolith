@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Accounts\Application\User;
+namespace App\Modules\Accounts\Domain\User;
 
 interface PasswordManager
 {

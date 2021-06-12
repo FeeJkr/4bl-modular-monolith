@@ -5,32 +5,26 @@ declare(strict_types=1);
 namespace App\Modules\Accounts\Application\User\Register;
 
 use App\Common\Application\Command\CommandHandler;
-use App\Modules\Accounts\Application\User\PasswordManager;
-use App\Modules\Accounts\Application\User\ValidationException;
-use App\Modules\Accounts\Domain\User\User;
+use App\Modules\Accounts\Application\User\ApplicationException;
+use App\Modules\Accounts\Domain\DomainException;
 use App\Modules\Accounts\Domain\User\UserRepository;
+use App\Modules\Accounts\Domain\User\UserService;
 
 final class RegisterUserHandler implements CommandHandler
 {
-    public function __construct(
-        private UserRepository $repository,
-        private PasswordManager $passwordManager,
-        private RegisterUserValidator $validator
-    ) {}
+    public function __construct(private UserService $service, private UserRepository $repository) {}
 
     /**
-     * @throws ValidationException
+     * @throws ApplicationException
      */
     public function __invoke(RegisterUserCommand $command): void
     {
-        $this->validator->validate($command);
+        try {
+            $user = $this->service->register($command->getEmail(), $command->getUsername(), $command->getPassword());
 
-        $user = User::register(
-            $command->getEmail(),
-            $command->getUsername(),
-            $this->passwordManager->hash($command->getPassword())
-        );
-
-        $this->repository->store($user);
+            $this->repository->store($user);
+        } catch (DomainException $exception) {
+            throw ApplicationException::fromDomainException($exception);
+        }
     }
 }

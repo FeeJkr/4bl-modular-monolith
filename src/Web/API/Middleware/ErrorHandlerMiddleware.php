@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Web\API\Middleware;
 
-use App\Modules\Accounts\Application\User\LogicException as AccountsModuleLogicException;
-use App\Modules\Accounts\Application\User\NotFoundException as AccountsModuleNotFoundException;
-use App\Modules\Accounts\Application\User\ValidationException as AccountsModuleValidationException;
+use App\Modules\Accounts\Application\User\ApplicationException as AccountApplicationException;
 use App\Web\API\DomainErrorResponse;
 use App\Web\API\ValidationErrorResponse;
 use Assert\LazyAssertionException;
@@ -17,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Messenger\Exception\ValidationFailedException;
 use Throwable;
 
 final class ErrorHandlerMiddleware implements EventSubscriberInterface
@@ -41,9 +40,7 @@ final class ErrorHandlerMiddleware implements EventSubscriberInterface
 				];
 
 				$statusCode = match ($exception::class) {
-					AccountsModuleValidationException::class => Response::HTTP_BAD_REQUEST,
-					AccountsModuleLogicException::class => Response::HTTP_CONFLICT,
-					AccountsModuleNotFoundException::class => Response::HTTP_NOT_FOUND,
+                    AccountApplicationException::class => Response::HTTP_CONFLICT,
 					default => throw $exception,
 				};
 
@@ -69,6 +66,15 @@ final class ErrorHandlerMiddleware implements EventSubscriberInterface
 					)
 				);
 			}
+
+            if ($exception instanceof ValidationFailedException) {
+                $response = [
+                    'type' => self::VALIDATION_ERROR_TYPE,
+                    'errors' => ValidationErrorResponse::getViolationsResponse($exception->getViolations()),
+                ];
+
+                $event->setResponse(new JsonResponse($response, Response::HTTP_BAD_REQUEST));
+            }
 		}
     }
 

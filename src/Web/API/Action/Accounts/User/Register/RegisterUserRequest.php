@@ -32,7 +32,7 @@ final class RegisterUserRequest extends Request
         Assert::lazy()
             ->that($email, 'email')->notEmpty()->email()
             ->that($username, 'username')->notEmpty()
-            ->that($password, 'password')->notEmpty()->minLength(8)->maxLength(15)
+            ->that($password, 'password')->notEmpty()->minLength(8)->maxLength(255)
             ->verifyNow();
 
         return new self(

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Accounts\Infrastructure\Domain\User;
 
-use App\Modules\Accounts\Application\User\PasswordManager as PasswordManagerInterface;
+use App\Modules\Accounts\Domain\User\PasswordManager;
 
-final class PasswordManager implements PasswordManagerInterface
+final class PHPBuildInPasswordManager implements PasswordManager
 {
     public function hash(string $plainPassword): string
     {

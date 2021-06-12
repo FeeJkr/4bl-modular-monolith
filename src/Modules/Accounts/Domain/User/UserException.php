@@ -26,4 +26,10 @@ final class UserException extends DomainException
     {
         return new self('Users with given email or username already exists');
     }
+
+    #[Pure]
+    public static function notFoundByEmail(string $email): self
+    {
+        return new self(sprintf('User with email %s not found.', $email));
+    }
 }

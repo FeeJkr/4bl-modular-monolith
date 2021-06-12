@@ -10,7 +10,6 @@ final class UserDTO
         private string $id,
         private string $email,
         private string $username,
-        private string $password,
         private string $token
     ) {}
 
@@ -27,11 +26,6 @@ final class UserDTO
     public function getUsername(): string
     {
         return $this->username;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
     }
 
     public function getToken(): string
