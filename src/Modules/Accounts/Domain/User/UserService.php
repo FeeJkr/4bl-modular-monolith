@@ -11,6 +11,7 @@ final class UserService
         private ValidPasswordSpecification $validPasswordSpecification,
         private EmailAndUsernameNotExistsSpecification $alreadyExistsSpecification,
         private UserRepository $repository,
+        private PasswordManager $passwordManager,
     ){}
 
     /**
