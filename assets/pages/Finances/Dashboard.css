@@ -1,0 +1,158 @@
+.finances-type-button {
+    background: none;
+    margin: 15px;
+    padding: 10px;
+    border: 1px white solid;
+    border-radius: 15px;
+    font-size: 24px;
+}
+
+.finances-type-button:hover {
+    background-color: rgba(85, 110, 230, .2);
+}
+
+.finances-step-active {
+    background: #f3f4f5;
+}
+
+.finances-step {
+    border: none;
+    border-right: 1px solid rgba(34,36,38,.15);
+    vertical-align: middle;
+}
+
+.finances-step-last {
+    border: none;
+    vertical-align: middle;
+}
+
+.finances-step-disabled {
+    color: rgba(40,40,40,.3);
+}
+
+.modal-content {
+    border: none;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.category-button {
+    background: none;
+    margin: 15px;
+    padding: 10px;
+    border: 1px white solid;
+    border-radius: 15px;
+    font-size: 24px;
+}
+
+.dropdown {
+    width: 100%;
+}
+
+.select-category {
+    min-width: 100%;
+    background: none;
+    color: hsl(0, 0%, 50%);
+    border: 1px solid #ced4da;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0.47rem 0.75rem;
+}
+
+.select-category-active {
+    color: black;
+}
+
+.select-category:hover {
+    background: none;
+    color: black;
+    border-color: #7b93a4;
+}
+
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle {
+    color: black;
+    background: none;
+    border-color: #7b93a4;
+}
+
+.btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: none;
+}
+.btn-check:focus+.btn-primary, .btn-primary:focus {
+    box-shadow: none;
+}
+
+.btn-check:focus+.btn-primary, .btn-primary:focus {
+    color: black;
+    background: none;
+    border-color: #7b93a4;
+}
+
+.select-category:active {
+    background: none;
+}
+
+
+
+.transaction-type-button {
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #e5ebee;
+    text-align: center;
+    color: #7b93a4;
+    height: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.transaction-type-button-expenses-active {
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #ff6b7f;
+    text-align: center;
+    color: white;
+}
+
+.transaction-type-button-income-active {
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #42D100;
+    text-align: center;
+    color: white;
+}
+
+.category-list-div {
+    margin-top: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.category-list {
+    list-style: none;
+    padding-left: 0;
+    font-size: 15px;
+}
+.category-list li {
+    color: black;
+    line-height: 40px;
+    padding-left: 40px;
+    display: block;
+}
+.category-list li:hover {
+    background: #F6F8F9;
+    cursor: pointer;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #7b93a4;
+}
+
+.flatpickr-input:hover {
+    border-color: #7b93a4;
+}
+
+.flatpickr-input:active {
+    border-color: #7b93a4;
+}

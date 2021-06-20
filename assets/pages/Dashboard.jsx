@@ -16,6 +16,8 @@ import {Edit as InvoicesEdit} from "./Invoices/Invoices/Edit";
 import {useDispatch} from "react-redux";
 import {authenticationActions} from "../actions/authentication.actions";
 
+import {Dashboard as FinancesDashboard} from '../pages/Finances/Dashboard';
+
 export default function Dashboard() {
     const dispatch = useDispatch();
     const isDashboardRoute = history.location.pathname === '/' || history.location.pathname === '';
@@ -190,6 +192,8 @@ export default function Dashboard() {
                             <PrivateRoute exact path={'/invoices'} component={InvoicesList}/>
                             <PrivateRoute exact path={'/invoices/generate'} component={InvoicesGenerate}/>
                             <PrivateRoute exact path={'/invoices/edit/:id'} component={InvoicesEdit}/>
+
+                            <PrivateRoute exact path={'/finances'} component={FinancesDashboard}/>
                         </Switch>
                     </Router>
                 </div>

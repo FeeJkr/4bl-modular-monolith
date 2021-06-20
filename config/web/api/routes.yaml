@@ -77,3 +77,28 @@ api.v1.invoices.filesystem.getByName:
   path: /api/v1/invoices/filesystem/{filename}
   controller: App\Web\API\Action\Invoices\Filesystem\GetFileByName\GetFileByNameAction
   methods: GET
+
+api.v1.finances.category.create:
+  path: /api/v1/finances/categories
+  controller: App\Web\API\Action\Finances\Category\Create\CreateCategoryAction
+  methods: POST
+
+api.v1.finances.category.edit:
+  path: /api/v1/finances/categories/{id}
+  controller: App\Web\API\Action\Finances\Category\Edit\EditCategoryAction
+  methods: POST
+
+api.v1.finances.category.delete:
+  path: /api/v1/finances/categories/{id}
+  controller: App\Web\API\Action\Finances\Category\Delete\DeleteCategoryAction
+  methods: DELETE
+
+api.v1.finances.category.all:
+  path: /api/v1/finances/categories
+  controller: App\Web\API\Action\Finances\Category\GetAll\GetAllCategoriesAction
+  methods: GET
+
+api.v1.finances.category.getById:
+  path: /api/v1/finances/categories/{id}
+  controller: App\Web\API\Action\Finances\Category\GetById\GetCategoryByIdAction
+  methods: GET
