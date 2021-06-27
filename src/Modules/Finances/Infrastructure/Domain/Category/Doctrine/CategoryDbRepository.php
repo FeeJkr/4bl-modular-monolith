@@ -8,6 +8,7 @@ use App\Modules\Finances\Domain\Category\Category;
 use App\Modules\Finances\Domain\Category\CategoryId;
 use App\Modules\Finances\Domain\Category\CategoryRepository;
 use App\Modules\Finances\Domain\Category\CategoryType;
+use App\Modules\Finances\Domain\User\UserId;
 use Doctrine\DBAL\Connection;
 
 final class CategoryDbRepository implements CategoryRepository
@@ -23,12 +24,14 @@ final class CategoryDbRepository implements CategoryRepository
             ->insert('categories')
             ->values([
                 'id' => ':id',
+                'user_id' => ':userId',
                 'name' => ':name',
                 'type' => ':type',
                 'icon' => ':icon',
             ])
             ->setParameters([
                 'id' => $snapshot->getId(),
+                'userId' => $snapshot->getUserId(),
                 'name' => $snapshot->getName(),
                 'type' => $snapshot->getType(),
                 'icon' => $snapshot->getIcon(),
@@ -42,19 +45,22 @@ final class CategoryDbRepository implements CategoryRepository
         return CategoryId::generate();
     }
 
-    public function getById(CategoryId $id): Category
+    public function getById(CategoryId $id, UserId $userId): Category
     {
         $query = $this->connection
             ->createQueryBuilder()
-            ->select(['id', 'name', 'type', 'icon'])
+            ->select(['id', 'user_id', 'name', 'type', 'icon'])
             ->from('categories')
             ->where('id = :id')
-            ->setParameter('id', $id->toString());
+            ->andWhere('user_id = :userId')
+            ->setParameter('id', $id->toString())
+            ->setParameter('userId', $userId->toString());
 
         $row = $this->connection->executeQuery($query->getSQL(), $query->getParameters())->fetchAssociative();
 
         return new Category(
             CategoryId::fromString($row['id']),
+            UserId::fromString($row['user_id']),
             $row['name'],
             CategoryType::from($row['type']),
             $row['icon']
@@ -67,7 +73,9 @@ final class CategoryDbRepository implements CategoryRepository
             ->createQueryBuilder()
             ->delete('categories')
             ->where('id = :id')
-            ->setParameter('id', $category->getSnapshot()->getId());
+            ->andWhere('user_id = :userId')
+            ->setParameter('id', $category->getSnapshot()->getId())
+            ->setParameter('userId', $category->getSnapshot()->getUserId());
 
         $this->connection->executeQuery($query->getSQL(), $query->getParameters());
     }
@@ -82,8 +90,10 @@ final class CategoryDbRepository implements CategoryRepository
             ->set('type', ':type')
             ->set('icon', ':icon')
             ->where('id = :id')
+            ->andWhere('user_id = :userId')
             ->setParameters([
                 'id' => $snapshot->getId(),
+                'userId' => $snapshot->getUserId(),
                 'name' => $snapshot->getName(),
                 'type' => $snapshot->getType(),
                 'icon' => $snapshot->getIcon(),

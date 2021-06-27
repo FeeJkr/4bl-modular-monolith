@@ -8,6 +8,7 @@ final class CategorySnapshot
 {
     public function __construct(
         private string $id,
+        private string $userId,
         private string $name,
         private string $type,
         private string $icon,
@@ -16,6 +17,11 @@ final class CategorySnapshot
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getUserId(): string
+    {
+        return $this->userId;
     }
 
     public function getName(): string

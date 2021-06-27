@@ -11,6 +11,12 @@
     background-color: rgba(85, 110, 230, .2);
 }
 
+.btn-primary {
+    background: none;
+    color: hsl(0, 0%, 50%);
+    border: 1px solid #ced4da;
+}
+
 .finances-step-active {
     background: #f3f4f5;
 }

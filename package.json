@@ -29,6 +29,8 @@
         "boxicons": "^2.0.7",
         "dotenv": "^8.2.0",
         "dotenv-webpack": "^7.0.2",
+        "emoji-mart": "^3.0.1",
+        "emoji-picker-react": "^3.4.8",
         "flatpickr": "^4.6.9",
         "history": "^4.10.1",
         "prop-types": "^15.7.2",

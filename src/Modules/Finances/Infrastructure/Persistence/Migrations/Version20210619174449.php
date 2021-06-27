@@ -19,12 +19,13 @@ final class Version20210619174449 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql("CREATE TYPE category_type AS ENUM ('expenses', 'income', 'transfer')");
+        $this->addSql("CREATE TYPE category_type AS ENUM ('expenses', 'income')");
 
         $this->addSql("
             create table categories
             (
                 id uuid default gen_random_uuid() not null unique constraint categories_pk primary key,
+                user_id uuid not null constraint companies_users_id_fk references users on delete cascade,
                 name varchar(255) not null,
                 type category_type not null,
                 icon varchar(255) not null,

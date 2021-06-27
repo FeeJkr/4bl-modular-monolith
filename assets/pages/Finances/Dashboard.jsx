@@ -1,12 +1,9 @@
+import './Dashboard.css';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {companiesActions} from "../../actions/companies.actions";
 import {Link} from "react-router-dom";
 import {Button, Dropdown, Modal, Nav, Toast} from "react-bootstrap";
-import expense from './icons/expense.svg';
-import income from './icons/income.svg';
-import transfer from './icons/transfer.svg';
-import './Dashboard.css';
 import {useRef} from "react";
 import Flatpickr from "react-flatpickr";
 import AsyncSelect from "react-select/async/dist/react-select.esm";

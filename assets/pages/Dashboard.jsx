@@ -15,8 +15,11 @@ import {Generate as InvoicesGenerate} from '../pages/Invoices/Invoices/Generate'
 import {Edit as InvoicesEdit} from "./Invoices/Invoices/Edit";
 import {useDispatch} from "react-redux";
 import {authenticationActions} from "../actions/authentication.actions";
-
+// finances
 import {Dashboard as FinancesDashboard} from '../pages/Finances/Dashboard';
+import {List as FinancesCategoriesList} from '../pages/Finances/Categories/List';
+import {Create as FinancesCategoriesCreate} from '../pages/Finances/Categories/Create';
+import {Edit as FinancesCategoriesEdit} from '../pages/Finances/Categories/Edit';
 
 export default function Dashboard() {
     const dispatch = useDispatch();
@@ -24,7 +27,11 @@ export default function Dashboard() {
     const isCompaniesRoute = history.location.pathname.startsWith('/companies');
     const isInvoicesRoute = history.location.pathname.startsWith('/invoices');
     const isFinancesRoute = history.location.pathname.startsWith('/finances');
+    const isFinancesDashboardRoute = history.location.pathname.startsWith('/finances/dashboard');
+    const isFinancesCategoriesRoute = history.location.pathname.startsWith('/finances/categories');
+
     let [openInvoices, setOpenInvoices] = useState(isCompaniesRoute || isInvoicesRoute);
+    let [openFinances, setOpenFinances] = useState(isFinancesRoute)
 
     function collapseAll() {
         setOpenInvoices(false);
@@ -159,10 +166,13 @@ export default function Dashboard() {
                         </li>
 
                         <li style={{display: 'block', width: '100%'}}>
-                            <Link to="/finances"
-                                  style={{padding: '0.625rem 1.5rem', position: 'relative', fontSize: '13px', transition: 'all .4s', color: '#79829c', cursor: 'pointer', width: '100%', display: 'block', textDecoration: 'none'}}
-                                  className={isFinancesRoute ? 'mm-active' : ''}
+                            <a style={{padding: '.625rem 1.5rem', position: 'relative', fontSize: '13px', transition: 'all .4s', color: '#79829c', cursor: 'pointer', width: '100%', display: 'block', textDecoration: 'none'}}
+                               onClick={() => setOpenFinances(!openFinances)}
+                               aria-controls="finances"
+                               aria-expanded={openFinances}
+                               className={isFinancesRoute ? 'mm-active' : ''}
                             >
+
                                 <i className="bi bi-cash-stack"
                                    style={{
                                        minWidth: '2rem',
@@ -172,10 +182,34 @@ export default function Dashboard() {
                                        lineHeight: '1.40625rem',
                                        verticalAlign: 'middle',
                                        transition: 'all .4s'
-                                   }}
-                                />
+                                   }}/>
                                 Finances
-                            </Link>
+
+                                {openFinances
+                                    ? <i className="bi bi-arrow-up-short" style={{float: 'right', fontSize: '1.2rem'}}/>
+                                    : <i className="bi bi-arrow-down-short" style={{float: 'right', fontSize: '1.2rem'}}/>
+                                }
+                            </a>
+                            <Collapse in={openFinances}>
+                                <ul style={{padding: 0}}>
+                                    <li style={{display: 'block', width: '100%', cursor: 'pointer'}}>
+                                        <Link to={'/finances/dashboard'}
+                                              style={{padding: '.4rem 1.5rem .4rem 3.5rem', fontSize: '13px', color: '#79829c', display: 'block', position: 'relative', textDecoration: 'none'}}
+                                              className={isFinancesDashboardRoute ? 'mm-active' : ''}
+                                        >
+                                            Dashboard
+                                        </Link>
+                                    </li>
+                                    <li style={{display: 'block', width: '100%', cursor: 'pointer'}}>
+                                        <Link to={'/finances/categories'}
+                                              style={{padding: '.4rem 1.5rem .4rem 3.5rem', fontSize: '13px', color: '#79829c', display: 'block', position: 'relative', textDecoration: 'none'}}
+                                              className={isFinancesCategoriesRoute ? 'mm-active' : ''}
+                                        >
+                                            Categories
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </Collapse>
                         </li>
                     </ul>
                 </div>
@@ -193,7 +227,10 @@ export default function Dashboard() {
                             <PrivateRoute exact path={'/invoices/generate'} component={InvoicesGenerate}/>
                             <PrivateRoute exact path={'/invoices/edit/:id'} component={InvoicesEdit}/>
 
-                            <PrivateRoute exact path={'/finances'} component={FinancesDashboard}/>
+                            <PrivateRoute exact path={'/finances/dashboard'} component={FinancesDashboard}/>
+                            <PrivateRoute exact path={'/finances/categories'} component={FinancesCategoriesList}/>
+                            <PrivateRoute exact path={'/finances/categories/create'} component={FinancesCategoriesCreate}/>
+                            <PrivateRoute exact path={'/finances/categories/edit/:id'} component={FinancesCategoriesEdit}/>
                         </Switch>
                     </Router>
                 </div>
