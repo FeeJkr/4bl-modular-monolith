@@ -1,6 +1,5 @@
 web.mvc:
     resource: 'web/mvc/routes.yaml'
 
-
 web.api:
     resource: 'web/api/routes.yaml'
